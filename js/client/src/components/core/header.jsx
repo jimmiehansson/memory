@@ -26,39 +26,20 @@
  */
 
 
-
 /**
  * TODO:
  * Could include this in separate file perhaps
  * called inclusion file.
  */
 import React, { Component } from 'react'
-import { Link } from 'react-router';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
-import RaisedButton from 'material-ui/RaisedButton';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
-import Snackbar from 'material-ui/Snackbar';
+
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
-
-/**
- * TODO: Add proper styling
- * @type {{customWidth: {width: number}}}
- */
-const styles = {
-    customWidth: {
-        width: 200,
-    },
-};
 
 class Header extends Component {
 
@@ -68,10 +49,6 @@ class Header extends Component {
         super(props);
 
         this.state = {
-            timeSelectorValue:1,
-            snackbarNotificationTime: 4000,
-            snackbarNotificationMessage: 'Kontrollerar din anslutning',
-            snackbarNotificationOpen:false,
             drawerNavOpen:false
         };
     }
@@ -81,15 +58,6 @@ class Header extends Component {
      * down to create better detachable components.
      */
     handleToggle = () => this.setState({drawerNavOpen: !this.state.drawerNavOpen});
-    handleChange = (event, index, timeSelectorValue) => this.setState({timeSelectorValue});
-    handleReset = () => this.state = {
-        timeSelectorValue:1,
-        drawerNavOpen:false,
-        snackbarNotificationMessage: 'Kontrollerar din anslutning, vänligen vänta',
-        snackbarNotificationOpen:false
-    };
-    handleResetNotification = () => this.setState({snackbarNotificationOpen:false});
-    handleDisplayNotification = () => this.setState({snackbarNotificationOpen:true});
 
     render() {
         return(
@@ -97,144 +65,20 @@ class Header extends Component {
             <AppBar
                 title=""
                 onLeftIconButtonTouchTap={this.handleToggle}
-                titleStyle={{fontSize:'20px'}}
+                titleStyle={{fontSize:'26px'}}
+                iconElementRight={<img className="header-logo" src="https://github.com/jimmiehansson/memory/raw/master/memoryinja.jpg" /> }
             />
                 <Drawer open={this.state.drawerNavOpen} width={200} openSecondary={true}>
 
 
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            place
-                        </i>
-                        Nätverkskarta
-                    </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            wifi_lock
-                        </i>
-                        Wi-fi trådlöst
-                    </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            router
-                        </i>
-                        Router
-                    </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            storage
-                        </i>
-                        Molnlagring
-                    </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            local_printshop
-                        </i>
-                        Skrivare
-                    </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            devices_other
-                        </i>
-                        Övriga enheter
-                    </MenuItem>
-
-                    <Divider />
 
                     <MenuItem>
                         <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            graphic_eq
+                            face
                         </i>
-                        Diagnostik
+                        My score
                     </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            build
-                        </i>
-                        Verktyg
-                    </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            folder
-                        </i>
-                        Snapshots
-                    </MenuItem>
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            insert_chart
-                        </i>
-                        Historik
-                    </MenuItem>
-
-                    <Divider />
-
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            help_outline
-                        </i>
-                        Hjälp
-                    </MenuItem>
-
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            info
-                        </i>
-                        Om programmet
-                    </MenuItem>
-
-
                 </Drawer>
-                <Toolbar>
-                    <ToolbarGroup firstChild={true}>
-
-                        <RaisedButton
-                            label=""
-                            primary={false}
-                            containerElement={<Link to="/" />}
-                            onTouchTap={this.handleReset}
-                            style={{float:'left', margin:'0px 35px 0px 5px'}}
-                        >
-                            <i className="material-icons" style={
-                                {position:'relative', color:'#fff', margin:'5px 0px 0px 0px'}
-                            }>
-                                home
-                            </i>
-                        </RaisedButton>
-
-                        <ToolbarTitle text="Visa efter tid:"/>
-
-                        <DropDownMenu value={this.state.timeSelectorValue} onChange={this.handleChange}>
-                            <MenuItem value={1} primaryText="Visa i realtid" />
-                            <MenuItem value={2} primaryText="Visa per timme" />
-                            <MenuItem value={3} primaryText="Visa per dygn" />
-                            <MenuItem value={4} primaryText="Visa per vecka" />
-                            <MenuItem value={5} primaryText="Visa per månad" />
-                            <MenuItem value={6} primaryText="Visa allt" />
-                        </DropDownMenu>
-                    </ToolbarGroup>
-                    <ToolbarGroup firstChild={true}>
-
-                        <ToolbarSeparator />
-                        <IconMenu
-                            iconButtonElement={
-                                <IconButton touch={true}>
-                                    <NavigationExpandMoreIcon />
-                                </IconButton>
-                            }
-                        >
-                            <MenuItem primaryText="Avancerade alternativ" />
-                            <MenuItem primaryText="Skicka kontrollrapport" />
-                        </IconMenu>
-                    </ToolbarGroup>
-                </Toolbar>
-
-                <Snackbar
-                    open={this.state.snackbarNotificationOpen}
-                    message={this.state.snackbarNotificationMessage}
-                    action="ok"
-                    autoHideDuration={this.state.snackbarNotificationTime}
-                    onRequestClose={this.handleResetNotification}
-                />
             </div>
         )
     }

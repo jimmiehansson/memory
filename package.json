@@ -1,5 +1,5 @@
 {
-  "name": "Connectiontool",
+  "name": "Memory",
   "version": "0.0.1",
   "main": "./js/client/pub/main/main.js",
   "scripts": {

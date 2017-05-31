@@ -38,24 +38,6 @@ class Menu extends Component {
         return(
             <div>
                 <Header />
-                <Tabs>
-                    <Tab
-                        value="/"
-                        label="Översikt"
-                        containerElement={<Link to="/" />}
-                    />
-                    <Tab
-                        value="/connection"
-                        label="Uppkoppling"
-                        containerElement={<Link to="/connection" />}
-                    />
-                    <Tab
-                        value="/quality"
-                        label="Kvalitet"
-                        containerElement={<Link to="/quality" />}
-                    />
-
-                </Tabs>
                 {this.props.children }
             </div>
         )

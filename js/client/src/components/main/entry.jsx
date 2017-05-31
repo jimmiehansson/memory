@@ -43,16 +43,6 @@ import { Router, Route, hashHistory } from 'react-router'; // hashHistory for el
  * imported here.
  */
 import '../../../pub/less/main.less';
-import {
-    grey900,
-    grey50,
-    pink200,
-    pink500,
-    green50,
-    darkWhite,
-    lightWhite,
-    fullWhite,
-} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -60,8 +50,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 /**
  * DOING: Adding components from our own sources
  */
-import Home from '../..//components/home/home.jsx';
-import Menu from '../..//components/core/menu.jsx';
+import Home from '../../components/home/home.jsx';
+import Menu from '../../components/core/menu.jsx';
 
 /**
  *
@@ -71,7 +61,7 @@ import Menu from '../..//components/core/menu.jsx';
  */
 
 const muiTheme = getMuiTheme({
-    fontFamily: 'Open Sans',
+    fontFamily: 'Permanent Marker',
     palette: {
         accent1Color: "#C8E6C9",
         accent2Color: "#fff",
@@ -90,21 +80,6 @@ const muiTheme = getMuiTheme({
     }
 });
 
-/*
-const muiTheme = getMuiTheme({
-    palette: {
-        primary1Color: fullWhite,
-        primary2Color: green50,
-        primary3Color: pink200,
-        accent1Color: grey50,
-        accent2Color: lightWhite,
-        accent3Color: grey900,
-        textColor: grey900,
-        alternateTextColor: grey900,
-        pickerHeaderColor: lightWhite,
-    },
-});
-*/
 const store = configureStore(populate.default());
 
 render (
