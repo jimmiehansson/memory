@@ -1,4 +1,4 @@
-![alt text](https://github.com/jimmiehansson/memory/blob/master/memoryinja.jpg)
+![alt text](https://github.com/jimmiehansson/memory/blob/master/js/client/pub/images/memoryinja.jpg?raw=true)
 
 ## Memory (card game with ninjas)
 Simple memory card game. Card tiles will function as components, data in each component will be fetched from an API. Store state will be used to remember which card tiles have been turned, removed from the board and used to refresh the random placement of each tile.
