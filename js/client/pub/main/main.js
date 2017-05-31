@@ -53,11 +53,11 @@ app.on("ready", () => {
     const {width, height} = electron.screen.getPrimaryDisplay().workAreaSize;
 
     win = new BrowserWindow({
-        title: "Diskovery",
-        minWidth: width * 1,
-        minHeight: height * 1,
+        title: "Memorinja (Memory game)",
+        minWidth: width * 0.4,
+        minHeight: height * 0.7,
         width: width * 0.4,
-        height: height * 0.8,
+        height: height * 0.7,
         resizable: true,
         frame: true,
         transparent: false,

@@ -61,7 +61,7 @@ const style = {
     return (
         <div>
            <Paper className="tile" style={style}>
-               test
+               Flip card
            </Paper>
         </div>
     )

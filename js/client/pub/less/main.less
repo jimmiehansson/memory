@@ -1,7 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
-@content-bg: transparent;
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker|Bangers:400');
 
-
+/* Universal */
 body {
   background: #DCE35B;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #45B649, #DCE35B);  /* Chrome 10-25, Safari 5.1-6 */
@@ -10,15 +9,16 @@ body {
 }
 
 
-/* Dashboard: Circular progress */
-.CircularProgress-Fg {
-  transition: stroke-dashoffset .5s ease-in-out;
-}
-
+/* Header */
 .header-logo {
   position:relative;
   right:65%;
 }
 
+
+/* Tiles */
 .tile {
+  background-color: #f7f3bd !important;
+  background-image: url(https://github.com/jimmiehansson/memory/blob/master/public/images/tile.png?raw=true);
+  background-position: -35px 10px;
 }

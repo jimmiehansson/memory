@@ -34,12 +34,16 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
-
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
+import {
+    List,
+    ListItem
+} from 'material-ui/List';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
 injectTapEventPlugin();
+
 
 class Header extends Component {
 
@@ -66,18 +70,26 @@ class Header extends Component {
                 title=""
                 onLeftIconButtonTouchTap={this.handleToggle}
                 titleStyle={{fontSize:'26px'}}
-                iconElementRight={<img className="header-logo" src="http://localhost/public/images/memoryinja.jpg" /> }
+                iconElementRight={<img className="header-logo" src="https://github.com/jimmiehansson/memory/raw/master/public/images/memoryinja.jpg?raw=true" /> }
             />
                 <Drawer open={this.state.drawerNavOpen} width={200} openSecondary={true}>
 
+                    <List>
+                        <Subheader>My current score</Subheader>
+                        <ListItem disabled={true} style={{fontFamily:'Bangers', fontSize:'43px', color:'#222'}}>
+                            45 points
+                        </ListItem>
+                        <Divider/>
+                        <Subheader>My previous scores</Subheader>
+                        <ListItem disabled={true} style={{fontFamily:'Bangers', fontSize:'28px', color:'#8bc53e'}}>
+                            30 points
+                        </ListItem>
+                        <ListItem disabled={true} style={{fontFamily:'Bangers', fontSize:'28px', color:'#8bc53e'}}>
+                            12 points
+                        </ListItem>
+                        <Divider/>
 
-
-                    <MenuItem>
-                        <i className="material-icons" style={{float:'left', color:'#888', margin:'10px 10px 0px 0px'}}>
-                            face
-                        </i>
-                        My score
-                    </MenuItem>
+                    </List>
                 </Drawer>
             </div>
         )
