@@ -31,7 +31,7 @@
  * Could include this in separate file perhaps
  * called inclusion file.
  */
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -66,7 +66,7 @@ class Header extends Component {
                 title=""
                 onLeftIconButtonTouchTap={this.handleToggle}
                 titleStyle={{fontSize:'26px'}}
-                iconElementRight={<img className="header-logo" src="https://github.com/jimmiehansson/memory/raw/master/memoryinja.jpg" /> }
+                iconElementRight={<img className="header-logo" src="http://localhost/public/images/memoryinja.jpg" /> }
             />
                 <Drawer open={this.state.drawerNavOpen} width={200} openSecondary={true}>
 
