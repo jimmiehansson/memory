@@ -5,8 +5,8 @@
  * // -------------------------------------------------
  * GLOBAL FILE NOTATIONS
  * Project of: fix
- * Filename: cardboard.jsx by jimmie
- * Created: 2017-05-29 @ 15:16
+ * Filename: cardtile.jsx by jimmie
+ * Created: 2017-05-31 @ 15:16
  * Product of: WebStorm
  * // -------------------------------------------------
  * Make sure this file is part of its proper namespace
@@ -22,9 +22,9 @@
  * XXX - Any notation important enough to consider implementing.
  * CLARIFY - Very incomprehensible section of code below.
  *
- * Created by jimmie on (2017-05-29).
+ * Created by jimmie on (2017-05-31).
  *
- * Repository link: http://jimmie@gitlab.localdomain/connectiontool/fix.git
+ * Repository link: https://github.com/jimmiehansson/memory.git
  */
 
 /**

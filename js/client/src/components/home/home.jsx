@@ -5,8 +5,8 @@
  * // -------------------------------------------------
  * GLOBAL FILE NOTATIONS
  * Project of: fix
- * Filename: home.component.jsx by jimmie
- * Created: 2017-03-09 @ 14:04
+ * Filename: home.jsx by jimmie
+ * Created: 2017-05-31 @ 14:04
  * Product of: WebStorm
  * // -------------------------------------------------
  * Make sure this file is part of its proper namespace
@@ -22,9 +22,9 @@
  * XXX - Any notation important enough to consider implementing.
  * CLARIFY - Very incomprehensible section of code below.
  *
- * Created by jimmie on (2017-03-09).
+ * Created by jimmie on (2017-05-31).
  *
- * Repository link: project/repository
+ * Repository link: https://github.com/jimmiehansson/memory.git
  */
 
 /**
@@ -62,10 +62,6 @@ class Home extends Component {
     }
 
     handleToggle = (event, toggle) => {
-
-        // Set this in initial state
-        // switch to reducer init state
-        // once this is finished
         let payload = populate.load();
         this.props.preloadState(payload);
     };

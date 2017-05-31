@@ -3,8 +3,8 @@
  * // -------------------------------------------------
  * GLOBAL FILE NOTATIONS
  * Project of: fix
- * Filename: home.component.jsx by jimmie
- * Created: 2017-03-09 @ 14:04
+ * Filename: menu.jsx by jimmie
+ * Created: 2017-05-31 @ 14:04
  * Product of: WebStorm
  * // -------------------------------------------------
  * Make sure this file is part of its proper namespace
@@ -20,15 +20,13 @@
  * XXX - Any notation important enough to consider implementing.
  * CLARIFY - Very incomprehensible section of code below.
  *
- * Created by jimmie on (2017-03-09).
+ * Created by jimmie on (2017-05-31).
  *
- * Repository link: project/repository
+ * Repository link: https://github.com/jimmiehansson/memory.git
  */
 
 import React, { Component } from "react";
-import { Link } from "react-router";
 import Header from "./header.jsx";
-import {Tabs, Tab} from "material-ui/Tabs";
 
 
 class Menu extends Component {
