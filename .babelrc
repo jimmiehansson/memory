@@ -1,0 +1,4 @@
+{
+  "presets" : ["react","stage-1","es2017"],
+  "plugins": ["transform-async-to-generator", "transform-runtime"]
+}
