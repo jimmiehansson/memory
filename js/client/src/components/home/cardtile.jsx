@@ -38,7 +38,9 @@ import React from 'react';
  * DOING: Import app associated and universal libraries
  * here to separate from the rest of the code.
  */
-
+import {
+    addClickStateToElement,
+} from '../../../src/lib/common-render';
 
 /**
  * DOING: Import material ui and interface
@@ -50,18 +52,26 @@ import Paper from 'material-ui/Paper';
 const CardTile = props => {
 
 
-const style = {
-    height: 200,
-    width: 150,
-    margin: 20,
-    textAlign: 'center',
-    display: 'inline-block'
-};
+    // Onclick state / toggle tile
+    const addClassToTile = () => addClickStateToElement(`card-${props.index}`, {});
+
+
+    // Set default tile style
+    const style = {
+        height: 200,
+        width: 150,
+        margin: 20,
+        textAlign: 'center',
+        display: 'inline-block'
+    };
 
     return (
-        <div>
-           <Paper className="tile" style={style}>
-               Flip card
+        <div className={`card card-${props.index}`} onClick={addClassToTile()}>
+            <Paper className={`tile-front tile-front-${props.index}`} style={style}>
+                Front of card
+            </Paper>
+           <Paper className={`tile-back tile-back-${props.index}`} style={style}>
+               Back of card
            </Paper>
         </div>
     )

@@ -3,4 +3,7 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+  <component name="ProjectResources">
+    <resource url="https://fonts.googleapis.com/css?family=Permanent+Marker|Bangers:400" location="$PROJECT_DIR$" />
+  </component>
 </project>

@@ -46,21 +46,21 @@ const CardBoard = props => {
 
     return (
         <div style={{display:'flex', flexWrap:'wrap', justifyContent:'space-around'}}>
-            <CardTile key={1} />
-            <CardTile key={2} />
-            <CardTile key={3} />
-            <CardTile key={4} />
-            <CardTile key={5} />
-            <CardTile key={6} />
-            <CardTile key={7} />
-            <CardTile key={8} />
-            <CardTile key={9} />
-            <CardTile key={10} />
-            <CardTile key={11} />
-            <CardTile key={12} />
-            <CardTile key={13} />
-            <CardTile key={14} />
-            <CardTile key={15} />
+            <CardTile key={1} index={1}/>
+            <CardTile key={2} index={2} />
+            <CardTile key={3} index={3} />
+            <CardTile key={4} index={4} />
+            <CardTile key={5} index={5} />
+            <CardTile key={6} index={6} />
+            <CardTile key={7} index={7} />
+            <CardTile key={8} index={8} />
+            <CardTile key={9} index={9} />
+            <CardTile key={10} index={10} />
+            <CardTile key={11} index={11} />
+            <CardTile key={12} index={12} />
+            <CardTile key={13} index={13} />
+            <CardTile key={14} index={14} />
+            <CardTile key={15} index={15} />
         </div>
     )
 };

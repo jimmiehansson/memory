@@ -17,8 +17,26 @@ body {
 
 
 /* Tiles */
-.tile {
+.card {
+  position: relative;
+  width: 12rem; height: 15rem;
+  perspective: 30rem;
+}
+.tile-back, .tile-front {
+  position: absolute;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 2s;
+  backface-visibility:hidden;
+}
+.tile-front {
+  transform: rotateY(180deg);
+  background-color: #f7f3bd !important;
+}
+.tile-back {
   background-color: #f7f3bd !important;
   background-image: url(https://github.com/jimmiehansson/memory/blob/master/public/images/tile.png?raw=true);
   background-position: -35px 10px;
 }
+.card:active .tile-back { transform: rotateY(180deg); }
+.card:active .tile-front { transform: rotateY(360deg); }
