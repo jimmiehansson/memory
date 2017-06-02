@@ -43,7 +43,6 @@ import rootReducer from '../reducers';
 const logger = createLogger({
     collapsed: false,
     timestamp: true
-
 });
 
 export default function configureStore(initialState) {

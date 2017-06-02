@@ -5,7 +5,7 @@
  * // -------------------------------------------------
  * GLOBAL FILE NOTATIONS
  * Project of: memory
- * Filename: home.js by jimmie
+ * Filename: tile.js by jimmie
  * Created: 2017-05-31 @ 14:54
  * Product of: memory
  * // -------------------------------------------------
@@ -32,35 +32,33 @@
  * here to separate from the rest of the code.
  */
 import {
-    GET_PRELOAD_STATE,
-} from '../constants/action-types/home.js';
+    GET_TILE_STATE,
+} from '../constants/action-types/tile.js';
 
 
 /**
- * DOING: Home should have an initial connection
- * to render the first props.
+ * DOING: Card tiles state should be
+ * stored to render the proper tiles.
  * @param payload
  * @returns {{type, payload: *}}
  */
-export const getPreloadState = (payload) => {
+export const getTieState = (payload) => {
     return {
-        type: GET_PRELOAD_STATE,
+        type: GET_TILE_STATE,
         payload: payload
     };
 };
 
 
 /**
- * DOING: Should request each host in the preload
- * state to be reachable. Returns payload object
- * with current connection state.
+ * DOING: Fetches the state and content
+ * for the tiles.
  * @param payload
  * @returns {function(*)}
  */
-export const preloadState = (payload) => {
+export const tileState = (payload) => {
 
     return (dispatch) => {
-        dispatch(getPreloadState(payload));
-
+        dispatch(getTileState(payload));
     };
 };

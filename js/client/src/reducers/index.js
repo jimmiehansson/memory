@@ -28,8 +28,10 @@
  */
 
 import { combineReducers } from 'redux';
-import home from '../reducers/home';
+import card from './tile';
+import board from './board';
 
 export default combineReducers({
-   home: home,
+    card: card,
+    board: board,
 });

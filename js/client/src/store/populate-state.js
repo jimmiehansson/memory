@@ -27,12 +27,6 @@
  * Repository link: https://github.com/jimmiehansson/memory.git
  */
 
-/**
- * Import language libraries
- * here to separate from other code.
- */
-import * as language from '../constants/language/swedish';
-
 
 /**
  * DOING: Should return a predefined
@@ -48,194 +42,147 @@ export const populate = {
      */
     default : () => {
         return {
-            home : {
-                online: false,
-                application: {
-                    name:'Diskovery',
-                        version:1.0,
-                        rc:'1',
-                        rcType:'Alpha default',
-                },
-                network: {
-                    byName : {
-                        localAddress: {
-                            id : "localAddress",
-                            alias : language.NETWORK_DEVICE_LAN_IP_TITLE,
-                            address : '10.10.10.101',
-                            loading: true,
-                            alive : false,
-                            ms : 34,
-                            avg : 32,
-                            host : 'local.domain',
-                            min : 28,
-                            max : 42,
-                        },
-                        localGateway: {
-                            id : "localGateway",
-                            alias : language.NETWORK_DEVICE_LAN_GATEWAY_TITLE,
-                            address : '10.10.10.1',
-                            loading: true,
-                            alive : false,
-                            ms : 34,
-                            avg : 32,
-                            host : 'local.domain',
-                            min : 28,
-                            max : 42,
-                        },
-                        remoteAddress: {
-                            id : "remoteAddress",
-                            alias : language.NETWORK_DEVICE_WAN_IP_TITLE,
-                            address : '83.227.226.5',
-                            loading: true,
-                            alive : false,
-                            ms : 34,
-                            avg : 32,
-                            host : 'remote.domain',
-                            min : 28,
-                            max : 42,
-                        },
-                        remoteGateway: {
-                            id : "remoteGateway",
-                            alias : language.NETWORK_DEVICE_WAN_GATEWAY_TITLE,
-                            address : '83.227.226.1',
-                            loading: true,
-                            alive : false,
-                            ms : 34,
-                            avg : 32,
-                            host : 'remote.domain',
-                            min : 28,
-                            max : 42,
-                        },
-                        dnsPrimary: {
-                            id : "dnsPrimary",
-                            alias : language.NETWORK_DEVICE_WAN_DNS_PRIMARY_TITLE,
-                            address : '8.8.4.4',
-                            loading: true,
-                            alive : false,
-                            ms : 34,
-                            avg : 32,
-                            host : 'dns1.domain',
-                            min : 28,
-                            max : 42,
-                        },
-                        dnsSecondary: {
-                            id : "dnsSecondary",
-                            alias : language.NETWORK_DEVICE_WAN_DNS_SECONDARY_TITLE,
-                            address : '8.8.8.8',
-                            loading: true,
-                            alive : false,
-                            ms : 34,
-                            avg : 32,
-                            host : 'dns2.domain',
-                            min : 28,
-                            max : 42,
-                        },
+            board : {
+                score: 32,
+                flipCount : 0,
+                sessions: {
+                    session1 : {
+                        timestamp : '2017-06-31 7:22pm',
+                        score : 24,
                     },
-                    byId : {
-
-
-                    }
-                }
-            }
-        };
-    },
-
-    /**
-     * CLARIFY: Load state sets initial
-     * load, testing defaults.
-     * Should return the new state
-     * object for the existing state store.
-     * @returns {object}
-     */
-    load : () => {
-        return {
-            online: true,
-            application: {
-                name:'Diskovery',
-                version:1.0,
-                rc:'1',
-                rcType:'Alpha load',
-            },
-            network: {
-                byName : {
-                    localAddress: {
-                        id : "localAddress",
-                        alias : language.NETWORK_DEVICE_LAN_IP_TITLE,
-                        address : '10.10.10.2',
-                        loading: true,
-                        alive : false,
-                        ms : 34,
-                        avg : 32,
-                        host : 'local.domain',
-                        min : 28,
-                        max : 42,
+                    session2 : {
+                        timestamp : '2017-06-22 7:22pm',
+                        score : 18,
                     },
-                    localGateway: {
-                        id : "localGateway",
-                        alias : language.NETWORK_DEVICE_LAN_GATEWAY_TITLE,
-                        address : '10.10.10.1',
-                        loading: true,
-                        alive : false,
-                        ms : 34,
-                        avg : 32,
-                        host : 'local.domain',
-                        min : 28,
-                        max : 42,
-                    },
-                    remoteAddress: {
-                        id : "remoteAddress",
-                        alias : language.NETWORK_DEVICE_WAN_IP_TITLE,
-                        address : '83.227.226.5',
-                        loading: true,
-                        alive : false,
-                        ms : 34,
-                        avg : 32,
-                        host : 'remote.domain',
-                        min : 28,
-                        max : 42,
-                    },
-                    remoteGateway: {
-                        id : "remoteGateway",
-                        alias : language.NETWORK_DEVICE_WAN_GATEWAY_TITLE,
-                        address : '83.227.226.1',
-                        loading: true,
-                        alive : false,
-                        ms : 34,
-                        avg : 32,
-                        host : 'remote.domain',
-                        min : 28,
-                        max : 42,
-                    },
-                    dnsPrimary: {
-                        id : "dnsPrimary",
-                        alias : language.NETWORK_DEVICE_WAN_DNS_PRIMARY_TITLE,
-                        address : '8.8.4.4',
-                        loading: true,
-                        alive : false,
-                        ms : 34,
-                        avg : 32,
-                        host : 'dns1.domain',
-                        min : 28,
-                        max : 42,
-                    },
-                    dnsSecondary: {
-                        id : "dnsSecondary",
-                        alias : language.NETWORK_DEVICE_WAN_DNS_SECONDARY_TITLE,
-                        address : '8.8.8.8',
-                        loading: true,
-                        alive : false,
-                        ms : 34,
-                        avg : 32,
-                        host : 'dns2.domain',
-                        min : 28,
-                        max : 42,
+                    session3 : {
+                        timestamp : '2017-06-15 7:22pm',
+                        score : 40,
                     },
                 },
                 byId : {
-
-
+                    tile1 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile2 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile3 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile4 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile5 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile6 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile7 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile8 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile9 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile10 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile11 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile12 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile13 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile14 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
+                    tile15 : {
+                        name : "John doe",
+                        imagePortraitUrl : '//url/to/portrait',
+                        index : 0,
+                        filename : 'portrait',
+                        flipped : false,
+                        active : true,
+                    },
                 }
-            }
+            },
         };
     },
+
 };

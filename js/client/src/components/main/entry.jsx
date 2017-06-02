@@ -50,7 +50,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 /**
  * DOING: Adding components from our own sources
  */
-import Home from '../../components/home/home.jsx';
+import Board from '../../components/home/board.jsx';
 import Menu from '../../components/core/menu.jsx';
 
 /**
@@ -87,7 +87,7 @@ render (
         <MuiThemeProvider muiTheme={muiTheme}>
             <Router history={hashHistory}>
                 <Route component={Menu}>
-                    <Route path="/" component={Home} />
+                    <Route path="/" component={Board} />
                 </Route>
             </Router>
         </MuiThemeProvider>
