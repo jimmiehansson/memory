@@ -36,12 +36,11 @@ import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
 import * as boardActions from '../../actions/board';
 
-
 /**
  * DOING: Import react components here
  * to separate from the rest of the code.
  */
-import Tile from './tile.jsx';
+import TileWrapper from './tile-wrapper.jsx';
 
 
 /**
@@ -60,13 +59,18 @@ class Board extends PureComponent {
         super(props);
     }
 
-
-    // Lets move the logic over here to keep the cardtile stateless
-    // and purify this component as well once we're done
-
-
-
-
+    /**
+     * Dispatches a new payload when the tile
+     * triggers onClick. Should return a new state
+     * for the child component while stateless render
+     * an update for the className.
+     * @param payloadId
+     */
+    triggerDispatch(payloadId){
+        let dispatchElement = this.props.board.byId[`tile${payloadId}`];
+        this.props.board.byId[`tile${payloadId}`].flipped = (!dispatchElement.flipped);
+        this.props.boardState(this.props.board);
+    }
 
     render() {
 
@@ -75,21 +79,24 @@ class Board extends PureComponent {
                 <Card>
                     <CardText style={{fontSize: '13px'}}>
                         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
-                            <Tile key={1} index={1} props={this.props} />
-                            <Tile key={2} index={2} props={this.props} />
-                            <Tile key={3} index={3} props={this.props} />
-                            <Tile key={4} index={4} props={this.props} />
-                            <Tile key={5} index={5} props={this.props} />
-                            <Tile key={6} index={6} props={this.props} />
-                            <Tile key={7} index={7} props={this.props} />
-                            <Tile key={8} index={8} props={this.props} />
-                            <Tile key={9} index={9} props={this.props} />
-                            <Tile key={10} index={10} props={this.props} />
-                            <Tile key={11} index={11} props={this.props} />
-                            <Tile key={12} index={12} props={this.props} />
-                            <Tile key={13} index={13} props={this.props} />
-                            <Tile key={14} index={14} props={this.props} />
-                            <Tile key={15} index={15} props={this.props} />
+
+                            {Object.keys(this.props.board.byId).map((tile, index) => {
+                                return <div
+                                    key={`triggerWrapper${this.props.board.byId[tile].index}`}
+                                    onClick={
+                                        () => {
+                                            this.triggerDispatch(this.props.board.byId[tile].index)
+                                        }
+                                    }
+                                >
+                                <TileWrapper
+                                        key={`tileWrapper${this.props.board.byId[tile].index}`}
+                                        index={this.props.board.byId[tile].index}
+                                        {...this.props.board.byId[tile]}
+                                    />
+                                </div>
+                            })}
+
                         </div>
                     </CardText>
                 </Card>
@@ -97,9 +104,7 @@ class Board extends PureComponent {
 
         )
     }
-};
-
-
+}
 
 
 /**

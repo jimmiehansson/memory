@@ -63,7 +63,7 @@ export const populate = {
                     tile1 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 1,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -71,7 +71,7 @@ export const populate = {
                     tile2 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 2,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -79,7 +79,7 @@ export const populate = {
                     tile3 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 3,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -87,7 +87,7 @@ export const populate = {
                     tile4 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 4,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -95,7 +95,7 @@ export const populate = {
                     tile5 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 5,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -103,7 +103,7 @@ export const populate = {
                     tile6 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 6,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -111,7 +111,7 @@ export const populate = {
                     tile7 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 7,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -119,7 +119,7 @@ export const populate = {
                     tile8 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 8,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -127,7 +127,7 @@ export const populate = {
                     tile9 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 9,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -135,7 +135,7 @@ export const populate = {
                     tile10 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 10,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -143,7 +143,7 @@ export const populate = {
                     tile11 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 11,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -151,7 +151,7 @@ export const populate = {
                     tile12 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 12,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -159,7 +159,7 @@ export const populate = {
                     tile13 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 13,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -167,7 +167,7 @@ export const populate = {
                     tile14 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 14,
                         filename : 'portrait',
                         flipped : false,
                         active : true,
@@ -175,7 +175,7 @@ export const populate = {
                     tile15 : {
                         name : "John doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 0,
+                        index : 15,
                         filename : 'portrait',
                         flipped : false,
                         active : true,

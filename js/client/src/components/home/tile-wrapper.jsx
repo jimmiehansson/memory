@@ -5,7 +5,7 @@
  * // -------------------------------------------------
  * GLOBAL FILE NOTATIONS
  * Project of: fix
- * Filename: tile.jsx by jimmie
+ * Filename: tile-wrapper.jsx by jimmie
  * Created: 2017-05-31 @ 15:16
  * Product of: WebStorm
  * // -------------------------------------------------
@@ -35,8 +35,14 @@ import React from 'react';
 
 
 /**
+ * DOING: Import component specific files
+ * here to separate from the rest of the code.
+ */
+import Tile from './tile.jsx';
+
+/**
  * DOING: Import app associated and universal libraries
- * here to separate from the rest of the c
+ * here to separate from the rest of the code.
  */
 
 
@@ -44,32 +50,18 @@ import React from 'react';
  * DOING: Import material ui and interface
  * here to separate from the rest of the code.
  */
-import Paper from 'material-ui/Paper';
 
 
-const Tile = props => {
+const TileWrapper = props => {
 
-
-    // Set default tile style
-    const style = {
-        height: 200,
-        width: 150,
-        margin: 20,
-        textAlign: 'center',
-        display: 'inline-block'
-    };
+    const tileClassState = (props.flipped) ? 'flipped' : '';
 
     return (
-        <div>
-            <Paper className={`tile-front tile-front-${props.index}`} style={style}>
-                {props.name}
-            </Paper>
-            <Paper className={`tile-back tile-back-${props.index}`} style={style}>
-                {props.index}
-            </Paper>
+        <div key={`tileDiv${props.index}`} className={`card tile${props.index} ${tileClassState}` }>
+            <Tile key={`tileComponent${props.index}`} index={props.index} {...props} />
         </div>
     )
 };
 
 
-export default Tile;
+export default TileWrapper;
