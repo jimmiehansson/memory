@@ -36,6 +36,7 @@ import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
 import * as boardActions from '../../actions/board';
 
+
 /**
  * DOING: Import react components here
  * to separate from the rest of the code.
@@ -51,7 +52,7 @@ import {
     isNumber,
     isDefined
 } from '../../lib/common-type';
-import { populate } from '../../store/populate-state';
+
 
 /**
  * DOING: Import ui and interface libraries and components
@@ -67,8 +68,8 @@ class Board extends PureComponent {
 
 
     constructor(props) {
-        console.log(props.board);
         super(props);
+
         this.counter = 0;
         this.matchingTiles = [];
         this.matched = false;
@@ -85,6 +86,9 @@ class Board extends PureComponent {
         setTimeout(() => {
             Object.keys(this.props.board.byId).map((item)=> this.props.board.byId[item].flipped = false );
             this.props.resetBoardState(this.props.board);
+            this.resetCounter();
+            this.resetMatchingTiles();
+            this.triggerUnlockBoard();
         },2000);
     }
 
@@ -127,6 +131,15 @@ class Board extends PureComponent {
 
 
     /**
+     * DOING: Should reset the counter
+     * to zero.
+     */
+    resetCounter() {
+        this.counter = 0;
+    }
+
+
+    /**
      * DOING: Get the current counter
      * value.
      */
@@ -160,7 +173,7 @@ class Board extends PureComponent {
     triggerDisplayMatch(){
         this.matched = true;
         this.resetMatchingTiles();
-        alert('its a match');
+        alert('its a match'); // what happens after the match?!?
     }
 
 
