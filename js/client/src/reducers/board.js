@@ -34,6 +34,9 @@
  */
 import {
     GET_BOARD_STATE,
+    RESET_BOARD_STATE,
+    INCREMENT_FLIPCOUNT_STATE,
+    DECREMENT_FLIPCOUNT_STATE,
 } from '../constants/action-types/board.js';
 
 
@@ -42,7 +45,13 @@ export default (state = [], {type, payload} ) => {
     switch (type) {
 
         case GET_BOARD_STATE:
-            return Object.assign({}, payload);
+            return {...state, payload};
+        case RESET_BOARD_STATE:
+            return {...state, payload};
+        case INCREMENT_FLIPCOUNT_STATE:
+            return {...state, flipCount: state.flipCount+1};
+        case  DECREMENT_FLIPCOUNT_STATE:
+            return {...state, flipCount: state.flipCount-1};
         default:
             return state;
 

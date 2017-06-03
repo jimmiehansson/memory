@@ -49,7 +49,6 @@ export const getTieState = (payload) => {
     };
 };
 
-
 /**
  * DOING: Fetches the state and content
  * for the tiles.

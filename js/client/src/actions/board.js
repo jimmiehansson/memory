@@ -33,6 +33,9 @@
  */
 import {
     GET_BOARD_STATE,
+    RESET_BOARD_STATE,
+    INCREMENT_FLIPCOUNT_STATE,
+    DECREMENT_FLIPCOUNT_STATE
 } from '../constants/action-types/board.js';
 
 
@@ -47,6 +50,41 @@ export const getBoardState = (payload) => {
         type: GET_BOARD_STATE,
         payload: payload
     };
+};
+
+
+export const resetBoardState = (payload) => {
+    return {
+        type: RESET_BOARD_STATE,
+        payload: payload
+    };
+};
+
+/**
+ * DOING: Flip count should increment
+ * by one if the action has been triggered.
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export const incrementFlipCount = (payload) => {
+    return {
+        type: INCREMENT_FLIPCOUNT_STATE,
+        payload: payload,
+    };
+};
+
+
+/**
+ * DOING: Flip count should decrement
+ * by one if the action has been triggered.
+ * @param payload
+ * @returns {{type: *, payload: *}}
+ */
+export const decrementFlipCount = (payload) => {
+   return {
+       type: DECREMENT_FLIPCOUNT_STATE,
+       payload: payload,
+   };
 };
 
 

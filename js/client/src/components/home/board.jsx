@@ -44,6 +44,16 @@ import TileWrapper from './tile-wrapper.jsx';
 
 
 /**
+ * DOING: Import universal and associated libraries
+ * here to separate from the rest of the code.
+ */
+import {
+    isNumber,
+    isDefined
+} from '../../lib/common-type';
+
+
+/**
  * DOING: Import ui and interface libraries and components
  * here to separate from the rest of the code.
  */
@@ -55,8 +65,86 @@ import {
 
 class Board extends PureComponent {
 
+
     constructor(props) {
+        console.log(props.board);
         super(props);
+        this.counter = 0;
+        this.matchingTiles = [];
+        this.locked = false;
+    }
+
+
+    /**
+     * DOING: Should reset the board triggered
+     * by the function. Resets the state.
+     */
+    triggerResetBoard() {
+        this.props.resetBoardState(); // reset the state object with the initial
+    }
+
+
+    /**
+     * DOING: Should lock the board triggered
+     * by the function.
+     */
+    triggerLockBoard() {
+        this.locked = true;
+    }
+
+
+    /**
+     * DOING: Should unlock the board triggered
+     * by the function.
+     */
+    triggerUnlockBoard() {
+        this.locked = false;
+    }
+
+
+    /**
+     * DOING: Should increment the counter
+     * by one numeral literal.
+     */
+    doIncrementCounter() {
+        ++this.counter;
+    }
+
+
+    /**
+     * DOING: Should reset the counter
+     * to initial state.
+     */
+    doDecrementCounter() {
+        --this.counter;
+    }
+
+
+    /**
+     * DOING: Get the current counter
+     * value.
+     */
+    getCounter() {
+        return this.counter;
+    }
+
+
+    /**
+     * Should add the current tile
+     * to the matches array.
+     * @param data
+     */
+    setMatchingTiles(data) {
+        this.matchingTiles.push(data);
+    }
+
+
+    /**
+     * Should return the matchingTiles
+     * array from the parent scope.
+     */
+    getMatchingTiles() {
+        return this.matchingTiles;
     }
 
     /**
@@ -66,10 +154,69 @@ class Board extends PureComponent {
      * an update for the className.
      * @param payloadId
      */
-    triggerDispatch(payloadId){
-        let dispatchElement = this.props.board.byId[`tile${payloadId}`];
-        this.props.board.byId[`tile${payloadId}`].flipped = (!dispatchElement.flipped);
+    triggerDispatch(payloadId) {
+
+        (isNumber(payloadId) && isDefined(payloadId));
+
+        // Increment the count
+        this.doIncrementCounter();
+
+        // Add the tile to our matches array
+        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].name);
+        console.log(this.getMatchingTiles());
+
+        // Check if the tile is a match!
+        this.getMatchingTiles().filter((matches) => {
+            console.log(this.props.board.byId[`tile${payloadId}`].name===matches);
+            return this.props.board.byId[`tile${payloadId}`].name===matches;
+        });
+
+        // Lock the board if 2
+        (this.getCounter()===2) ? this.triggerLockBoard() : this.triggerUnlockBoard();
+
+        this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
         this.props.boardState(this.props.board);
+
+        console.log('counter is: ', this.getCounter());
+
+
+
+
+
+        /*
+        // Should count how many cards are flipped
+        let flipCounts = Object.keys(this.props.board.byId).filter((iterations) => {
+            return this.props.board.byId[iterations].flipped;
+        });
+
+        if(flipCounts.length === 2){
+            this.triggerResetBoard();
+        }
+*/
+
+/*
+        switch(this.props.board.byId[`tile${payloadId}`].flipped){
+
+            case true:
+                if(countTotalFlipped(this.props.board) < 3){
+                    this.props.decrementFlipCount(this.props.board);
+                    this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
+                    this.props.boardState(this.props.board);
+                }
+                break;
+            case false:
+                if(countTotalFlipped(this.props.board) < 3){
+                    this.props.incrementFlipCount(this.props.board);
+                    this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
+                    this.props.boardState(this.props.board);
+                }
+                break;
+            default:
+                this.props.decrementFlipCount(this.props.board);
+
+        }
+
+        */
     }
 
     render() {
@@ -80,13 +227,16 @@ class Board extends PureComponent {
                     <CardText style={{fontSize: '13px'}}>
                         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
 
-                            {Object.keys(this.props.board.byId).map((tile, index) => {
+                            {Object.keys(this.props.board.byId).map((tile) => {
                                 return <div
                                     key={`triggerWrapper${this.props.board.byId[tile].index}`}
                                     onClick={
+                                        (!this.locked) ?
                                         () => {
                                             this.triggerDispatch(this.props.board.byId[tile].index)
                                         }
+                                        :
+                                            ''
                                     }
                                 >
                                 <TileWrapper
@@ -129,7 +279,10 @@ const mapStateToProps = (state, props) => {
  */
 const mapDispatchToProps = (dispatch) => {
     return {
-        boardState : payload => dispatch(boardActions.boardState(payload))
+        boardState : payload => dispatch(boardActions.boardState(payload)),
+        resetBoardState  : payload => dispatch(boardActions.resetBoardState ()),
+        incrementFlipCount : payload => dispatch(boardActions.incrementFlipCount(payload)),
+        decrementFlipCount : payload => dispatch(boardActions.decrementFlipCount(payload))
     };
 };
 

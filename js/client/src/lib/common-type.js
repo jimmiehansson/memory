@@ -38,6 +38,15 @@ export const isString = (string) => string.length > 0 && typeof string === 'stri
 
 
 /**
+ * DOING: Should return if param
+ * is undefined or not.
+ * @param defined
+ * @returns {boolean}
+ */
+export const isDefined = (defined) => defined.length > 0 && typeof defined !== 'undefined';
+
+
+/**
  * DOING: Should return if number
  * is of type number.
  * @param number

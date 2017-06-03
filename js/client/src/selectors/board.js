@@ -46,4 +46,11 @@ export const getBoard = state => state;
  * DOING: Get the highest order of cardboard objects
  * stored in the state.
  */
-export const boardSelector = createSelector([ getBoard ], (cardBoard) => cardBoard);
+export const boardSelector = createSelector([ getBoard ], (board) => board);
+
+
+/**
+ * DOING: Get the total number of cardboard objects
+ * with the flipped key true.
+ */
+export const countTotalFlipped = createSelector([ getBoard ], (board) => board.flipCount);
