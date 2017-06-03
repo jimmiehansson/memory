@@ -83,13 +83,15 @@ class Board extends PureComponent {
      */
     triggerResetBoard() {
         alert('resetting the board');
+
         setTimeout(() => {
             Object.keys(this.props.board.byId).map((item)=> this.props.board.byId[item].flipped = false );
             this.props.resetBoardState(this.props.board);
-            this.resetCounter();
-            this.resetMatchingTiles();
-            this.triggerUnlockBoard();
         },2000);
+
+        this.resetCounter();
+        this.resetMatchingTiles();
+        this.triggerUnlockBoard();
     }
 
 
@@ -278,7 +280,7 @@ class Board extends PureComponent {
  * initial state set by scope reducer.
  * @param state
  * @param props
- * @returns {{cardboard: (Array|*)}}
+ * @returns {{board: (Array|*)}}
  */
 const mapStateToProps = (state, props) => {
     return {
@@ -289,9 +291,9 @@ const mapStateToProps = (state, props) => {
 
 /**
  * CLARIFY: Returning dispatched action state for
- * cardBoardState.
+ * boardState.
  * @param dispatch
- * @returns {{cardBoardState: (function(*=): *)}}
+ * @returns {{boardState: (function(*=): *)}}
  */
 const mapDispatchToProps = (dispatch) => {
     return {
