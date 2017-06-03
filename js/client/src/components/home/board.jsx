@@ -51,7 +51,7 @@ import {
     isNumber,
     isDefined
 } from '../../lib/common-type';
-
+import { populate } from '../../store/populate-state';
 
 /**
  * DOING: Import ui and interface libraries and components
@@ -81,7 +81,11 @@ class Board extends PureComponent {
      * by the function. Resets the state.
      */
     triggerResetBoard() {
-        this.props.resetBoardState(); // reset the state object with the initial
+        alert('resetting the board');
+        setTimeout(() => {
+            Object.keys(this.props.board.byId).map((item)=> this.props.board.byId[item].flipped = false );
+            this.props.resetBoardState(this.props.board);
+        },2000);
     }
 
 
@@ -91,17 +95,7 @@ class Board extends PureComponent {
      */
     triggerLockBoard() {
         this.locked = true;
-        alert('the board is locked');
-    }
-
-
-    /**
-     * DOING: Should return that values
-     * are of matching context.
-     */
-    triggerDisplayMatch(){
-        this.matched = true;
-        alert('its a match');
+        this.triggerResetBoard();
     }
 
 
@@ -124,8 +118,8 @@ class Board extends PureComponent {
 
 
     /**
-     * DOING: Should reset the counter
-     * to initial state.
+     * DOING: Should decrement the counter
+     * by one numeral literal.
      */
     doDecrementCounter() {
         --this.counter;
@@ -138,6 +132,44 @@ class Board extends PureComponent {
      */
     getCounter() {
         return this.counter;
+    }
+
+
+    /**
+     * DOING: Should set the matched
+     * flag to proper state.
+     */
+    setMatched() {
+        this.matched = !(this.matched);
+    }
+
+
+    /**
+     * DOING: Should get the matched
+     * flags current state.
+     */
+    getMatched() {
+        return this.matched;
+    }
+
+
+    /**
+     * DOING: Should return that values
+     * are of matching context.
+     */
+    triggerDisplayMatch(){
+        this.matched = true;
+        this.resetMatchingTiles();
+        alert('its a match');
+    }
+
+
+    /**
+     * Should reset the array containing
+     * matches of the tiles to an empty state.
+     */
+    resetMatchingTiles() {
+        this.matchingTiles = [];
     }
 
 
@@ -182,7 +214,6 @@ class Board extends PureComponent {
 
         // Add the new tile to our matches array
         this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].name);
-
 
         this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
         this.props.boardState(this.props.board);
