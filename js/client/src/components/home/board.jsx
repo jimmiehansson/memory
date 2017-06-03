@@ -71,6 +71,7 @@ class Board extends PureComponent {
         super(props);
         this.counter = 0;
         this.matchingTiles = [];
+        this.matched = false;
         this.locked = false;
     }
 
@@ -90,6 +91,17 @@ class Board extends PureComponent {
      */
     triggerLockBoard() {
         this.locked = true;
+        alert('the board is locked');
+    }
+
+
+    /**
+     * DOING: Should return that values
+     * are of matching context.
+     */
+    triggerDisplayMatch(){
+        this.matched = true;
+        alert('its a match');
     }
 
 
@@ -147,6 +159,7 @@ class Board extends PureComponent {
         return this.matchingTiles;
     }
 
+
     /**
      * Dispatches a new payload when the tile
      * triggers onClick. Should return a new state
@@ -161,62 +174,21 @@ class Board extends PureComponent {
         // Increment the count
         this.doIncrementCounter();
 
-        // Add the tile to our matches array
-        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].name);
-        console.log(this.getMatchingTiles());
-
-        // Check if the tile is a match!
-        this.getMatchingTiles().filter((matches) => {
-            console.log(this.props.board.byId[`tile${payloadId}`].name===matches);
-            return this.props.board.byId[`tile${payloadId}`].name===matches;
-        });
-
         // Lock the board if 2
         (this.getCounter()===2) ? this.triggerLockBoard() : this.triggerUnlockBoard();
+
+        // Check to see if the tile is a match
+        (this.getMatchingTiles().includes(this.props.board.byId[`tile${payloadId}`].name)) ? this.triggerDisplayMatch() : this.triggerUnlockBoard();
+
+        // Add the new tile to our matches array
+        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].name);
+
 
         this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
         this.props.boardState(this.props.board);
 
         console.log('counter is: ', this.getCounter());
 
-
-
-
-
-        /*
-        // Should count how many cards are flipped
-        let flipCounts = Object.keys(this.props.board.byId).filter((iterations) => {
-            return this.props.board.byId[iterations].flipped;
-        });
-
-        if(flipCounts.length === 2){
-            this.triggerResetBoard();
-        }
-*/
-
-/*
-        switch(this.props.board.byId[`tile${payloadId}`].flipped){
-
-            case true:
-                if(countTotalFlipped(this.props.board) < 3){
-                    this.props.decrementFlipCount(this.props.board);
-                    this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
-                    this.props.boardState(this.props.board);
-                }
-                break;
-            case false:
-                if(countTotalFlipped(this.props.board) < 3){
-                    this.props.incrementFlipCount(this.props.board);
-                    this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
-                    this.props.boardState(this.props.board);
-                }
-                break;
-            default:
-                this.props.decrementFlipCount(this.props.board);
-
-        }
-
-        */
     }
 
     render() {

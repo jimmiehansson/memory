@@ -61,7 +61,7 @@ export const populate = {
                 },
                 byId : {
                     tile1 : {
-                        name : "John doe",
+                        name : "Jon doe",
                         imagePortraitUrl : '//url/to/portrait',
                         index : 1,
                         filename : 'portrait',
