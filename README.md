@@ -16,10 +16,15 @@ These are some featured items from the toolchain used to build this game.
 ## Where's the data?
 All data will be fetched from a private API as a JSON object.
 
+
 * What does the JSON look like?
 ```
 {"name":"Master Ninja","imagePortraitUrl":"//secretaddress.xxx/files/master-ninja","index":0,"filename":"master-ninja"}
 ```
+
+## Screenshot
+
+![alt text](https://github.com/jimmiehansson/memory/blob/master/public/images/memorinja_github.PNG?raw=true)
 
 # Why
 This project was made as an assignment for an interview at the company Tretton37.
