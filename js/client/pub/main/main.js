@@ -50,10 +50,10 @@ app.on("ready", () => {
 
     win = new BrowserWindow({
         title: "Memorinja (Memory game)",
-        minWidth: width * 0.4,
-        minHeight: height * 0.7,
-        width: width * 0.4,
-        height: height * 0.7,
+        minWidth: 1024,
+        minHeight: 650,
+        width: 1024, //width * 0.4,
+        height: 650,
         resizable: true,
         frame: true,
         transparent: false,
