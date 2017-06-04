@@ -72,7 +72,6 @@ class Board extends PureComponent {
 
         this.counter = 0;
         this.matchingTiles = [];
-        this.matched = false;
         this.locked = false;
     }
 
@@ -82,16 +81,15 @@ class Board extends PureComponent {
      * by the function. Resets the state.
      */
     triggerResetBoard() {
-        alert('resetting the board');
+
+        this.triggerLockBoard();
 
         setTimeout(() => {
             Object.keys(this.props.board.byId).map((item)=> this.props.board.byId[item].flipped = false );
             this.props.resetBoardState(this.props.board);
-        },2000);
-
-        this.resetCounter();
-        this.resetMatchingTiles();
-        this.triggerUnlockBoard();
+            this.resetCounter();
+            if(!this.getCounter()) this.triggerUnlockBoard();
+        },2500);
     }
 
 
@@ -101,7 +99,7 @@ class Board extends PureComponent {
      */
     triggerLockBoard() {
         this.locked = true;
-        this.triggerResetBoard();
+        this.resetMatchingTiles();
     }
 
 
@@ -149,33 +147,13 @@ class Board extends PureComponent {
         return this.counter;
     }
 
-
-    /**
-     * DOING: Should set the matched
-     * flag to proper state.
-     */
-    setMatched() {
-        this.matched = !(this.matched);
-    }
-
-
-    /**
-     * DOING: Should get the matched
-     * flags current state.
-     */
-    getMatched() {
-        return this.matched;
-    }
-
-
     /**
      * DOING: Should return that values
      * are of matching context.
      */
     triggerDisplayMatch(){
-        this.matched = true;
-        this.resetMatchingTiles();
         alert('its a match'); // what happens after the match?!?
+        this.triggerResetBoard();
     }
 
 
@@ -218,23 +196,25 @@ class Board extends PureComponent {
 
         (isNumber(payloadId) && isDefined(payloadId));
 
-        // Increment the count
         this.doIncrementCounter();
 
-        // Lock the board if 2
-        (this.getCounter()===2) ? this.triggerLockBoard() : this.triggerUnlockBoard();
-
-        // Check to see if the tile is a match
-        (this.getMatchingTiles().includes(this.props.board.byId[`tile${payloadId}`].name)) ? this.triggerDisplayMatch() : this.triggerUnlockBoard();
-
-        // Add the new tile to our matches array
         this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].name);
+
+        let checkTilesMatch = this.getMatchingTiles().reduce((acm, val) => {
+            return acm + (val === this.props.board.byId[`tile${payloadId}`].name);
+        }, 0);
+
+        if(checkTilesMatch===2){
+            this.triggerDisplayMatch();
+        } else {
+            this.triggerUnlockBoard();
+        }
+
+        (this.getCounter()===2) ? this.triggerLockBoard() : this.triggerUnlockBoard();
 
         this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
         this.props.boardState(this.props.board);
-
-        console.log('counter is: ', this.getCounter());
-
+        this.triggerUnlockBoard();
     }
 
     render() {
