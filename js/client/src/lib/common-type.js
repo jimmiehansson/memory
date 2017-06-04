@@ -56,12 +56,23 @@ export const isNumber = (number) => number.toString().length > 0 && typeof numbe
 
 
 /**
+ * DOING: Should return if arr
+ * is of type array.
+ * @param arr
+ * @returns {boolean}
+ */
+export const isArray = (arr) => arr.length > 0 && Array.isArray(arr);
+
+
+
+/**
  * DOING: Should return if object
  * is of type object.
  * @param object
  * @returns {boolean}
  */
 export const isObject = (object) => Object.keys(object).length > 0 && typeof object === 'object';
+
 
 /**
  * DOING: Should return if boolean
