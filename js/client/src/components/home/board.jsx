@@ -84,7 +84,11 @@ class Board extends PureComponent {
     triggerResetBoard() {
 
         setTimeout(() => {
-            Object.keys(this.props.board.byId).map((item) => this.props.board.byId[item].flipped = false);
+            Object.keys(this.props.board.byId).map((item) => {
+                if(!this.props.board.byId[item].matched){
+                    this.props.board.byId[item].flipped = false;
+                }
+            });
             this.props.boardState(this.props.board);
             this.resetMatchingTiles();
             this.resetCounter();
@@ -163,10 +167,10 @@ class Board extends PureComponent {
      * to proper state and return.
      * @param payloadId
      */
-    triggerMatchUpdate(payloadId){
+    triggerMatchUpdate(){
 
         alert('Its a match! Yay!');
-
+/*
         this.getMatchingTiles().forEach((tile, index) => {
             if(payloadId === this.getMatchingTiles()[index]){
                 this.props.board.byId[`tile${payloadId}`].flipped = true;
@@ -177,14 +181,14 @@ class Board extends PureComponent {
 
         // Dispatch new payload to update
         // the state with the new matches.
-
-        //this.triggerResetBoard();
+*/
+        this.triggerResetBoard();
 
     }
 
 
     /**
-     * Should reset the array containing
+     * DOING: Should reset the array containing
      * matches of the tiles to an empty state.
      */
     resetMatchingTiles() {
@@ -193,17 +197,20 @@ class Board extends PureComponent {
 
 
     /**
-     * Should add the current tile
+     * DOING: Should add the current tile
      * to the matches array.
      * @param data
      */
     setMatchingTiles(data) {
         this.matchingTiles.push(data);
+        this.props.board.byId[`tile${data}`].flipped = true;
+        this.props.board.byId[`tile${data}`].matched = true;
+        this.dispatchState(this.props.board);
     }
 
 
     /**
-     * Should return the matchingTiles
+     * DOING: Should return the matchingTiles
      * array from the parent scope.
      */
     getMatchingTiles() {
@@ -224,7 +231,7 @@ class Board extends PureComponent {
 
 
     /**
-     * Dispatches a new payload when the tile
+     * DOING: Dispatches a new payload when the tile
      * triggers onClick. Should return a new state
      * for the child component while stateless render
      * an update for the className.
@@ -237,8 +244,10 @@ class Board extends PureComponent {
 
         // Should update the tile state as flipped
         // and push the new state to the board
-        this.props.board.byId[`tile${payloadId}`].flipped =
-            (!this.props.board.byId[`tile${payloadId}`].flipped);
+        if(!this.props.board.byId[`tile${payloadId}`].matched) {
+            this.props.board.byId[`tile${payloadId}`].flipped =
+                (!this.props.board.byId[`tile${payloadId}`].flipped);
+        }
 
         this.dispatchState(this.props.board.byId);
 
