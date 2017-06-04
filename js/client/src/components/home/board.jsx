@@ -157,13 +157,29 @@ class Board extends PureComponent {
         return this.counter;
     }
 
+
     /**
-     * DOING: Should return that values
-     * are of matching context.
+     * DOING: Should update tiles of match
+     * to proper state and return.
+     * @param payloadId
      */
-    triggerDisplayMatch(){
-        alert('its a match'); // what happens after the match?!?
-        this.triggerResetBoard();
+    triggerMatchUpdate(payloadId){
+
+        alert('Its a match! Yay!');
+
+        this.getMatchingTiles().forEach((tile, index) => {
+            if(payloadId === this.getMatchingTiles()[index]){
+                this.props.board.byId[`tile${payloadId}`].flipped = true;
+                this.props.board.byId[`tile${payloadId}`].matched = true;
+            }
+        });
+                this.dispatchState(this.props.board);
+
+        // Dispatch new payload to update
+        // the state with the new matches.
+
+        //this.triggerResetBoard();
+
     }
 
 
@@ -197,6 +213,17 @@ class Board extends PureComponent {
 
 
     /**
+     * DOING: Returns new state after
+     * dispatching new payload to the
+     * store.
+     * @param payload
+     */
+    dispatchState(payload) {
+        this.props.boardState(payload);
+    }
+
+
+    /**
      * Dispatches a new payload when the tile
      * triggers onClick. Should return a new state
      * for the child component while stateless render
@@ -208,33 +235,34 @@ class Board extends PureComponent {
         (isNumber(payloadId) && isDefined(payloadId));
 
 
-        // flip the card
-        // -> check if the counter is 2
-        // -> if the counter is 2: lock the board
-        // ---> check if the cards are matching
-        // ---> If the cards are matching say so and reset everything
-        // ---> If not, then say so and reset everything
+        // Should update the tile state as flipped
+        // and push the new state to the board
+        this.props.board.byId[`tile${payloadId}`].flipped =
+            (!this.props.board.byId[`tile${payloadId}`].flipped);
 
+        this.dispatchState(this.props.board.byId);
 
-        this.props.board.byId[`tile${payloadId}`].flipped = (!this.props.board.byId[`tile${payloadId}`].flipped);
-        this.props.boardState(this.props.board);
 
         this.doIncrementCounter();
 
-        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].name);
+
+        // Should push the tile data to the matchingTiles
+        // array before evaluating if there is a match.
+        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].index);
 
 
+        // Should, if 2 tiles are flipped return the
+        // number of tiles in the matchingTiles array
+        // that are of match, if so update state properly.
+        // Or unlock and reset the board.
         if(this.getCounter()===2 || this.getMatchingTiles().length===2) {
 
             this.triggerLockBoard();
 
-            let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val === this.props.board.byId[`tile${payloadId}`].name), 0);
+            let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val === this.props.board.byId[`tile${payloadId}`].index), 0);
 
-            if (getMatch === 2) {
-                this.triggerDisplayMatch();
-            } else {
-                this.triggerUnlockBoard();
-            }
+            if (getMatch === 2) { this.triggerMatchUpdate(payloadId); }
+            else { this.triggerUnlockBoard(); }
 
             this.triggerResetBoard();
         }
@@ -250,7 +278,7 @@ class Board extends PureComponent {
 
                             {Object.keys(this.props.board.byId).map((tile) => {
                                 return <div
-                                    key={`triggerWrapper${this.props.board.byId[tile].index}`}
+                                    key={`triggerWrapper${this.props.board.byId[tile].name}`}
                                     onClick={
                                         (!this.getLocked()) ?
                                         () => {
@@ -261,8 +289,8 @@ class Board extends PureComponent {
                                     }
                                 >
                                 <TileWrapper
-                                        key={`tileWrapper${this.props.board.byId[tile].index}`}
-                                        index={this.props.board.byId[tile].index}
+                                        key={`tileWrapper${this.props.board.byId[tile].name}`}
+                                        index={this.props.board.byId[tile].name}
                                         {...this.props.board.byId[tile]}
                                     />
                                 </div>

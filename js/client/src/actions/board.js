@@ -48,11 +48,30 @@ import {
 export const getBoardState = (payload) => {
     return {
         type: GET_BOARD_STATE,
-        payload: payload
+        payload
     };
 };
 
 
+/**
+ * DOING: Fetches the state and content
+ * for the tiles.
+ * @param payload
+ * @returns {function(*)}
+ */
+export const boardState = (payload) => {
+
+    return (dispatch) => {
+        dispatch(getBoardState(payload));
+    };
+};
+
+/**
+ * DOING: Resets the state of the board
+ * to the initial.
+ * @param payload
+ * @returns {{type, payload: *}}
+ */
 export const resetBoardState = (payload) => {
     return {
         type: RESET_BOARD_STATE,
@@ -88,15 +107,3 @@ export const decrementFlipCount = (payload) => {
 };
 
 
-/**
- * DOING: Fetches the state and content
- * for the tiles.
- * @param payload
- * @returns {function(*)}
- */
-export const boardState = (payload) => {
-
-    return (dispatch) => {
-        dispatch(getBoardState(payload));
-    };
-};
