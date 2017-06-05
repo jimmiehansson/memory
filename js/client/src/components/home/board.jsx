@@ -139,8 +139,11 @@ class Board extends PureComponent {
      * by one numeral literal.
      */
     doIncrementCounter() {
-        ++this.counter;
+        if(this.counter < 2) {
+            ++this.counter;
+        }
     }
+
 
 
     /**
@@ -176,6 +179,8 @@ class Board extends PureComponent {
      * to proper state and return.
      */
     triggerMatchUpdate(){
+        // Trigger dispatch from resetting
+        // the board to its initial state.
         this.triggerResetBoard();
     }
 
@@ -234,7 +239,7 @@ class Board extends PureComponent {
      * DOING: Dispatches a new payload when the tile
      * triggers onClick. Should return a new state
      * for the child component while stateless render
-     * an update for the className.
+     * an update for the store.
      * @param payloadId
      */
     triggerDispatch(payloadId) {
@@ -247,19 +252,16 @@ class Board extends PureComponent {
         this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
         this.dispatchState(this.props.board.byId);
 
-
         this.doIncrementCounter();
 
-
-        // Should push the tile data to the matchingTiles
-        // array before evaluating if there is a match.
+        // Should push the tile data to the array
+        // before evaluating if there is a match.
         this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`]);
 
 
         // Should, if 2 tiles are flipped return the
-        // number of tiles in the matchingTiles array
-        // that are of match, if so update state properly.
-        // Or unlock and reset the board.
+        // number of tiles in the array
+        // that are of match, update state properly.
         if(this.getCounter()===2 || this.getMatchingTiles().length===2) {
 
             this.triggerLockBoard();
@@ -267,14 +269,10 @@ class Board extends PureComponent {
             let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val.name === this.props.board.byId[`tile${payloadId}`].name), 0);
 
             if (getMatch === 2) {
-
                 this.getMatchingTiles().forEach((item) => this.setMatched(item.index));
                 this.triggerMatchUpdate();
             }
             else {
-
-
-
                 this.triggerUnlockBoard();
             }
 
@@ -294,12 +292,15 @@ class Board extends PureComponent {
                                 return <div
                                     key={`triggerWrapper${this.props.board.byId[tile].index}`}
                                     onClick={
-                                        (!this.getLocked()) ?
-                                        () => {
-                                            this.triggerDispatch(this.props.board.byId[tile].index)
-                                        }
-                                        :
-                                            () => { alert('locked: '+this.locked+' count: '+this.getCounter()+' matching: '+this.getMatchingTiles().length) }
+                                        (!this.getLocked() && this.getCounter() < 2 && !this.props.board.byId[tile].matched)
+                                            ?
+                                            () => {
+                                                this.triggerDispatch(this.props.board.byId[tile].index)
+                                            }
+                                            : () => {
+                                                alert('Cant do that!'); // add user interface animation
+                                                this.triggerResetBoard();
+                                            }
                                     }
                                 >
                                 <TileWrapper

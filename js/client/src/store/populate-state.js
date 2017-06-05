@@ -151,7 +151,7 @@ export const populate = {
                         pending : false,
                     },
                     tile11 : {
-                        name : "Gogo doe",
+                        name : "Gunner doe",
                         imagePortraitUrl : '//url/to/portrait',
                         index : 11,
                         filename : 'portrait',
