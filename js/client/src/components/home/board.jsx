@@ -63,7 +63,6 @@ import {
     Card,
     CardText
 } from 'material-ui/Card';
-import Snackbar from 'material-ui/Snackbar';
 
 
 
@@ -75,24 +74,23 @@ class Board extends PureComponent {
 
         this.counter = 0;
         this.matchingTiles = [];
-        this.locked = false;
-        this.warning = false;
+        this.locked = false;;
     }
 
 
     /**
      * DOING: Should reset the board triggered
-     * by the function. Resets the state.
+     * by the function. Resets the state by dispatch.
      */
     triggerResetBoard() {
 
         setTimeout(() => {
-            Object.keys(this.props.board.byId).map((item) => {
+            Object.keys(this.props.board.byId).forEach((item) => {
                 this.props.board.byId[item].flipped = !!(this.props.board.byId[item].matched);
             });
+
             this.resetHelpers();
             if(this.getCounter() <= 2) {
-
             this.props.boardState(this.props.board);
             }
 
@@ -152,17 +150,8 @@ class Board extends PureComponent {
 
 
     /**
-     * DOING: Should decrement the counter
-     * by one numeral literal.
-     */
-    doDecrementCounter() {
-        --this.counter;
-    }
-
-
-    /**
      * DOING: Should reset the counter
-     * to zero.
+     * to zero (its initial state).
      */
     resetCounter() {
         this.counter = 0;
@@ -170,8 +159,8 @@ class Board extends PureComponent {
 
 
     /**
-     * DOING: Get the current counter
-     * value.
+     * DOING: Should get the current counter
+     * value and return it.
      */
     getCounter() {
         (isDefined(this.counter) && isNumber(this.counter));
@@ -203,6 +192,7 @@ class Board extends PureComponent {
      * @param data
      */
     setMatchingTiles(data) {
+        (isDefined(data) && isArray(data));
         this.matchingTiles.push(data);
     }
 
@@ -213,13 +203,15 @@ class Board extends PureComponent {
      * @param payloadId
      */
     setMatched(payloadId) {
+        (isDefined(payloadId) && isNumber(payloadId));
         this.props.board.byId[`tile${payloadId}`].matched = true;
+        this.props.decrementFlipCount();
     }
 
 
     /**
      * DOING: Should return the matchingTiles
-     * array from the parent scope.
+     * array in complete.
      */
     getMatchingTiles() {
         (isDefined(this.matchingTiles) && isArray(this.matchingTiles));
@@ -251,17 +243,18 @@ class Board extends PureComponent {
 
         this.doIncrementCounter();
 
+        // Increment per click for score keeping
+        this.props.incrementFlipCount();
 
-            this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
-            this.dispatchState(this.props.board.byId);
-
+        // Dispatch initial flipped state
+        this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
+        this.dispatchState(this.props.board.byId);
 
         /**
          * Should add the current tile to the
          * array for matching.
          */
         this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`]);
-
 
         /**
          * Should if 2 tiles are flipped, check them
@@ -302,18 +295,16 @@ class Board extends PureComponent {
                                     key={`triggerWrapper${this.props.board.byId[tile].index}`}
                                     onClick={
                                         (!this.getLocked() && this.getCounter() < 2 && !this.props.board.byId[tile].matched)
-                                            ?
-                                            () => {
-                                                this.triggerDispatch(this.props.board.byId[tile].index)
+                                        ?
+                                        () => {
+                                            this.triggerDispatch(this.props.board.byId[tile].index)
+                                        }
+                                        : () => {
+                                            if(this.getLocked()){
+                                                alert('too fast, calm down');
                                             }
-                                            : () => {
-                                                if(this.getLocked()){
-                                                    alert('too fast, calm down');
-                                                }
-                                                this.triggerResetBoard();
-
-                                            }
-
+                                            this.triggerResetBoard();
+                                        }
                                     }
                                 >
                                 <TileWrapper

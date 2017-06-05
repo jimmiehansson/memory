@@ -55,7 +55,10 @@ import Tile from './tile.jsx';
 const TileWrapper = props => {
 
     return (
-        <div key={`tileDiv${props.index}`} className={`card tile${props.index} ${(!props.locked) ? (props.flipped) ? 'flipped' : '' : 'shake'}` }>
+        <div
+            key={`tileDiv${props.index}`}
+            className={`card tile${props.index} ${(!props.locked) ? (props.flipped) ? 'flipped' : '' : ''}` }
+        >
             <Tile key={`tileComponent${props.index}`} index={props.index} {...props} />
         </div>
     )

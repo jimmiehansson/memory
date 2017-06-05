@@ -2,9 +2,8 @@
 
 /* Universal */
 body {
-  background: #DCE35B;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #45B649, #DCE35B);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #45B649, #DCE35B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #DCE35B;
+  background: linear-gradient(to right, #45B649, #DCE35B);
   font-family: 'Share Tech Mono', sans-serif;
 }
 
@@ -20,6 +19,7 @@ body {
 .card {
   position: relative;
   width: 12rem; height: 15rem;
+  cursor: pointer;
   transform-style: preserve-3d;
   transition: transform 1.0s;
   perspective: 30rem;
@@ -41,6 +41,18 @@ body {
   background-image: url(https://github.com/jimmiehansson/memory/blob/master/public/images/tile.png?raw=true);
   background-position: -35px 10px;
 }
-.shake {
-  border:10px solid red !important;
+
+@-webkit-keyframes fadeinout {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+.matched {
+  box-shadow: 0px 1px 30px 0px rgba(132, 210, 40, 0.51) !important;
+  animation: fadeinout 1.3s linear forwards;
+  cursor:not-allowed !important;
 }

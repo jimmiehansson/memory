@@ -31,6 +31,7 @@
  * DOING: Only legacy/non-custom libraries
  * imported here.
  */
+//require('@glimpse/glimpse').init();
 const electron = require("electron");
 const {app, BrowserWindow} = electron;
 const path = require("path");

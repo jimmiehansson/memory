@@ -82,13 +82,11 @@ export const resetBoardState = (payload) => {
 /**
  * DOING: Flip count should increment
  * by one if the action has been triggered.
- * @param payload
  * @returns {{type: *, payload: *}}
  */
-export const incrementFlipCount = (payload) => {
+export const incrementFlipCount = () => {
     return {
         type: INCREMENT_FLIPCOUNT_STATE,
-        payload: payload,
     };
 };
 

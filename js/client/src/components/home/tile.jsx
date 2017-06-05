@@ -61,7 +61,7 @@ const Tile = props => {
 
     return (
         <div>
-            <Paper className={`tile-front tile-front-${props.index}`} style={style}>
+            <Paper className={`tile-front tile-front-${props.index} ${(props.matched) ? 'matched' : ''}`} style={style}>
                 {props.name}
             </Paper>
             <Paper className={`tile-back tile-back-${props.index}`} style={style}>
