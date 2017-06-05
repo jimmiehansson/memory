@@ -67,6 +67,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile2 : {
                         name : "John doe",
@@ -75,6 +76,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile3 : {
                         name : "Ellie doe",
@@ -83,6 +85,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile4 : {
                         name : "Donnie doe",
@@ -91,14 +94,16 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile5 : {
-                        name : "Betty doe",
+                        name : "Abba doe",
                         imagePortraitUrl : '//url/to/portrait',
-                        index : 1,
+                        index : 5,
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile6 : {
                         name : "Kobal doe",
@@ -107,6 +112,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile7 : {
                         name : "Ronni doe",
@@ -115,6 +121,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile8 : {
                         name : "Bobba doe",
@@ -123,6 +130,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile9 : {
                         name : "Annie doe",
@@ -131,6 +139,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile10 : {
                         name : "Kavinsky doe",
@@ -139,6 +148,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile11 : {
                         name : "Gogo doe",
@@ -147,6 +157,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile12 : {
                         name : "Mimi doe",
@@ -155,6 +166,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile13 : {
                         name : "Acid doe",
@@ -163,6 +175,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile14 : {
                         name : "Terry doe",
@@ -171,6 +184,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                     tile15 : {
                         name : "Gunner doe",
@@ -179,6 +193,7 @@ export const populate = {
                         filename : 'portrait',
                         flipped : false,
                         matched : false,
+                        pending : false,
                     },
                 }
             },

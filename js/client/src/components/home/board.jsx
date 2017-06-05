@@ -85,15 +85,24 @@ class Board extends PureComponent {
 
         setTimeout(() => {
             Object.keys(this.props.board.byId).map((item) => {
-                if(!this.props.board.byId[item].matched){
-                    this.props.board.byId[item].flipped = false;
-                }
+                this.props.board.byId[item].flipped = !!(this.props.board.byId[item].matched);
             });
             this.props.boardState(this.props.board);
-            this.resetMatchingTiles();
-            this.resetCounter();
+
+            this.resetHelpers();
             this.triggerUnlockBoard();
         },2500);
+    }
+
+
+    /**
+     * DOING: Should reset common
+     * functions to their initial
+     * values.
+     */
+    resetHelpers(){
+        this.resetMatchingTiles();
+        this.resetCounter();
     }
 
 
@@ -165,25 +174,9 @@ class Board extends PureComponent {
     /**
      * DOING: Should update tiles of match
      * to proper state and return.
-     * @param payloadId
      */
     triggerMatchUpdate(){
-
-        alert('Its a match! Yay!');
-/*
-        this.getMatchingTiles().forEach((tile, index) => {
-            if(payloadId === this.getMatchingTiles()[index]){
-                this.props.board.byId[`tile${payloadId}`].flipped = true;
-                this.props.board.byId[`tile${payloadId}`].matched = true;
-            }
-        });
-                this.dispatchState(this.props.board);
-
-        // Dispatch new payload to update
-        // the state with the new matches.
-*/
         this.triggerResetBoard();
-
     }
 
 
@@ -203,9 +196,16 @@ class Board extends PureComponent {
      */
     setMatchingTiles(data) {
         this.matchingTiles.push(data);
-        this.props.board.byId[`tile${data}`].flipped = true;
-        this.props.board.byId[`tile${data}`].matched = true;
-        this.dispatchState(this.props.board);
+    }
+
+
+    /**
+     * DOING: Should set matched property
+     * to true in the state object.
+     * @param payloadId
+     */
+    setMatched(payloadId) {
+        this.props.board.byId[`tile${payloadId}`].matched = true;
     }
 
 
@@ -244,11 +244,7 @@ class Board extends PureComponent {
 
         // Should update the tile state as flipped
         // and push the new state to the board
-        if(!this.props.board.byId[`tile${payloadId}`].matched) {
-            this.props.board.byId[`tile${payloadId}`].flipped =
-                (!this.props.board.byId[`tile${payloadId}`].flipped);
-        }
-
+        this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
         this.dispatchState(this.props.board.byId);
 
 
@@ -257,7 +253,7 @@ class Board extends PureComponent {
 
         // Should push the tile data to the matchingTiles
         // array before evaluating if there is a match.
-        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`].index);
+        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`]);
 
 
         // Should, if 2 tiles are flipped return the
@@ -268,10 +264,19 @@ class Board extends PureComponent {
 
             this.triggerLockBoard();
 
-            let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val === this.props.board.byId[`tile${payloadId}`].index), 0);
+            let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val.name === this.props.board.byId[`tile${payloadId}`].name), 0);
 
-            if (getMatch === 2) { this.triggerMatchUpdate(payloadId); }
-            else { this.triggerUnlockBoard(); }
+            if (getMatch === 2) {
+
+                this.getMatchingTiles().forEach((item) => this.setMatched(item.index));
+                this.triggerMatchUpdate();
+            }
+            else {
+
+
+
+                this.triggerUnlockBoard();
+            }
 
             this.triggerResetBoard();
         }
@@ -287,7 +292,7 @@ class Board extends PureComponent {
 
                             {Object.keys(this.props.board.byId).map((tile) => {
                                 return <div
-                                    key={`triggerWrapper${this.props.board.byId[tile].name}`}
+                                    key={`triggerWrapper${this.props.board.byId[tile].index}`}
                                     onClick={
                                         (!this.getLocked()) ?
                                         () => {
@@ -298,8 +303,8 @@ class Board extends PureComponent {
                                     }
                                 >
                                 <TileWrapper
-                                        key={`tileWrapper${this.props.board.byId[tile].name}`}
-                                        index={this.props.board.byId[tile].name}
+                                        key={`tileWrapper${this.props.board.byId[tile].index}`}
+                                        index={this.props.board.byId[tile].index}
                                         {...this.props.board.byId[tile]}
                                     />
                                 </div>
