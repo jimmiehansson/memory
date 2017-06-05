@@ -63,6 +63,8 @@ import {
     Card,
     CardText
 } from 'material-ui/Card';
+import Snackbar from 'material-ui/Snackbar';
+
 
 
 class Board extends PureComponent {
@@ -74,6 +76,7 @@ class Board extends PureComponent {
         this.counter = 0;
         this.matchingTiles = [];
         this.locked = false;
+        this.warning = false;
     }
 
 
@@ -91,7 +94,7 @@ class Board extends PureComponent {
 
             this.resetHelpers();
             this.triggerUnlockBoard();
-        },2500);
+        },1000);
     }
 
 
@@ -143,7 +146,6 @@ class Board extends PureComponent {
             ++this.counter;
         }
     }
-
 
 
     /**
@@ -225,6 +227,24 @@ class Board extends PureComponent {
 
 
     /**
+     * DOING: Should set explicit
+     * state for the warning.
+     */
+    setWarning() {
+        this.warning = true;
+    }
+
+
+    /**
+     * DOING: Should return explicit
+     * state for the warning.
+     * @returns {boolean}
+     */
+    getWarning() {
+        return this.warning;
+    }
+
+    /**
      * DOING: Returns new state after
      * dispatching new payload to the
      * store.
@@ -298,9 +318,13 @@ class Board extends PureComponent {
                                                 this.triggerDispatch(this.props.board.byId[tile].index)
                                             }
                                             : () => {
-                                                alert('Cant do that!'); // add user interface animation
+                                                if(this.getLocked()){
+                                                    this.setWarning();
+                                                }
                                                 this.triggerResetBoard();
+
                                             }
+
                                     }
                                 >
                                 <TileWrapper
@@ -311,6 +335,12 @@ class Board extends PureComponent {
                                 </div>
                             })}
 
+                            <Snackbar
+                                open={this.getWarning()}
+                                message="Loading..."
+                                contentStyle={{ color:'#fff', fontSize: '23px'}}
+                                autoHideDuration={1000}
+                            />
                         </div>
                     </CardText>
                 </Card>
