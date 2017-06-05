@@ -90,11 +90,14 @@ class Board extends PureComponent {
             Object.keys(this.props.board.byId).map((item) => {
                 this.props.board.byId[item].flipped = !!(this.props.board.byId[item].matched);
             });
-            this.props.boardState(this.props.board);
-
             this.resetHelpers();
+            if(this.getCounter() <= 2) {
+
+            this.props.boardState(this.props.board);
+            }
+
             this.triggerUnlockBoard();
-        },1000);
+        },2200);
     }
 
 
@@ -181,8 +184,6 @@ class Board extends PureComponent {
      * to proper state and return.
      */
     triggerMatchUpdate(){
-        // Trigger dispatch from resetting
-        // the board to its initial state.
         this.triggerResetBoard();
     }
 
@@ -227,24 +228,6 @@ class Board extends PureComponent {
 
 
     /**
-     * DOING: Should set explicit
-     * state for the warning.
-     */
-    setWarning() {
-        this.warning = true;
-    }
-
-
-    /**
-     * DOING: Should return explicit
-     * state for the warning.
-     * @returns {boolean}
-     */
-    getWarning() {
-        return this.warning;
-    }
-
-    /**
      * DOING: Returns new state after
      * dispatching new payload to the
      * store.
@@ -266,13 +249,16 @@ class Board extends PureComponent {
 
         (isNumber(payloadId) && isDefined(payloadId));
 
-
-        // Should update the tile state as flipped
-        // and push the new state to the board
-        this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
-        this.dispatchState(this.props.board.byId);
-
         this.doIncrementCounter();
+
+
+        if(this.getCounter() <= 2){
+            // Should update the tile state as flipped
+            // and push the new state to the board
+            this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
+            this.dispatchState(this.props.board.byId);
+        }
+
 
         // Should push the tile data to the array
         // before evaluating if there is a match.
@@ -319,7 +305,7 @@ class Board extends PureComponent {
                                             }
                                             : () => {
                                                 if(this.getLocked()){
-                                                    this.setWarning();
+                                                    alert('too fast, calm down');
                                                 }
                                                 this.triggerResetBoard();
 
@@ -335,12 +321,6 @@ class Board extends PureComponent {
                                 </div>
                             })}
 
-                            <Snackbar
-                                open={this.getWarning()}
-                                message="Loading..."
-                                contentStyle={{ color:'#fff', fontSize: '23px'}}
-                                autoHideDuration={1000}
-                            />
                         </div>
                     </CardText>
                 </Card>
