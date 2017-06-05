@@ -252,26 +252,29 @@ class Board extends PureComponent {
         this.doIncrementCounter();
 
 
-        if(this.getCounter() <= 2){
-            // Should update the tile state as flipped
-            // and push the new state to the board
             this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
             this.dispatchState(this.props.board.byId);
-        }
 
 
-        // Should push the tile data to the array
-        // before evaluating if there is a match.
+        /**
+         * Should add the current tile to the
+         * array for matching.
+         */
         this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`]);
 
 
-        // Should, if 2 tiles are flipped return the
-        // number of tiles in the array
-        // that are of match, update state properly.
+        /**
+         * Should if 2 tiles are flipped, check them
+         * if they match. Return the proper state
+         * if match or not.
+         */
         if(this.getCounter()===2 || this.getMatchingTiles().length===2) {
 
             this.triggerLockBoard();
 
+            /**
+             * Return the n of matched tiles
+             */
             let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val.name === this.props.board.byId[`tile${payloadId}`].name), 0);
 
             if (getMatch === 2) {
