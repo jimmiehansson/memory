@@ -1,7 +1,14 @@
+'use strict';
+
 /**
- * Application vendor, release
+ * Application
+ * @type {string}
  */
-export const APPLICATION_NAME = 'Memorinja';
-export const APPLICATION_RC = '1';
-export const APPLICATION_RCTYPE = 'Alpha';
-export const APPLICATION_VERSION = '1.1';
+
+
+
+/**
+ * Network/Data
+ * @type {string}
+ */
+export const BAD_REQUEST = 'The Url response with a bad request.';

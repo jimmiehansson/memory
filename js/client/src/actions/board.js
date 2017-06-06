@@ -27,16 +27,23 @@
  * Repository link: https://github.com/jimmiehansson/memory.git
  */
 
+
 /**
  * DOING: Import app associated and universal libraries
  * here to separate from the rest of the code.
  */
 import {
     GET_BOARD_STATE,
-    RESET_BOARD_STATE,
+    GET_DATA_TO_BOARD,
     INCREMENT_FLIPCOUNT_STATE,
     DECREMENT_FLIPCOUNT_STATE
 } from '../constants/action-types/board.js';
+import {
+    API_FETCH_URL
+} from '../constants/common-application';
+import {
+    buildDataFromUrl
+} from '../lib/common-api';
 
 
 /**
@@ -61,23 +68,46 @@ export const getBoardState = (payload) => {
  */
 export const boardState = (payload) => {
 
+    console.log(buildDataFromUrl());
+
     return (dispatch) => {
         dispatch(getBoardState(payload));
     };
 };
 
+
 /**
- * DOING: Resets the state of the board
- * to the initial.
+ * DOING: Data state should be
+ * stored and rendered to the tiles.
  * @param payload
- * @returns {{type, payload: *}}
+ * @returns {{type: *, payload: *}}
  */
-export const resetBoardState = (payload) => {
+export const getDataToBoard = (payload) => {
     return {
-        type: RESET_BOARD_STATE,
-        payload: payload
+        type: GET_DATA_TO_BOARD,
+        payload
     };
 };
+
+
+
+/**
+ * DOING: Fetch data from url to board
+ * and dispatch the data to state object.
+ * @param payload
+ * @returns {function(*)}
+ */
+export const dataToBoard = (payload) => {
+
+    fetchFromUrl(API_FETCH_URL).then((data) => {
+        console.log(data);
+    });
+
+    return (dispatch) => {
+        dispatch(getDataToBoard(payload));
+    };
+};
+
 
 /**
  * DOING: Flip count should increment

@@ -34,7 +34,7 @@
  */
 import {
     GET_BOARD_STATE,
-    RESET_BOARD_STATE,
+    GET_DATA_TO_BOARD,
     INCREMENT_FLIPCOUNT_STATE,
     DECREMENT_FLIPCOUNT_STATE,
 } from '../constants/action-types/board.js';
@@ -46,7 +46,7 @@ export default (state = [], {type, payload} ) => {
 
         case GET_BOARD_STATE:
             return {...state, payload};
-        case RESET_BOARD_STATE:
+        case GET_DATA_TO_BOARD:
             return {...state, payload};
         case INCREMENT_FLIPCOUNT_STATE:
             return {...state, flipCount: state.flipCount+1};

@@ -1,1 +1,1 @@
-{ "esversion":6, "W030":false, "E054":false }
+{ "esversion":6, "node"  : true, "W030":false, "E054":false }

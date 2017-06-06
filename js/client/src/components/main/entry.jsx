@@ -80,6 +80,7 @@ const muiTheme = getMuiTheme({
     }
 });
 
+
 const store = configureStore(populate.default());
 
 render (

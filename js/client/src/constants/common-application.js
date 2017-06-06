@@ -1,5 +1,6 @@
 /**
  * Application vendor, release
+ * @param *
  */
 export const APPLICATION_NAME = 'Memorinja';
 export const APPLICATION_RC = '1';
@@ -8,10 +9,7 @@ export const APPLICATION_VERSION = '1.1';
 
 
 /**
- * Application, System network
+ * Network data, API
+ * @param string
  */
-export const SYSTEM_NETWORK_PROBE_INTERVAL = 1500;
-export const SYSTEM_NETWORK_PROBE_TIMEOUT = 15000;
-export const SYSTEM_NETWORK_PING_NUMERIC = false;
-export const SYSTEM_NETWORK_PING_TIMEOUT = 5;
-export const SYSTEM_NETWORK_PING_MINREPLY = 6;
+export const API_FETCH_URL = 'http://tretton37.com/assets/js/meet-ninjas.js';

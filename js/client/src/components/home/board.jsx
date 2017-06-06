@@ -72,9 +72,11 @@ class Board extends PureComponent {
     constructor(props) {
         super(props);
 
+        this.session = 0;
         this.counter = 0;
         this.matchingTiles = [];
-        this.locked = false;;
+        this.locked = false;
+
     }
 
 
@@ -83,7 +85,6 @@ class Board extends PureComponent {
      * by the function. Resets the state by dispatch.
      */
     triggerResetBoard() {
-
         setTimeout(() => {
             Object.keys(this.props.board.byId).forEach((item) => {
                 this.props.board.byId[item].flipped = !!(this.props.board.byId[item].matched);
@@ -239,7 +240,19 @@ class Board extends PureComponent {
      */
     triggerDispatch(payloadId) {
 
+
+        // Update the board component logic
+        // to match that of the new store object
+        // 1. Set a session object
+        // 2. Check what session it is
+        // 3. Update cursors to match the new path in the store object
+        // 4. When all are set to matched in the first session node end it
+        // 5. Start session 2 with 10 new tiles, all set matched to false
+
+
         (isNumber(payloadId) && isDefined(payloadId));
+
+        this.props.boardState(this.props.board);
 
         this.doIncrementCounter();
 
@@ -348,7 +361,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         boardState : payload => dispatch(boardActions.boardState(payload)),
-        resetBoardState  : payload => dispatch(boardActions.resetBoardState ()),
+        dataToBoard : payload => dispatch(boardActions.dataToBoard(payload)),
         incrementFlipCount : payload => dispatch(boardActions.incrementFlipCount(payload)),
         decrementFlipCount : payload => dispatch(boardActions.decrementFlipCount(payload))
     };
