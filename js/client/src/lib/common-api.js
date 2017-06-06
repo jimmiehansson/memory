@@ -34,11 +34,17 @@
  */
 import fetch from 'isomorphic-fetch';
 import {
-    BAD_REQUEST
+    BAD_REQUEST,
+    BAD_OBJECT_PROPERTIES
 } from '../constants/language/english';
 import {
     API_FETCH_URL
 } from '../constants/common-application';
+import {
+    isDefined,
+    isObject,
+    isArray
+} from '../lib/common-type';
 
 
 /**
@@ -47,10 +53,58 @@ import {
  * @param url
  * @returns object
  */
-export const fetchFromUrl = (url = API_FETCH_URL) => fetch(url)
-    .then((response) => (response.status < 200 || response.status > 400) ? () => { throw new Error(BAD_REQUEST); } : response.json())
-    .then((data)=> data)
-    .catch((error) => error);
+export const fetchFromUrl = (url = API_FETCH_URL) =>
+    fetch(url)
+        .then((response) => (response.status < 200 || response.status > 400) ? () => { throw new Error(BAD_REQUEST); } : response.json())
+        .then((data)=> data)
+        .catch((error) => error);
+
+
+/**
+ * DOING: Should return the default set
+ * of object properties used in the return data
+ * from the http object.
+ * @returns array
+ */
+export const getHttpObjectProperties = () => ['name', 'imagePortraitUrl', 'index', 'filename'];
+
+
+/**
+ * DOING: Should validate if the object
+ * has properties matching those in the
+ * params.
+ * @param object
+ * @param properties
+ * @param propertyMatch
+ * @returns boolean
+ */
+export const hasObjectProperties = (object, properties = [], propertyMatch=false) => {
+    if(isDefined(object) && isDefined(properties) && isObject(object) && isArray(properties)){
+        Object.keys(object).forEach((item) => properties.forEach((property) => propertyMatch = object[item].hasOwnProperty(property)));
+        return propertyMatch;
+    }
+    else { throw new Error(BAD_OBJECT_PROPERTIES); }
+};
+
+
+/**
+ * DOING: Should assemble a new object
+ * structure based on computations from
+ * the fetched data.
+ * @returns object
+ */
+export const buildNextIndex = () => {
+
+
+
+};
+
+
+
+
+
+
+
 
 
 /**
@@ -62,78 +116,71 @@ export const fetchFromUrl = (url = API_FETCH_URL) => fetch(url)
  */
 export const buildDataFromUrl = () => {
 
-
-    let iterator = 0;
-    let sessions = 0;
-    let fiveObjects = {};
-    let mergedFiveObjects = {};
-    let fiveObjectsCopy = {};
-    let tiles = {};
-
-
     fetchFromUrl(API_FETCH_URL).then((dataFromUrl) => {
 
-        /**
-         * Should map the fetched data and validate.
-         * Returns mapped object where n value % 5 === 0
-         */
-        Object.keys(dataFromUrl).forEach((item, index) => {
+        if(hasObjectProperties(dataFromUrl, getHttpObjectProperties())){
 
-            ++iterator;
-
-            if(
-                dataFromUrl[item].hasOwnProperty('name') &&
-                dataFromUrl[item].hasOwnProperty('imagePortraitUrl') &&
-                dataFromUrl[item].hasOwnProperty('index') &&
-                dataFromUrl[item].hasOwnProperty('filename')
-            ) {
-
-                /**
-                 * If iterator reaches 5 iterations
-                 * increment the sessions counter.
-                 */
-                if(iterator===5) { iterator = 0; ++sessions; }
-
-                /**
-                 * Add these 5 objects as object
-                 * properties for each session board.
-                 */
-                for(let x = 0; x <= 5; x++) { tiles[`tile${dataFromUrl[item].index}`] = dataFromUrl[item]; }
+            Object.keys(dataFromUrl).forEach((item, index) => {
 
 
-                if(Object.keys(tiles).length === 5) {
+                    /*
+                    ++iterator;
+                        if(iterator===5) { iterator = 0; ++sessions; }
+                        for( let x = 0; x <= 5; x++ ) {
+                            tiles[`tile${dataFromUrl[item].index}`] = dataFromUrl[item];
+                        }
+                        if(Object.keys(tiles).length === 5){
+                            //console.log(tiles[`tile${dataFromUrl[item].index}`]);
+                        }
 
-                    fiveObjects[`session${sessions}`] = { tiles };
-                    fiveObjectsCopy[`session${sessions}`] = fiveObjects;
-
-
-                    let o = tiles[`tile${dataFromUrl[item].index}`].index;
-                    let x = 0;
-
-                    for(; x < 5; ++x){
-
-                        ++o;
-
-                        tiles[`tile${o}`] = {
-                                name : dataFromUrl[item].name,
-                                imagePortraitUrl : dataFromUrl[item].imagePortraitUrl,
-                                index : o,
-                                filename : dataFromUrl[item].filename,
-                                flipped : false,
-                                matched : false,
-                            };
+                        */
 
 
-                    }
 
-                    fiveObjectsCopy[`session${sessions}`] = { tiles };
-                    mergedFiveObjects = Object.assign(fiveObjects, fiveObjectsCopy);
 
-                    tiles = {};
-                }
 
-            }
-        });
+
+
+
+        /*
+                        if(Object.keys(tiles).length <= 5) {
+
+                            fiveObjects[`session${sessions}`] = { tiles };
+                            fiveObjectsCopy[`session${sessions}`] = fiveObjects;
+
+
+                            let o = tiles[`tile${dataFromUrl[item].index}`].index;
+
+                            let x = 0;
+
+                            for(; x < 5; ++x){
+
+                                ++o;
+
+                                tiles[`tile${o}`] = {
+                                        name : tiles[`tile${dataFromUrl[item].index}`].name,
+                                        imagePortraitUrl : tiles[`tile${dataFromUrl[item].index}`].imagePortraitUrl,
+                                        index : o,
+                                        filename : tiles[`tile${dataFromUrl[item].index}`].filename,
+                                        flipped : false,
+                                        matched : false,
+                                    };
+                            }
+
+                            fiveObjectsCopy[`session${sessions}`] = { tiles };
+                            mergedFiveObjects = Object.assign(fiveObjects, fiveObjectsCopy);
+
+                            tiles = {};
+                        }
+        */
+                });
+
+
+
+        }
+
+
+
 
     });
 
@@ -142,5 +189,10 @@ export const buildDataFromUrl = () => {
     // 8. do this until all 134 items are done
     // 9. return the object to the state
 
-    console.log(fiveObjectsCopy);
+    //console.log(fiveObjectsCopy);
 };
+
+
+
+
+
