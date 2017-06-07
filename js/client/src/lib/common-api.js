@@ -35,7 +35,7 @@
 import fetch from 'isomorphic-fetch';
 import {
     BAD_REQUEST,
-    BAD_OBJECT_PROPERTIES
+    BAD_ARGS
 } from '../constants/language/english';
 import {
     API_FETCH_URL
@@ -83,28 +83,100 @@ export const hasObjectProperties = (object, properties = [], propertyMatch=false
         Object.keys(object).forEach((item) => properties.forEach((property) => propertyMatch = object[item].hasOwnProperty(property)));
         return propertyMatch;
     }
-    else { throw new Error(BAD_OBJECT_PROPERTIES); }
+    else { throw new Error(BAD_ARGS); }
+};
+
+
+/**
+ * DOING: Should take passed data object
+ * and shuffle the contents using Math.
+ * Returns object.
+ * @param dataObject
+ * @returns  object
+ */
+export const getShuffleData = (dataObject = {}) => {
+    if(isDefined(dataObject) && isObject(dataObject)){
+        const moveData = Object.values(dataObject);
+        for(let j, x, i = moveData.length; i; j = Math.floor(Math.random() * i), x = moveData[--i], moveData[i] = moveData[j], moveData[j] = x){}
+        return moveData;
+    }
+    else { throw new Error(BAD_ARGS); }
+};
+
+
+/**
+ * DOING: Should return the total
+ * amount of n in an object.
+ * @param dataObject
+ * @returns number
+ */
+export const getTotalFromObject = (dataObject = {}) => Object.keys(dataObject).length;
+
+
+/**
+ * DOING: Should build dynamic child object
+ * and return to requested state.
+ * @param object
+ * @param dataObject
+ * @returns object
+ */
+export const buildDynamicObject = (object = {}, dataObject = {}) => {
+
+    Object.keys(object).forEach((item) => {
+
+        Object.keys(object[item]).forEach((child) => {
+
+            let tileIndex = object[item][child].index;
+            let tileIndexCursor = tileIndex + getTotalFromObject(dataObject);
+
+            object[item][`tile${tileIndexCursor}`] = {
+                name: object[item][child].name,
+                imagePortraitUrl: object[item][child].imagePortraitUrl,
+                index: tileIndexCursor,
+                filename: object[item][child].filename,
+                flipped: false,
+                matched: false,
+            };
+        });
+    });
+    return object;
 };
 
 
 /**
  * DOING: Should assemble a new object
  * structure based on computations from
- * the fetched data.
+ * the fetched data and the params.
+ * @param dataObject
+ * @param groupByNumber
  * @returns object
  */
-export const buildNextIndex = () => {
+export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
 
+    let iterator = 0, sessions = 0, tiles = {}, original = {}, copy = {}, merged = {};
 
+    dataObject = getShuffleData(dataObject);
 
+    Object.keys(dataObject).forEach((item, index) => {
+
+        ++iterator;
+
+        if (iterator === groupByNumber) { iterator = 0; ++sessions; }
+
+        for (let x = 0; x <= groupByNumber; ++x) {
+            tiles[`tile${dataObject[item].index}`] = dataObject[item];
+        }
+
+        if (Object.keys(tiles).length === groupByNumber) {
+            original[`session${sessions}`] = {...tiles};
+            tiles = {};
+        }
+
+    });
+
+    merged = Object.assign(original, buildDynamicObject(copy, dataObject));
+    return merged;
 };
-
-
-
-
-
-
-
 
 
 /**
@@ -116,69 +188,12 @@ export const buildNextIndex = () => {
  */
 export const buildDataFromUrl = () => {
 
-    fetchFromUrl(API_FETCH_URL).then((dataFromUrl) => {
+    fetchFromUrl(API_FETCH_URL)
+        .then((dataFromUrl) => {
 
         if(hasObjectProperties(dataFromUrl, getHttpObjectProperties())){
-
-            Object.keys(dataFromUrl).forEach((item, index) => {
-
-
-                    /*
-                    ++iterator;
-                        if(iterator===5) { iterator = 0; ++sessions; }
-                        for( let x = 0; x <= 5; x++ ) {
-                            tiles[`tile${dataFromUrl[item].index}`] = dataFromUrl[item];
-                        }
-                        if(Object.keys(tiles).length === 5){
-                            //console.log(tiles[`tile${dataFromUrl[item].index}`]);
-                        }
-
-                        */
-
-
-
-
-
-
-
-
-        /*
-                        if(Object.keys(tiles).length <= 5) {
-
-                            fiveObjects[`session${sessions}`] = { tiles };
-                            fiveObjectsCopy[`session${sessions}`] = fiveObjects;
-
-
-                            let o = tiles[`tile${dataFromUrl[item].index}`].index;
-
-                            let x = 0;
-
-                            for(; x < 5; ++x){
-
-                                ++o;
-
-                                tiles[`tile${o}`] = {
-                                        name : tiles[`tile${dataFromUrl[item].index}`].name,
-                                        imagePortraitUrl : tiles[`tile${dataFromUrl[item].index}`].imagePortraitUrl,
-                                        index : o,
-                                        filename : tiles[`tile${dataFromUrl[item].index}`].filename,
-                                        flipped : false,
-                                        matched : false,
-                                    };
-                            }
-
-                            fiveObjectsCopy[`session${sessions}`] = { tiles };
-                            mergedFiveObjects = Object.assign(fiveObjects, fiveObjectsCopy);
-
-                            tiles = {};
-                        }
-        */
-                });
-
-
-
+            buildCopyObject(dataFromUrl, 5);
         }
-
 
 
 
