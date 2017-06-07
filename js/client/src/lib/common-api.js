@@ -96,8 +96,9 @@ export const hasObjectProperties = (object, properties = [], propertyMatch=false
  */
 export const getShuffleData = (dataObject = {}) => {
     if(isDefined(dataObject) && isObject(dataObject)){
-        const moveData = Object.values(dataObject);
+        let moveData = Object.values(dataObject);
         for(let j, x, i = moveData.length; i; j = Math.floor(Math.random() * i), x = moveData[--i], moveData[i] = moveData[j], moveData[j] = x){}
+        //console.log(moveData);
         return moveData;
     }
     else { throw new Error(BAD_ARGS); }
@@ -110,7 +111,7 @@ export const getShuffleData = (dataObject = {}) => {
  * @param dataObject
  * @returns number
  */
-export const getTotalFromObject = (dataObject = {}) => Object.keys(dataObject).length;
+export const getTotalCountFromObject = (dataObject = {}) => Object.keys(dataObject).length;
 
 
 /**
@@ -127,7 +128,7 @@ export const buildDynamicObject = (object = {}, dataObject = {}) => {
         Object.keys(object[item]).forEach((child) => {
 
             let tileIndex = object[item][child].index;
-            let tileIndexCursor = tileIndex + getTotalFromObject(dataObject);
+            let tileIndexCursor = tileIndex + getTotalCountFromObject(dataObject);
 
             object[item][`tile${tileIndexCursor}`] = {
                 name: object[item][child].name,
@@ -144,6 +145,28 @@ export const buildDynamicObject = (object = {}, dataObject = {}) => {
 
 
 /**
+ * DOING: Should find and rebuild the index
+ * of an object to an array and execute.
+ * @param dataObject
+ * @returns {Object}
+ */
+export const flattenObjectToShuffle = (dataObject = {}) => {
+
+    let makeCopy = [];
+
+    Object.keys(dataObject).forEach((item) => {
+        Object.keys(dataObject[item]).forEach((child, index) => {
+            makeCopy[index] = dataObject[item][child];
+            dataObject[item][child] = getShuffleData(makeCopy)[index];
+        });
+    });
+
+
+    return dataObject;
+};
+
+
+/**
  * DOING: Should assemble a new object
  * structure based on computations from
  * the fetched data and the params.
@@ -156,6 +179,7 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
     let iterator = 0, sessions = 0, tiles = {}, original = {}, copy = {}, merged = {};
 
     dataObject = getShuffleData(dataObject);
+    console.log(dataObject);
 
     Object.keys(dataObject).forEach((item, index) => {
 
@@ -168,14 +192,15 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
         }
 
         if (Object.keys(tiles).length === groupByNumber) {
-            original[`session${sessions}`] = {...tiles};
+            original[`session${sessions}`] = copy[`session${sessions}`] = {...tiles};
             tiles = {};
         }
 
     });
 
-    merged = Object.assign(original, buildDynamicObject(copy, dataObject));
-    return merged;
+    let shuffleData =  Object.assign(original, buildDynamicObject(copy, dataObject));
+
+    return flattenObjectToShuffle(shuffleData);
 };
 
 
@@ -192,7 +217,7 @@ export const buildDataFromUrl = () => {
         .then((dataFromUrl) => {
 
         if(hasObjectProperties(dataFromUrl, getHttpObjectProperties())){
-            buildCopyObject(dataFromUrl, 5);
+            console.log(buildCopyObject(dataFromUrl, 5));
         }
 
 
