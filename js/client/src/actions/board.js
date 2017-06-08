@@ -36,7 +36,8 @@ import {
     GET_BOARD_STATE,
     GET_DATA_TO_BOARD,
     INCREMENT_FLIPCOUNT_STATE,
-    DECREMENT_FLIPCOUNT_STATE
+    DECREMENT_FLIPCOUNT_STATE,
+    INCREMENT_ACTIVEGAME_STATE
 } from '../constants/action-types/board.js';
 
 import {
@@ -134,3 +135,13 @@ export const decrementFlipCount = (payload) => {
 };
 
 
+/**
+ * DOING: Session count should increment
+ * by one if the action has been triggered.
+ * @returns {{type: *, payload: *}}
+ */
+export const incrementActiveGame = () => {
+    return {
+        type: INCREMENT_ACTIVEGAME_STATE,
+    };
+};

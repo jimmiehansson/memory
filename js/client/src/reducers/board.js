@@ -37,6 +37,7 @@ import {
     GET_DATA_TO_BOARD,
     INCREMENT_FLIPCOUNT_STATE,
     DECREMENT_FLIPCOUNT_STATE,
+    INCREMENT_ACTIVEGAME_STATE,
 } from '../constants/action-types/board.js';
 
 
@@ -52,6 +53,8 @@ export default (state = {}, {type, payload} ) => {
             return {...state, flipCount: state.flipCount+1};
         case  DECREMENT_FLIPCOUNT_STATE:
             return {...state, flipCount: state.flipCount-1};
+        case  INCREMENT_ACTIVEGAME_STATE:
+            return {...state, activeGame: state.activeGame+1};
         default:
             return state;
 

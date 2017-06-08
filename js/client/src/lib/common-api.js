@@ -122,18 +122,24 @@ export const getTotalCountFromObject = (dataObject = {}) => Object.keys(dataObje
  */
 export const buildDynamicObject = (object = {}, dataObject = {}) => {
 
-    Object.keys(object).forEach((item) => {
+    let shuffled = [];
 
-        Object.keys(object[item]).forEach((child) => {
+    Object.keys(object).forEach((item, index) => {
 
-            let tileIndex = object[item][child].index;
+        shuffled = Object.keys(object[item]);
+
+        for(let i=shuffled.length;i--;) shuffled.push(shuffled.splice(Math.floor(Math.random() * (i + 1)),1)[0]);
+
+        Object.keys(object[item]).forEach((child, idx) => {
+
+            let tileIndex = object[item][shuffled[idx]].index;
             let tileIndexCursor = tileIndex + getTotalCountFromObject(dataObject);
 
             object[item][`tile${tileIndexCursor}`] = {
-                name: object[item][child].name,
-                imagePortraitUrl: object[item][child].imagePortraitUrl,
+                name: object[item][shuffled[idx]].name,
+                imagePortraitUrl: object[item][shuffled[idx]].imagePortraitUrl,
                 index: tileIndexCursor,
-                filename: object[item][child].filename,
+                filename: object[item][shuffled[idx]].filename,
                 flipped: false,
                 matched: false,
             };
@@ -192,7 +198,6 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
             tiles = {};
         }
     });
-
     return Object.assign(original, buildDynamicObject(copy, dataObject));
 };
 
@@ -210,7 +215,7 @@ export const buildDataFromUrl = () => {
         fetchFromUrl(API_FETCH_URL)
             .then((dataFromUrl) => {
                 if (hasObjectProperties(dataFromUrl, getHttpObjectProperties())) {
-                    resolve(resolve(buildCopyObject(dataFromUrl, 5)));
+                    resolve(resolve(buildCopyObject(dataFromUrl, 6)));
                 }
             });
     });

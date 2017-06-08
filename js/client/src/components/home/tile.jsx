@@ -65,7 +65,8 @@ const Tile = props => {
     return (
         <div>
             <Paper className={`tile-front tile-front-${props.index} ${(props.matched) ? 'matched' : ''}`} style={style} >
-                <img src={image} id={props.index} style={{}} />
+                    <img src={image} id={props.index} style={{}} />
+                    {props.name}
             </Paper>
             <Paper className={`tile-back tile-back-${props.index}`} style={style}>
                 {props.index}

@@ -68,6 +68,8 @@ class Header extends Component {
                 <Drawer open={this.state.drawerNavOpen} width={200} openSecondary={true}>
 
                     <List>
+                        <Subheader>Level 1</Subheader>
+                        <Divider/>
                         <Subheader>My current score</Subheader>
                         <ListItem disabled={true} style={{fontFamily:'Bangers', fontSize:'43px', color:'#222'}}>
                             45 points

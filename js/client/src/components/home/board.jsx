@@ -52,7 +52,6 @@ import {
     isDefined,
     isArray
 } from '../../lib/common-type';
-
 import {
     sessionsSelector,
     activeGameSelector
@@ -67,7 +66,6 @@ import {
     Card,
     CardText
 } from 'material-ui/Card';
-
 
 
 class Board extends PureComponent {
@@ -88,6 +86,7 @@ class Board extends PureComponent {
      *
      */
     triggerResetBoard() {
+
         setTimeout(() => {
             Object.keys(this.props.games[`session${this.props.activeGame}`]).forEach((item) => {
                 this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
@@ -99,7 +98,7 @@ class Board extends PureComponent {
             }
 
             this.triggerUnlockBoard();
-        },2200);
+        },2000);
     }
 
 
@@ -296,26 +295,43 @@ class Board extends PureComponent {
 
             this.triggerResetBoard();
         }
+
+        /**
+         * Should return the total amount of tiles
+         * that have matched set to true.
+         * On return, dispatch to increment the game session
+         * number by one numeral.
+         * @type {*}
+         */
+        let setGameSession =
+            Object.values(this.props.games[`session${this.props.activeGame}`]).reduce((total, val) => total + (val.matched===true), 0);
+
+        if(
+            setGameSession===Object.keys(this.props.games[`session${this.props.activeGame}`]).length &&
+            this.props.activeGame < Object.keys(this.props.games).length
+        ){
+            // Add some user feedback here
+            this.props.incrementActiveGame(this.props);
+        }
     }
 
 
-
     render() {
-
         return (
             <div>
                 <Card>
                     <CardText style={{fontSize: '13px'}}>
-                        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                        <div className="flexWrapper" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
                             {
                                 (this.props.games)
                                 ?
-
                                     Object.keys(this.props.games[`session${this.props.activeGame}`]).map((tile) => {
+
                                         return <div
                                             key={`triggerWrapper${this.props.games[`session${this.props.activeGame}`][tile].index}`}
+                                            className="tileWrapper"
                                             onClick={
-                                                (!this.getLocked() && this.getCounter() < 2 && !this.props.games[`session${this.props.activeGame}`][tile].matched)
+                                                (!this.getLocked() && this.getCounter() < 2 && !this.props.games[`session${this.props.activeGame}`][tile].matched && !this.props.games[`session${this.props.activeGame}`][tile].flipped)
                                                     ?
                                                     () => {
                                                         this.triggerDispatch(this.props.games[`session${this.props.activeGame}`][tile].index)
@@ -358,6 +374,7 @@ class Board extends PureComponent {
  * @returns {{board: (Array|*)}}
  */
 const mapStateToProps = (state, props) => {
+
     return {
         board : state.board,
         games : sessionsSelector(state),
@@ -377,7 +394,8 @@ const mapDispatchToProps = (dispatch) => {
         boardState : payload => dispatch(boardActions.boardState(payload)),
         dataToBoard : payload => dispatch(boardActions.dataToBoard(payload)),
         incrementFlipCount : payload => dispatch(boardActions.incrementFlipCount(payload)),
-        decrementFlipCount : payload => dispatch(boardActions.decrementFlipCount(payload))
+        decrementFlipCount : payload => dispatch(boardActions.decrementFlipCount(payload)),
+        incrementActiveGame : payload => dispatch(boardActions.incrementActiveGame(payload))
     };
 };
 

@@ -46,6 +46,7 @@ module.exports = {
     module: {
         exprContextCritical : false,
         loaders: [
+            { test: /\.json($|\?)/, use: 'json-loader' },
             { test: /\.jsx?/, loader: 'babel-loader', exclude: /node_modules/ },
             { test: /\.css$/, loader: 'style-loader!css-loader' },
             { test: /\.less$/, loader: 'style-loader!css-loader!less-loader'}
