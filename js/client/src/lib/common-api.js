@@ -98,7 +98,6 @@ export const getShuffleData = (dataObject = {}) => {
     if(isDefined(dataObject) && isObject(dataObject)){
         let moveData = Object.values(dataObject);
         for(let j, x, i = moveData.length; i; j = Math.floor(Math.random() * i), x = moveData[--i], moveData[i] = moveData[j], moveData[j] = x){}
-        //console.log(moveData);
         return moveData;
     }
     else { throw new Error(BAD_ARGS); }
@@ -139,8 +138,8 @@ export const buildDynamicObject = (object = {}, dataObject = {}) => {
                 matched: false,
             };
         });
+        return object;
     });
-    return object;
 };
 
 
@@ -160,8 +159,6 @@ export const flattenObjectToShuffle = (dataObject = {}) => {
             dataObject[item][child] = getShuffleData(makeCopy)[index];
         });
     });
-
-
     return dataObject;
 };
 
@@ -176,10 +173,9 @@ export const flattenObjectToShuffle = (dataObject = {}) => {
  */
 export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
 
-    let iterator = 0, sessions = 0, tiles = {}, original = {}, copy = {}, merged = {};
+    let iterator = 0, sessions = 0, tiles = {}, original = {}, copy = {}, shuffled = [];
 
     dataObject = getShuffleData(dataObject);
-    console.log(dataObject);
 
     Object.keys(dataObject).forEach((item, index) => {
 
@@ -195,12 +191,9 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
             original[`session${sessions}`] = copy[`session${sessions}`] = {...tiles};
             tiles = {};
         }
-
     });
 
-    let shuffleData =  Object.assign(original, buildDynamicObject(copy, dataObject));
-
-    return flattenObjectToShuffle(shuffleData);
+    return Object.assign(original, buildDynamicObject(copy, dataObject));
 };
 
 
@@ -213,23 +206,14 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
  */
 export const buildDataFromUrl = () => {
 
-    fetchFromUrl(API_FETCH_URL)
-        .then((dataFromUrl) => {
-
-        if(hasObjectProperties(dataFromUrl, getHttpObjectProperties())){
-            console.log(buildCopyObject(dataFromUrl, 5));
-        }
-
-
-
+    return new Promise((resolve) => {
+        fetchFromUrl(API_FETCH_URL)
+            .then((dataFromUrl) => {
+                if (hasObjectProperties(dataFromUrl, getHttpObjectProperties())) {
+                    resolve(resolve(buildCopyObject(dataFromUrl, 5)));
+                }
+            });
     });
-
-    // 6. loop that object
-    // 7. build a new object using the index from the loop, index should now be 1-10
-    // 8. do this until all 134 items are done
-    // 9. return the object to the state
-
-    //console.log(fiveObjectsCopy);
 };
 
 

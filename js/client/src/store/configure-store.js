@@ -46,5 +46,5 @@ const logger = createLogger({
 });
 
 export default function configureStore(initialState) {
-    return createStore(rootReducer, initialState, applyMiddleware(logger, thunk));
+    return createStore(rootReducer, initialState, applyMiddleware(thunk, logger));
 }

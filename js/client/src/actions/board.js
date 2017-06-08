@@ -38,12 +38,11 @@ import {
     INCREMENT_FLIPCOUNT_STATE,
     DECREMENT_FLIPCOUNT_STATE
 } from '../constants/action-types/board.js';
-import {
-    API_FETCH_URL
-} from '../constants/common-application';
+
 import {
     buildDataFromUrl
 } from '../lib/common-api';
+
 
 
 /**
@@ -68,8 +67,6 @@ export const getBoardState = (payload) => {
  */
 export const boardState = (payload) => {
 
-    console.log(buildDataFromUrl());
-
     return (dispatch) => {
         dispatch(getBoardState(payload));
     };
@@ -90,7 +87,6 @@ export const getDataToBoard = (payload) => {
 };
 
 
-
 /**
  * DOING: Fetch data from url to board
  * and dispatch the data to state object.
@@ -98,13 +94,16 @@ export const getDataToBoard = (payload) => {
  * @returns {function(*)}
  */
 export const dataToBoard = (payload) => {
-
-    fetchFromUrl(API_FETCH_URL).then((data) => {
-        console.log(data);
-    });
-
     return (dispatch) => {
-        dispatch(getDataToBoard(payload));
+        buildDataFromUrl().then(data => {
+            payload = {
+                score : 0,
+                flipCount : 0,
+                activeGame : 1,
+                sessions : {...data}
+            };
+            dispatch(getDataToBoard(payload));
+        });
     };
 };
 

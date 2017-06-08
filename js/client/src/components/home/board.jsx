@@ -36,7 +36,6 @@ import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
 import * as boardActions from '../../actions/board';
 
-
 /**
  * DOING: Import react components here
  * to separate from the rest of the code.
@@ -53,6 +52,11 @@ import {
     isDefined,
     isArray
 } from '../../lib/common-type';
+
+import {
+    sessionsSelector,
+    activeGameSelector
+} from '../../selectors/board';
 
 
 /**
@@ -72,27 +76,26 @@ class Board extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.session = 0;
         this.counter = 0;
         this.matchingTiles = [];
         this.locked = false;
-
     }
 
 
     /**
      * DOING: Should reset the board triggered
      * by the function. Resets the state by dispatch.
+     *
      */
     triggerResetBoard() {
         setTimeout(() => {
-            Object.keys(this.props.board.byId).forEach((item) => {
-                this.props.board.byId[item].flipped = !!(this.props.board.byId[item].matched);
+            Object.keys(this.props.games[`session${this.props.activeGame}`]).forEach((item) => {
+                this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
             });
 
             this.resetHelpers();
             if(this.getCounter() <= 2) {
-            this.props.boardState(this.props.board);
+            this.props.boardState(this.props.games);
             }
 
             this.triggerUnlockBoard();
@@ -205,7 +208,7 @@ class Board extends PureComponent {
      */
     setMatched(payloadId) {
         (isDefined(payloadId) && isNumber(payloadId));
-        this.props.board.byId[`tile${payloadId}`].matched = true;
+        this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched = true;
         this.props.decrementFlipCount();
     }
 
@@ -260,14 +263,14 @@ class Board extends PureComponent {
         this.props.incrementFlipCount();
 
         // Dispatch initial flipped state
-        this.props.board.byId[`tile${payloadId}`].flipped = !(this.props.board.byId[`tile${payloadId}`].matched);
-        this.dispatchState(this.props.board.byId);
+        this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].flipped = !(this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched);
+        this.dispatchState(this.props.games[`session${this.props.activeGame}`]);
 
         /**
          * Should add the current tile to the
          * array for matching.
          */
-        this.setMatchingTiles(this.props.board.byId[`tile${payloadId}`]);
+        this.setMatchingTiles(this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`]);
 
         /**
          * Should if 2 tiles are flipped, check them
@@ -281,7 +284,7 @@ class Board extends PureComponent {
             /**
              * Return the n of matched tiles
              */
-            let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val.name === this.props.board.byId[`tile${payloadId}`].name), 0);
+            let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val.name === this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].name), 0);
 
             if (getMatch === 2) {
                 this.getMatchingTiles().forEach((item) => this.setMatched(item.index));
@@ -295,6 +298,8 @@ class Board extends PureComponent {
         }
     }
 
+
+
     render() {
 
         return (
@@ -302,32 +307,39 @@ class Board extends PureComponent {
                 <Card>
                     <CardText style={{fontSize: '13px'}}>
                         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
+                            {
+                                (this.props.games)
+                                ?
 
-                            {Object.keys(this.props.board.byId).map((tile) => {
-                                return <div
-                                    key={`triggerWrapper${this.props.board.byId[tile].index}`}
-                                    onClick={
-                                        (!this.getLocked() && this.getCounter() < 2 && !this.props.board.byId[tile].matched)
-                                        ?
-                                        () => {
-                                            this.triggerDispatch(this.props.board.byId[tile].index)
-                                        }
-                                        : () => {
-                                            if(this.getLocked()){
-                                                alert('too fast, calm down');
+                                    Object.keys(this.props.games[`session${this.props.activeGame}`]).map((tile) => {
+                                        return <div
+                                            key={`triggerWrapper${this.props.games[`session${this.props.activeGame}`][tile].index}`}
+                                            onClick={
+                                                (!this.getLocked() && this.getCounter() < 2 && !this.props.games[`session${this.props.activeGame}`][tile].matched)
+                                                    ?
+                                                    () => {
+                                                        this.triggerDispatch(this.props.games[`session${this.props.activeGame}`][tile].index)
+                                                    }
+                                                    : () => {
+                                                    if(this.getLocked()){
+                                                        alert('too fast, calm down');
+                                                    }
+                                                    this.triggerResetBoard();
+                                                }
                                             }
-                                            this.triggerResetBoard();
-                                        }
-                                    }
-                                >
-                                <TileWrapper
-                                        key={`tileWrapper${this.props.board.byId[tile].index}`}
-                                        index={this.props.board.byId[tile].index}
-                                        {...this.props.board.byId[tile]}
-                                    />
-                                </div>
-                            })}
+                                        >
+                                            <TileWrapper
+                                                key={`tileWrapper${this.props.games[`session${this.props.activeGame}`][tile].index}`}
+                                                index={this.props.games[`session${this.props.activeGame}`][tile].index}
+                                                {...this.props.games[`session${this.props.activeGame}`][tile]}
+                                            />
+                                        </div>
+                                    })
 
+                                    : <div>
+                                    Loading....
+                                </div>
+                            }
                         </div>
                     </CardText>
                 </Card>
@@ -348,6 +360,8 @@ class Board extends PureComponent {
 const mapStateToProps = (state, props) => {
     return {
         board : state.board,
+        games : sessionsSelector(state),
+        activeGame : activeGameSelector(state),
     }
 };
 

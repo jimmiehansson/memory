@@ -56,13 +56,16 @@ const Tile = props => {
         width: 150,
         margin: 20,
         textAlign: 'center',
-        display: 'inline-block'
+        display: 'inline-block',
     };
+
+    const image = `http:${props.imagePortraitUrl}`;
+
 
     return (
         <div>
-            <Paper className={`tile-front tile-front-${props.index} ${(props.matched) ? 'matched' : ''}`} style={style}>
-                {props.name}
+            <Paper className={`tile-front tile-front-${props.index} ${(props.matched) ? 'matched' : ''}`} style={style} >
+                <img src={image} id={props.index} style={{}} />
             </Paper>
             <Paper className={`tile-back tile-back-${props.index}`} style={style}>
                 {props.index}

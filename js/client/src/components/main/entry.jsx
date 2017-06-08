@@ -35,8 +35,13 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import configureStore from '../../store/configure-store';
-import { populate } from '../../store/populate-state';
 import { Router, Route, hashHistory } from 'react-router'; // hashHistory for electron
+import * as boardActions from '../../actions/board';
+
+/**
+ * DOING: Import universal and associated libraries
+ * here to separate from the rest of the code.
+ */
 
 /**
  * DOING: Only style/theme libraries
@@ -80,8 +85,8 @@ const muiTheme = getMuiTheme({
     }
 });
 
-
-const store = configureStore(populate.default());
+const store = configureStore();
+store.dispatch(boardActions.dataToBoard());
 
 render (
     <Provider store={store}>

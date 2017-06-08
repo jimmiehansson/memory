@@ -39,18 +39,20 @@ import { createSelector } from 'reselect';
  * to executing the selector functions.
  * @param state
  */
-export const getBoard = state => state;
+export const getSessions = state => state.board.sessions;
+export const getActiveGame = state => state.board.activeGame;
 
 
 /**
- * DOING: Get the highest order of cardboard objects
- * stored in the state.
+ * DOING: Should return a cursor
+ * for the current sessions stored in state.
  */
-export const boardSelector = createSelector([ getBoard ], (board) => board);
+export const sessionsSelector = createSelector([ getSessions ], (board) => board);
 
 
 /**
- * DOING: Get the total number of cardboard objects
- * with the flipped key true.
+ * DOING: Should return a cursor
+ * for the current active game stored in state.
  */
-export const countTotalFlipped = createSelector([ getBoard ], (board) => board.flipCount);
+export const activeGameSelector = createSelector([ getActiveGame ], (board) => board);
+
