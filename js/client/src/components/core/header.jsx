@@ -52,6 +52,10 @@ class Header extends Component {
         this.state = {
             drawerNavOpen:false
         };
+
+        // make stateful, implement
+        // redux connection to store
+        // return score-keeping
     }
 
     handleToggle = () => this.setState({drawerNavOpen: !this.state.drawerNavOpen});

@@ -218,6 +218,8 @@ export const buildDataFromUrl = () => {
                     resolve(resolve(buildCopyObject(dataFromUrl, 6)));
                 }
             });
+
+        // try, catch... NO_RETURN_DATA
     });
 };
 
