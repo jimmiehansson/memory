@@ -67,7 +67,6 @@ import {
     CardText
 } from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 
 
 
@@ -76,6 +75,8 @@ class Board extends PureComponent {
 
     constructor(props) {
         super(props);
+
+        this.audioLoop = new Audio('');
 
         this.counter = 0;
         this.matchingTiles = [];
@@ -95,7 +96,9 @@ class Board extends PureComponent {
             Object.keys(this.props.games[`session${this.props.activeGame}`]).forEach((item) => {
                 this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
             });
-            this.setDialog(false);
+            setTimeout(() => {
+                this.setDialog(false);
+            }, 6000);
             this.resetHelpers();
             if(this.getCounter() <= 2) {
             this.props.boardState(this.props.games);
@@ -277,7 +280,7 @@ class Board extends PureComponent {
         this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].flipped = !(this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched);
         this.dispatchState(this.props.games[`session${this.props.activeGame}`]);
 
-        this.setDialog(false);
+        //this.setDialog(false);
 
         /**
          * Should add the current tile to the
@@ -311,14 +314,16 @@ class Board extends PureComponent {
         }
 
         /**
-         * Should return the total amount of tiles
-         * that have matched set to true.
+         * Should return the n of tiles
+         * that have matched true in total.
          */
         let setGameSession =
             Object.values(this.props.games[`session${this.props.activeGame}`]).reduce((total, val) => total + (val.matched===true), 0);
 
         /**
-         * If tiles are all matched, level up
+         * Return next n of game where
+         * n still is less than total
+         *
          */
         if(
             setGameSession===Object.keys(this.props.games[`session${this.props.activeGame}`]).length &&
@@ -328,7 +333,7 @@ class Board extends PureComponent {
 
             setTimeout(() => {
                 this.props.incrementActiveGame(this.props);
-            }, 2500);
+            }, 4500);
         }
     }
 

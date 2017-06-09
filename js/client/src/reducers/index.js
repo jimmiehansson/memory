@@ -7,7 +7,7 @@
  * Project of: memory
  * Filename: index.js by jimmie
  * Created: 2017-05-31 @ 15:26
- * Product of: Webstpr,
+ * Product of: Webstorm
  * // -------------------------------------------------
  * Make sure this file is part of its proper namespace
  * and project before moving on.
