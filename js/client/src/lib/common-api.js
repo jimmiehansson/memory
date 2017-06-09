@@ -35,6 +35,7 @@
 import fetch from 'isomorphic-fetch';
 import {
     BAD_REQUEST,
+    NO_RETURN_DATA,
     BAD_ARGS
 } from '../constants/language/english';
 import {
@@ -126,8 +127,12 @@ export const buildDynamicObject = (object = {}, dataObject = {}) => {
 
     Object.keys(object).forEach((item, index) => {
 
+        /**
+         * CLARIFY: Should rebuild the data
+         * by shuffling the values before merging with original.
+         * @type {Array}
+         */
         shuffled = Object.keys(object[item]);
-
         for(let i=shuffled.length;i--;) shuffled.push(shuffled.splice(Math.floor(Math.random() * (i + 1)),1)[0]);
 
         Object.keys(object[item]).forEach((child, idx) => {
@@ -135,6 +140,7 @@ export const buildDynamicObject = (object = {}, dataObject = {}) => {
             let tileIndex = object[item][shuffled[idx]].index;
             let tileIndexCursor = tileIndex + getTotalCountFromObject(dataObject);
 
+            // Assemble copy object
             object[item][`tile${tileIndexCursor}`] = {
                 name: object[item][shuffled[idx]].name,
                 imagePortraitUrl: object[item][shuffled[idx]].imagePortraitUrl,
@@ -181,6 +187,7 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
 
     let iterator = 0, sessions = 0, tiles = {}, original = {}, copy = {}, shuffled = [];
 
+    // shuffle initial load
     dataObject = getShuffleData(dataObject);
 
     Object.keys(dataObject).forEach((item, index) => {
@@ -193,6 +200,7 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
             tiles[`tile${dataObject[item].index}`] = dataObject[item];
         }
 
+        // n of tiles returned
         if (Object.keys(tiles).length === groupByNumber) {
             original[`session${sessions}`] = copy[`session${sessions}`] = {...tiles};
             tiles = {};
@@ -211,15 +219,25 @@ export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
  */
 export const buildDataFromUrl = () => {
 
+    /**
+     * DOING: Should return a promise
+     * after retrieving the data batch and build
+     * final data.
+     */
     return new Promise((resolve) => {
-        fetchFromUrl(API_FETCH_URL)
-            .then((dataFromUrl) => {
-                if (hasObjectProperties(dataFromUrl, getHttpObjectProperties())) {
-                    resolve(resolve(buildCopyObject(dataFromUrl, 6)));
-                }
-            });
 
-        // try, catch... NO_RETURN_DATA
+        try {
+            fetchFromUrl(API_FETCH_URL)
+                .then((dataFromUrl) => {
+                    if (hasObjectProperties(dataFromUrl, getHttpObjectProperties())) {
+                        // build and return dataset
+                        resolve(resolve(buildCopyObject(dataFromUrl, 6)));
+                    }
+                });
+        }
+        catch(error) {
+            throw new Error(error, NO_RETURN_DATA);
+        }
     });
 };
 

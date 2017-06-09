@@ -38,10 +38,6 @@ import configureStore from '../../store/configure-store';
 import { Router, Route, hashHistory } from 'react-router'; // hashHistory for electron
 import * as boardActions from '../../actions/board';
 
-/**
- * DOING: Import universal and associated libraries
- * here to separate from the rest of the code.
- */
 
 /**
  * DOING: Only style/theme libraries
@@ -85,8 +81,13 @@ const muiTheme = getMuiTheme({
     }
 });
 
+/**
+ * DOING: Should dispatch the preload state
+ * and initialize the first state of the store.
+ */
 const store = configureStore();
 store.dispatch(boardActions.dataToBoard());
+
 
 render (
     <Provider store={store}>

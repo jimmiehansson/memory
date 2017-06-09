@@ -51,7 +51,7 @@ const Tile = props => {
 
 
     // Set default tile style
-    const style = {
+    const paperStyle = {
         height: 200,
         width: 150,
         margin: 20,
@@ -59,16 +59,23 @@ const Tile = props => {
         display: 'inline-block',
     };
 
+    // Set default image style
+    let imageStyle = {
+        minWidth: '100%',
+        minHeight: '100%',
+    };
+
+
     const image = `http:${props.imagePortraitUrl}`;
 
 
     return (
         <div>
-            <Paper className={`tile-front tile-front-${props.index} ${(props.matched) ? 'matched' : ''}`} style={style} >
-                    <img src={image} id={props.index} style={{}} />
+            <Paper className={`tile-front tile-front-${props.index} ${(props.matched) ? 'matched' : ''}`} style={paperStyle} >
+                    <img src={image} id={props.index} style={imageStyle} />
                     {props.name}
             </Paper>
-            <Paper className={`tile-back tile-back-${props.index}`} style={style}>
+            <Paper className={`tile-back tile-back-${props.index}`} style={paperStyle}>
                 {props.index}
             </Paper>
         </div>

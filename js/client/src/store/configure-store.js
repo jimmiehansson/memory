@@ -27,6 +27,7 @@
  * Repository link: https://github.com/jimmiehansson/memory.git
  */
 
+
 /**
  * DOING: Redux legacy/*-associated imports of libraries only.
  * Keep other code separate from this.
@@ -35,6 +36,7 @@ import { applyMiddleware, createStore } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
+
 
 /**
  * DOING: Instantiate store-middleware
@@ -45,6 +47,7 @@ const logger = createLogger({
     timestamp: true
 });
 
+// create store with middleware
 export default function configureStore(initialState) {
     return createStore(rootReducer, initialState, applyMiddleware(thunk, logger));
 }

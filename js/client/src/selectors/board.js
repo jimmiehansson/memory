@@ -34,6 +34,7 @@
  */
 import { createSelector } from 'reselect';
 
+
 /**
  * DOING: State should be fetched prior
  * to executing the selector functions.

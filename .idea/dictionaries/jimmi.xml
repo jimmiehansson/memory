@@ -3,6 +3,8 @@
     <words>
       <w>activegame</w>
       <w>cardtile</w>
+      <w>dataset</w>
+      <w>fadeinout</w>
       <w>flipcard</w>
       <w>flipcount</w>
       <w>redux</w>
@@ -10,6 +12,7 @@
       <w>scorekeeping</w>
       <w>subheader</w>
       <w>tilewrapper</w>
+      <w>webstorm</w>
     </words>
   </dictionary>
 </component>

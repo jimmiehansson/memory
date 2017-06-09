@@ -67,7 +67,6 @@ export const getBoardState = (payload) => {
  * @returns {function(*)}
  */
 export const boardState = (payload) => {
-
     return (dispatch) => {
         dispatch(getBoardState(payload));
     };

@@ -48,6 +48,9 @@ import TileWrapper from './tile-wrapper.jsx';
  * here to separate from the rest of the code.
  */
 import {
+    BAD_ARGS
+} from '../../constants/language/english';
+import {
     AUDIO_MAIN_LOOP,
     AUDIO_EVENT_CLICK,
     AUDIO_EVENT_MATCH,
@@ -57,6 +60,9 @@ import {
 import {
     isNumber,
     isDefined,
+    isString,
+    isBoolean,
+    isObject,
     isArray
 } from '../../lib/common-type';
 import {
@@ -113,6 +119,10 @@ class Board extends PureComponent {
      * @param event
      */
     setAudio(event) {
+
+        if(!isString(event)){
+            throw new Error(BAD_ARGS);
+        }
 
         switch(event) {
             case 'main':
@@ -251,7 +261,6 @@ class Board extends PureComponent {
      * value and return it.
      */
     getCounter() {
-        (isDefined(this.counter) && isNumber(this.counter));
         return this.counter;
     }
 
@@ -280,7 +289,9 @@ class Board extends PureComponent {
      * @param data
      */
     setMatchingTiles(data) {
-        (isDefined(data) && isArray(data));
+        if(!isObject(data)){
+            throw new Error(BAD_ARGS);
+        }
         this.matchingTiles.push(data);
     }
 
@@ -291,7 +302,9 @@ class Board extends PureComponent {
      * @param payloadId
      */
     setMatched(payloadId) {
-        (isDefined(payloadId) && isNumber(payloadId));
+        if(!isNumber(payloadId)){
+            throw new Error(BAD_ARGS);
+        }
         this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched = true;
         this.props.decrementFlipCount();
     }
@@ -302,7 +315,6 @@ class Board extends PureComponent {
      * array in complete.
      */
     getMatchingTiles() {
-        (isDefined(this.matchingTiles) && isArray(this.matchingTiles));
         return this.matchingTiles;
     }
 
@@ -314,6 +326,9 @@ class Board extends PureComponent {
      * @returns {*}
      */
     countMatchingTiles(data) {
+        if(!isString(data)){
+            throw new Error(BAD_ARGS);
+        }
         return this.getMatchingTiles().reduce((acm, val) => acm + (val.name === data), 0);
     }
 
@@ -325,6 +340,9 @@ class Board extends PureComponent {
      * @returns {*}
      */
     countMatchingSession(data){
+        if(!isObject(data)){
+            throw new Error(BAD_ARGS);
+        }
         return Object.values(data).reduce((total, val) => total + (val.matched===true), 0);
     }
 
@@ -335,6 +353,9 @@ class Board extends PureComponent {
      * @param active
      */
     setDialog(active) {
+        if(!isBoolean(active)){
+            throw new Error(BAD_ARGS);
+        }
         this.dialog = active;
     }
 
@@ -356,6 +377,9 @@ class Board extends PureComponent {
      * @param payload
      */
     dispatchState(payload) {
+        if(!isObject(payload)){
+            throw new Error(BAD_ARGS);
+        }
         this.props.boardState(payload);
     }
 
@@ -369,7 +393,9 @@ class Board extends PureComponent {
      */
     triggerDispatch(payloadId) {
 
-        (isNumber(payloadId) && isDefined(payloadId));
+        if(!isNumber(payloadId)){
+            throw new Error(BAD_ARGS);
+        }
 
         this.doIncrementCounter();
 
@@ -508,7 +534,6 @@ class Board extends PureComponent {
  * @returns {{board: (Array|*)}}
  */
 const mapStateToProps = (state, props) => {
-
     return {
         board : state.board,
         games : sessionsSelector(state),
