@@ -48,6 +48,13 @@ import TileWrapper from './tile-wrapper.jsx';
  * here to separate from the rest of the code.
  */
 import {
+    AUDIO_MAIN_LOOP,
+    AUDIO_EVENT_CLICK,
+    AUDIO_EVENT_MATCH,
+    AUDIO_EVENT_GAME,
+    AUDIO_EVENT_WRONG,
+} from '../../constants/common-application';
+import {
     isNumber,
     isDefined,
     isArray
@@ -76,12 +83,75 @@ class Board extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.audioLoop = new Audio('');
+        // Audio
+        this.audio = new Audio();
+        this.audioMain = new Audio();
 
+
+        // Logic
         this.counter = 0;
         this.matchingTiles = [];
         this.locked = false;
+
+        // UI
         this.dialog = false;
+    }
+
+
+    /**
+     * DOING: Return initial context
+     * for component state.
+     */
+    componentDidMount() {
+        this.setAudio('main');
+    }
+
+
+    /**
+     * DOING: Should return audio
+     * context for event.
+     * @param event
+     */
+    setAudio(event) {
+
+        switch(event) {
+            case 'main':
+                this.audioMain.src = AUDIO_MAIN_LOOP;
+                this.audioMain.loop = true;
+                this.audioMain.volume = 0.3;
+                this.audioMain.play();
+                break;
+            case 'click':
+                this.audio.pause();
+                this.audio.src = AUDIO_EVENT_CLICK;
+                this.audio.volume = 0.8;
+                this.audio.play();
+                break;
+            case 'match':
+                this.audio.pause();
+                this.audio.src = AUDIO_EVENT_MATCH;
+                this.audio.volume = 0.9;
+                this.audio.play();
+                break;
+            case 'game':
+                this.audio.pause();
+                this.audio.src = AUDIO_EVENT_GAME;
+                this.audio.volume = 0.7;
+                this.audio.play();
+                break;
+            case 'wrong':
+                this.audio.pause();
+                this.audio.src = AUDIO_EVENT_WRONG;
+                this.audio.volume = 0.9;
+                this.audio.play();
+                break;
+            default:
+                this.audio.pause();
+                this.audio.loop = true;
+                this.audio.volume = 0.3;
+                this.audio.play();
+        }
+
     }
 
 
@@ -95,17 +165,25 @@ class Board extends PureComponent {
         setTimeout(() => {
             Object.keys(this.props.games[`session${this.props.activeGame}`]).forEach((item) => {
                 this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
+                if(this.countMatchingTiles(this.props.games[`session${this.props.activeGame}`][item].name)===2) {
+                    this.setAudio('match');
+                }
             });
             setTimeout(() => {
                 this.setDialog(false);
-            }, 6000);
+            }, 4000);
+
+            if(this.countMatchingSession(this.props.games[`session${this.props.activeGame}`])===Object.keys(this.props.games[`session${this.props.activeGame}`]).length) {
+                this.setAudio('game');
+            }
+
             this.resetHelpers();
             if(this.getCounter() <= 2) {
-            this.props.boardState(this.props.games);
+                this.props.boardState(this.props.games);
             }
 
             this.triggerUnlockBoard();
-        },1200);
+        },1500);
     }
 
 
@@ -230,6 +308,28 @@ class Board extends PureComponent {
 
 
     /**
+     * DOING: Should return n of the
+     * tiles matching.
+     * @param data
+     * @returns {*}
+     */
+    countMatchingTiles(data) {
+        return this.getMatchingTiles().reduce((acm, val) => acm + (val.name === data), 0);
+    }
+
+
+    /**
+     * DOING: Should return n of the
+     * tiles matching per session.
+     * @param data
+     * @returns {*}
+     */
+    countMatchingSession(data){
+        return Object.values(data).reduce((total, val) => total + (val.matched===true), 0);
+    }
+
+
+    /**
      * DOING: Should return a dialog
      * in the main interface.
      * @param active
@@ -280,8 +380,6 @@ class Board extends PureComponent {
         this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].flipped = !(this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched);
         this.dispatchState(this.props.games[`session${this.props.activeGame}`]);
 
-        //this.setDialog(false);
-
         /**
          * Should add the current tile to the
          * array for matching.
@@ -300,7 +398,7 @@ class Board extends PureComponent {
             /**
              * Return the n of matched tiles
              */
-            let getMatch = this.getMatchingTiles().reduce((acm, val) => acm + (val.name === this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].name), 0);
+            let getMatch = this.countMatchingTiles(this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].name);
 
             if (getMatch === 2) {
                 this.getMatchingTiles().forEach((item) => this.setMatched(item.index));
@@ -309,7 +407,6 @@ class Board extends PureComponent {
             else {
                 this.triggerUnlockBoard();
             }
-
             this.triggerResetBoard();
         }
 
@@ -317,8 +414,8 @@ class Board extends PureComponent {
          * Should return the n of tiles
          * that have matched true in total.
          */
-        let setGameSession =
-            Object.values(this.props.games[`session${this.props.activeGame}`]).reduce((total, val) => total + (val.matched===true), 0);
+        let setGameSession = this.countMatchingSession(this.props.games[`session${this.props.activeGame}`]);
+
 
         /**
          * Return next n of game where
@@ -330,10 +427,11 @@ class Board extends PureComponent {
             this.props.activeGame < Object.keys(this.props.games).length
         ){
             this.setDialog(true);
+            this.setAudio('game');
 
             setTimeout(() => {
                 this.props.incrementActiveGame(this.props);
-            }, 4500);
+            }, 4000);
         }
     }
 
@@ -369,9 +467,11 @@ class Board extends PureComponent {
                                                     ?
                                                     () => {
                                                         this.triggerDispatch(this.props.games[`session${this.props.activeGame}`][tile].index)
+                                                        this.setAudio('click');
                                                     }
                                                     : () => {
                                                     if(this.getLocked()){
+                                                        this.setAudio('wrong');
                                                         alert('too fast, calm down');
                                                     }
                                                     this.triggerResetBoard();

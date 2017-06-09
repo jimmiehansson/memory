@@ -55,7 +55,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 /**
  * DOING: Adding components from our own sources
  */
-import Board from '../../components/home/board.jsx';
+import Board from '../game/board.jsx';
 import Menu from '../../components/core/menu.jsx';
 
 /**
