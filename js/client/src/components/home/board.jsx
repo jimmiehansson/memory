@@ -66,6 +66,9 @@ import {
     Card,
     CardText
 } from 'material-ui/Card';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+
 
 
 class Board extends PureComponent {
@@ -77,6 +80,7 @@ class Board extends PureComponent {
         this.counter = 0;
         this.matchingTiles = [];
         this.locked = false;
+        this.dialog = false;
     }
 
 
@@ -91,14 +95,14 @@ class Board extends PureComponent {
             Object.keys(this.props.games[`session${this.props.activeGame}`]).forEach((item) => {
                 this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
             });
-
+            this.setDialog(false);
             this.resetHelpers();
             if(this.getCounter() <= 2) {
             this.props.boardState(this.props.games);
             }
 
             this.triggerUnlockBoard();
-        },2000);
+        },1200);
     }
 
 
@@ -223,6 +227,26 @@ class Board extends PureComponent {
 
 
     /**
+     * DOING: Should return a dialog
+     * in the main interface.
+     * @param active
+     */
+    setDialog(active) {
+        this.dialog = active;
+    }
+
+
+    /**
+     * DOING: Should return state
+     * of the dialog component.
+     * @returns {*}
+     */
+    getDialog(){
+        return this.dialog;
+    }
+
+
+    /**
      * DOING: Returns new state after
      * dispatching new payload to the
      * store.
@@ -242,19 +266,7 @@ class Board extends PureComponent {
      */
     triggerDispatch(payloadId) {
 
-
-        // Update the board component logic
-        // to match that of the new store object
-        // 1. Set a session object
-        // 2. Check what session it is
-        // 3. Update cursors to match the new path in the store object
-        // 4. When all are set to matched in the first session node end it
-        // 5. Start session 2 with 10 new tiles, all set matched to false
-
-
         (isNumber(payloadId) && isDefined(payloadId));
-
-        this.props.boardState(this.props.board);
 
         this.doIncrementCounter();
 
@@ -264,6 +276,8 @@ class Board extends PureComponent {
         // Dispatch initial flipped state
         this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].flipped = !(this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched);
         this.dispatchState(this.props.games[`session${this.props.activeGame}`]);
+
+        this.setDialog(false);
 
         /**
          * Should add the current tile to the
@@ -299,26 +313,41 @@ class Board extends PureComponent {
         /**
          * Should return the total amount of tiles
          * that have matched set to true.
-         * On return, dispatch to increment the game session
-         * number by one numeral.
-         * @type {*}
          */
         let setGameSession =
             Object.values(this.props.games[`session${this.props.activeGame}`]).reduce((total, val) => total + (val.matched===true), 0);
 
+        /**
+         * If tiles are all matched, level up
+         */
         if(
             setGameSession===Object.keys(this.props.games[`session${this.props.activeGame}`]).length &&
             this.props.activeGame < Object.keys(this.props.games).length
         ){
-            // Add some user feedback here
-            this.props.incrementActiveGame(this.props);
+            this.setDialog(true);
+
+            setTimeout(() => {
+                this.props.incrementActiveGame(this.props);
+            }, 2500);
         }
     }
 
-
     render() {
+
         return (
             <div>
+                {
+                <div>
+                    <Dialog
+                        title={`Congratulations! Level ${this.props.activeGame} finished!`}
+                        modal={true}
+                        open={this.getDialog()}
+                        >
+                        Loading, get ready for your next game....
+                    </Dialog>
+                </div>
+                }
+
                 <Card>
                     <CardText style={{fontSize: '13px'}}>
                         <div className="flexWrapper" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around'}}>
