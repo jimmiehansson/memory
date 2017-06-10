@@ -60,7 +60,7 @@ app.on("ready", () => {
         width: 850,
         height: 950,
         resizable: false,
-        frame: true,
+        frame: false,
         transparent: false,
         vibrancy: "dark",
         skipTaskbar: true,

@@ -36,6 +36,7 @@ import React, {PureComponent} from 'react';
 import { connect } from 'react-redux';
 import * as boardActions from '../../actions/board';
 
+
 /**
  * DOING: Import react components here
  * to separate from the rest of the code.
@@ -59,15 +60,14 @@ import {
 } from '../../constants/common-application';
 import {
     isNumber,
-    isDefined,
     isString,
     isBoolean,
     isObject,
-    isArray
 } from '../../lib/common-type';
 import {
     sessionsSelector,
-    activeGameSelector
+    activeGameSelector,
+    scoreSelector
 } from '../../selectors/board';
 
 
@@ -115,7 +115,7 @@ class Board extends PureComponent {
 
     /**
      * DOING: Should return audio
-     * context for event.
+     * context for event and play.
      * @param event
      */
     setAudio(event) {
@@ -175,13 +175,16 @@ class Board extends PureComponent {
         setTimeout(() => {
             Object.keys(this.props.games[`session${this.props.activeGame}`]).forEach((item) => {
                 this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
+
                 if(this.countMatchingTiles(this.props.games[`session${this.props.activeGame}`][item].name)===2) {
                     this.setAudio('match');
                 }
             });
+
             setTimeout(() => {
                 this.setDialog(false);
             }, 4000);
+
 
             if(this.countMatchingSession(this.props.games[`session${this.props.activeGame}`])===Object.keys(this.props.games[`session${this.props.activeGame}`]).length) {
                 this.setAudio('game');
@@ -306,6 +309,7 @@ class Board extends PureComponent {
             throw new Error(BAD_ARGS);
         }
         this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched = true;
+        this.props.incrementScoreCount();
         this.props.decrementFlipCount();
     }
 
@@ -446,12 +450,12 @@ class Board extends PureComponent {
         /**
          * Return next n of game where
          * n still is less than total
-         *
          */
         if(
             setGameSession===Object.keys(this.props.games[`session${this.props.activeGame}`]).length &&
             this.props.activeGame < Object.keys(this.props.games).length
         ){
+
             this.setDialog(true);
             this.setAudio('game');
 
@@ -471,8 +475,10 @@ class Board extends PureComponent {
                         title={`Congratulations! Level ${this.props.activeGame} finished!`}
                         modal={true}
                         open={this.getDialog()}
+                        titleStyle={{fontFamily: 'Bangers', fontSize: '28px', color: '#45B649', textAlign: 'Center'}}
+                        bodyStyle={{fontFamily: 'Bangers', fontSize: '22px', textAlign: 'Center'}}
                         >
-                        Loading, get ready for your next game....
+                        {this.props.score} points! Get ready for your next game....
                     </Dialog>
                 </div>
                 }
@@ -538,6 +544,7 @@ const mapStateToProps = (state, props) => {
         board : state.board,
         games : sessionsSelector(state),
         activeGame : activeGameSelector(state),
+        score : scoreSelector(state),
     }
 };
 
@@ -554,7 +561,8 @@ const mapDispatchToProps = (dispatch) => {
         dataToBoard : payload => dispatch(boardActions.dataToBoard(payload)),
         incrementFlipCount : payload => dispatch(boardActions.incrementFlipCount(payload)),
         decrementFlipCount : payload => dispatch(boardActions.decrementFlipCount(payload)),
-        incrementActiveGame : payload => dispatch(boardActions.incrementActiveGame(payload))
+        incrementActiveGame : payload => dispatch(boardActions.incrementActiveGame(payload)),
+        incrementScoreCount : payload => dispatch(boardActions.incrementScoreCount(payload))
     };
 };
 

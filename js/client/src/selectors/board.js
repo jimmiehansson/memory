@@ -42,6 +42,7 @@ import { createSelector } from 'reselect';
  */
 export const getSessions = state => state.board.sessions;
 export const getActiveGame = state => state.board.activeGame;
+export const getScore = state => state.board.score;
 
 
 /**
@@ -56,4 +57,12 @@ export const sessionsSelector = createSelector([ getSessions ], (board) => board
  * for the current active game stored in state.
  */
 export const activeGameSelector = createSelector([ getActiveGame ], (board) => board);
+
+
+
+/**
+ * DOING: Should return a cursor
+ * for the current score stored in state.
+ */
+export const scoreSelector = createSelector([ getScore ], (board) => board);
 

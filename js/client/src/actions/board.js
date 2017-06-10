@@ -27,6 +27,13 @@
  * Repository link: https://github.com/jimmiehansson/memory.git
  */
 
+/**
+ * DOING: Import node associated libraries
+ * here to separate from the rest of the code.
+ */
+const moment = require('moment');
+
+
 
 /**
  * DOING: Import app associated and universal libraries
@@ -37,13 +44,13 @@ import {
     GET_DATA_TO_BOARD,
     INCREMENT_FLIPCOUNT_STATE,
     DECREMENT_FLIPCOUNT_STATE,
-    INCREMENT_ACTIVEGAME_STATE
+    INCREMENT_ACTIVEGAME_STATE,
+    INCREMENT_SCORE_STATE
 } from '../constants/action-types/board.js';
 
 import {
     buildDataFromUrl
 } from '../lib/common-api';
-
 
 
 /**
@@ -97,6 +104,7 @@ export const dataToBoard = (payload) => {
     return (dispatch) => {
         buildDataFromUrl().then(data => {
             payload = {
+                timestamp: moment(new Date()).format(),
                 score : 0,
                 flipCount : 0,
                 activeGame : 1,
@@ -142,5 +150,17 @@ export const decrementFlipCount = (payload) => {
 export const incrementActiveGame = () => {
     return {
         type: INCREMENT_ACTIVEGAME_STATE,
+    };
+};
+
+
+/**
+ * DOING: Score count should increment
+ * by one if the action has been triggered.
+ * @returns {{type: *, payload: *}}
+ */
+export const incrementScoreCount = () => {
+    return {
+        type: INCREMENT_SCORE_STATE,
     };
 };

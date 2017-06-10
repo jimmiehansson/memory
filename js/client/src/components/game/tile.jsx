@@ -76,7 +76,7 @@ const Tile = props => {
                     {props.name}
             </Paper>
             <Paper className={`tile-back tile-back-${props.index}`} style={paperStyle}>
-                {props.index}
+                Flip card
             </Paper>
         </div>
     )
