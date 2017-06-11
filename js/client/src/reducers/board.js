@@ -38,7 +38,7 @@ import {
     INCREMENT_FLIPCOUNT_STATE,
     DECREMENT_FLIPCOUNT_STATE,
     INCREMENT_ACTIVEGAME_STATE,
-    INCREMENT_SCORE_STATE,
+    INCREMENT_SCORECOUNT_STATE,
 } from '../constants/action-types/board.js';
 
 
@@ -56,7 +56,7 @@ export default (state = {}, {type, payload} ) => {
             return {...state, flipCount: state.flipCount-5};
         case  INCREMENT_ACTIVEGAME_STATE:
             return {...state, activeGame: state.activeGame+1};
-        case  INCREMENT_SCORE_STATE:
+        case  INCREMENT_SCORECOUNT_STATE:
             return {...state, score: state.score+Math.round((10 - state.flipCount / 20))};
         default:
             return state;

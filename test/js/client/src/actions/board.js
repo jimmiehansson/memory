@@ -186,6 +186,121 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     });
 
 
+    mocha.describe('Behaviors @action->decrementFlipCount::function', () =>{
+
+        let data = {
+            type : testLibrary.DECREMENT_FLIPCOUNT_STATE
+        };
+
+        mocha.describe('Assert normal', () => {
+            mocha.it('should return an action object with correct members', ()=> {
+                chai.expect(testScope.decrementFlipCount({})).to.deep.equal(data);
+            });
+            mocha.it('should not return an empty object', ()=> {
+                chai.expect(testScope.decrementFlipCount({})).to.not.equal({});
+            });
+            mocha.it('should have object member @type', ()=> {
+                chai.expect(testScope.decrementFlipCount({})).to.deep.property('type');
+            });
+            mocha.it('should not have object member @payload', ()=> {
+                chai.expect(testScope.decrementFlipCount({})).to.not.deep.property('payload');
+            });
+
+        });
+
+        mocha.describe('Assert error', () => {
+            mocha.it('should not return a string when passed a string', ()=> {
+                chai.expect(testScope.decrementFlipCount('')).to.not.deep.equal('string');
+            });
+            mocha.it('should not return a number when passed a number', ()=> {
+                chai.expect(testScope.decrementFlipCount(100)).to.not.deep.equal(100);
+            });
+            mocha.it('should not return a boolean when passed a boolean', ()=> {
+                chai.expect(testScope.decrementFlipCount(true)).to.not.deep.equal(true);
+            });
+            mocha.it('should not return an array when passed an array', ()=> {
+                chai.expect(testScope.decrementFlipCount([])).to.not.deep.equal([]);
+            });
+        });
+    });
+
+
+    mocha.describe('Behaviors @action->incrementActiveGame::function', () =>{
+
+        let data = {
+            type : testLibrary.INCREMENT_ACTIVEGAME_STATE
+        };
+
+        mocha.describe('Assert normal', () => {
+            mocha.it('should return an action object with correct members', ()=> {
+                chai.expect(testScope.incrementActiveGame({})).to.deep.equal(data);
+            });
+            mocha.it('should not return an empty object', ()=> {
+                chai.expect(testScope.incrementActiveGame({})).to.not.equal({});
+            });
+            mocha.it('should have object member @type', ()=> {
+                chai.expect(testScope.incrementActiveGame({})).to.deep.property('type');
+            });
+            mocha.it('should not have object member @payload', ()=> {
+                chai.expect(testScope.incrementActiveGame({})).to.not.deep.property('payload');
+            });
+
+        });
+
+        mocha.describe('Assert error', () => {
+            mocha.it('should not return a string when passed a string', ()=> {
+                chai.expect(testScope.incrementActiveGame('')).to.not.deep.equal('string');
+            });
+            mocha.it('should not return a number when passed a number', ()=> {
+                chai.expect(testScope.incrementActiveGame(100)).to.not.deep.equal(100);
+            });
+            mocha.it('should not return a boolean when passed a boolean', ()=> {
+                chai.expect(testScope.incrementActiveGame(true)).to.not.deep.equal(true);
+            });
+            mocha.it('should not return an array when passed an array', ()=> {
+                chai.expect(testScope.incrementActiveGame([])).to.not.deep.equal([]);
+            });
+        });
+    });
+
+
+    mocha.describe('Behaviors @action->incrementScoreCount::function', () =>{
+
+        let data = {
+            type : testLibrary.INCREMENT_SCORECOUNT_STATE
+        };
+
+        mocha.describe('Assert normal', () => {
+            mocha.it('should return an action object with correct members', ()=> {
+                chai.expect(testScope.incrementScoreCount({})).to.deep.equal(data);
+            });
+            mocha.it('should not return an empty object', ()=> {
+                chai.expect(testScope.incrementScoreCount({})).to.not.equal({});
+            });
+            mocha.it('should have object member @type', ()=> {
+                chai.expect(testScope.incrementScoreCount({})).to.deep.property('type');
+            });
+            mocha.it('should not have object member @payload', ()=> {
+                chai.expect(testScope.incrementScoreCount({})).to.not.deep.property('payload');
+            });
+
+        });
+
+        mocha.describe('Assert error', () => {
+            mocha.it('should not return a string when passed a string', ()=> {
+                chai.expect(testScope.incrementScoreCount('')).to.not.deep.equal('string');
+            });
+            mocha.it('should not return a number when passed a number', ()=> {
+                chai.expect(testScope.incrementScoreCount(100)).to.not.deep.equal(100);
+            });
+            mocha.it('should not return a boolean when passed a boolean', ()=> {
+                chai.expect(testScope.incrementScoreCount(true)).to.not.deep.equal(true);
+            });
+            mocha.it('should not return an array when passed an array', ()=> {
+                chai.expect(testScope.incrementScoreCount([])).to.not.deep.equal([]);
+            });
+        });
+    });
 });
 
 

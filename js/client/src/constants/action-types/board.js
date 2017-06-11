@@ -28,4 +28,4 @@ export const INCREMENT_ACTIVEGAME_STATE= '@@game/INCREMENT_ACTIVEGAME_STATE';
  * Game, score count
  * @type {string}
  */
-export const INCREMENT_SCORE_STATE= '@@game/INCREMENT_SCORE_STATE';
+export const INCREMENT_SCORECOUNT_STATE= '@@game/INCREMENT_SCORE_STATE';

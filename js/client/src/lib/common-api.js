@@ -185,7 +185,7 @@ export const flattenObjectToShuffle = (dataObject = {}) => {
  */
 export const buildCopyObject = (dataObject={}, groupByNumber=0) => {
 
-    let iterator = 0, sessions = 0, tiles = {}, original = {}, copy = {}, shuffled = [];
+    let iterator = 0, sessions = 0, tiles = {}, original = {}, copy = {};
 
     // shuffle initial load
     dataObject = getShuffleData(dataObject);

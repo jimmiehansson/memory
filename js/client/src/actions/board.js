@@ -45,7 +45,7 @@ import {
     INCREMENT_FLIPCOUNT_STATE,
     DECREMENT_FLIPCOUNT_STATE,
     INCREMENT_ACTIVEGAME_STATE,
-    INCREMENT_SCORE_STATE
+    INCREMENT_SCORECOUNT_STATE
 } from '../constants/action-types/board.js';
 
 import {
@@ -138,7 +138,6 @@ export const incrementFlipCount = () => {
 export const decrementFlipCount = (payload) => {
    return {
        type: DECREMENT_FLIPCOUNT_STATE,
-       payload: payload,
    };
 };
 
@@ -162,6 +161,6 @@ export const incrementActiveGame = () => {
  */
 export const incrementScoreCount = () => {
     return {
-        type: INCREMENT_SCORE_STATE,
+        type: INCREMENT_SCORECOUNT_STATE,
     };
 };

@@ -183,7 +183,7 @@ class Header extends PureComponent {
                         <Divider/>
                         <Subheader>Time spent playing</Subheader>
                         <ListItem disabled={true} style={{fontFamily:'Bangers', fontSize:'22px', color:'#8bc53e', padding: '15px'}}>
-                            {`${this.getHoursInDuration()} hours ${this.getMinutesInDuration()} minutes`}
+                            {`${this.getMinutesInDuration()} minutes (${this.getHoursInDuration()} hours)`}
                         </ListItem>
                         <Divider/>
                         <Paper
