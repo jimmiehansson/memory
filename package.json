@@ -2,13 +2,13 @@
   "name": "Memory",
   "version": "0.0.1",
   "author": "Jimmie Hansson",
-  "license": "Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)",
+  "license": "CC-BY-NC-SA-4.0",
   "description": "Memory game built as a an assignment for a job interview at Tretton37.",
   "main": "./js/client/pub/main/main.js",
   "scripts": {
     "start": "electron .",
     "watch": "./node_modules/.bin/webpack-dev-server",
-    "test": "mocha"
+    "test": "mocha --compilers js:babel-core/register --recursive"
   },
   "dependencies": {
     "all": "^0.0.0",
@@ -26,6 +26,7 @@
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-1": "^6.22.0",
     "bufferutil": "^3.0.0",
+    "chai": "^4.0.2",
     "classnames": "^2.2.5",
     "css-loader": "^0.26.2",
     "devtron": "^1.4.0",
@@ -57,8 +58,10 @@
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
+    "redux-mock-store": "^1.2.3",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
+    "sinon": "^2.3.4",
     "style-loader": "^0.13.2",
     "utf-8-validate": "^3.0.1",
     "v8-profiler": "^5.7.0",

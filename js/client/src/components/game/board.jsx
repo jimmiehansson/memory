@@ -42,6 +42,7 @@ import * as boardActions from '../../actions/board';
  * to separate from the rest of the code.
  */
 import TileWrapper from './tile-wrapper.jsx';
+import GameDialog from './game-dialog.jsx';
 
 
 /**
@@ -67,6 +68,7 @@ import {
 import {
     sessionsSelector,
     activeGameSelector,
+    totalGamesSelector,
     scoreSelector
 } from '../../selectors/board';
 
@@ -79,7 +81,6 @@ import {
     Card,
     CardText
 } from 'material-ui/Card';
-import Dialog from 'material-ui/Dialog';
 
 
 
@@ -134,25 +135,25 @@ class Board extends PureComponent {
             case 'click':
                 this.audio.pause();
                 this.audio.src = AUDIO_EVENT_CLICK;
-                this.audio.volume = 0.8;
+                this.audio.volume = 0.5;
                 this.audio.play();
                 break;
             case 'match':
                 this.audio.pause();
                 this.audio.src = AUDIO_EVENT_MATCH;
-                this.audio.volume = 0.9;
+                this.audio.volume = 0.5;
                 this.audio.play();
                 break;
             case 'game':
                 this.audio.pause();
                 this.audio.src = AUDIO_EVENT_GAME;
-                this.audio.volume = 0.7;
+                this.audio.volume = 0.2;
                 this.audio.play();
                 break;
             case 'wrong':
                 this.audio.pause();
                 this.audio.src = AUDIO_EVENT_WRONG;
-                this.audio.volume = 0.9;
+                this.audio.volume = 0.5;
                 this.audio.play();
                 break;
             default:
@@ -172,20 +173,34 @@ class Board extends PureComponent {
      */
     triggerResetBoard() {
 
+        /**
+         * Should return timer to sync animations
+         * from the animation interface.
+         */
         setTimeout(() => {
             Object.keys(this.props.games[`session${this.props.activeGame}`]).forEach((item) => {
+
+                // Set flip state to tile
                 this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
 
+                // Register n total of game sessions
+                this.props.board.totalGames=Object.keys(this.props.games).length;
+
+                // Audio feedback when  matched
                 if(this.countMatchingTiles(this.props.games[`session${this.props.activeGame}`][item].name)===2) {
                     this.setAudio('match');
                 }
             });
 
+            /**
+             * Make sure dialog is returned to closed
+             * state on dispatch.
+             */
             setTimeout(() => {
                 this.setDialog(false);
             }, 4000);
 
-
+            // Audio feedback on session complete
             if(this.countMatchingSession(this.props.games[`session${this.props.activeGame}`])===Object.keys(this.props.games[`session${this.props.activeGame}`]).length) {
                 this.setAudio('game');
             }
@@ -309,6 +324,8 @@ class Board extends PureComponent {
             throw new Error(BAD_ARGS);
         }
         this.props.games[`session${this.props.activeGame}`][`tile${payloadId}`].matched = true;
+
+        // Dispatch for score keeping
         this.props.incrementScoreCount();
         this.props.decrementFlipCount();
     }
@@ -455,7 +472,6 @@ class Board extends PureComponent {
             setGameSession===Object.keys(this.props.games[`session${this.props.activeGame}`]).length &&
             this.props.activeGame < Object.keys(this.props.games).length
         ){
-
             this.setDialog(true);
             this.setAudio('game');
 
@@ -463,24 +479,26 @@ class Board extends PureComponent {
                 this.props.incrementActiveGame(this.props);
             }, 4000);
         }
+        else {
+                //this.triggerResetBoard();
+        }
     }
 
     render() {
 
         return (
+
             <div>
                 {
-                <div>
-                    <Dialog
-                        title={`Congratulations! Level ${this.props.activeGame} finished!`}
-                        modal={true}
-                        open={this.getDialog()}
-                        titleStyle={{fontFamily: 'Bangers', fontSize: '28px', color: '#45B649', textAlign: 'Center'}}
-                        bodyStyle={{fontFamily: 'Bangers', fontSize: '22px', textAlign: 'Center'}}
-                        >
-                        {this.props.score} points! Get ready for your next game....
-                    </Dialog>
-                </div>
+                    (this.props.activeGame < this.props.totalGames)
+                        ?
+                    <div>
+                        <GameDialog key={`gameDialog${this.props.activeGame}`} final={false} open={this.getDialog()} {...this.props} />
+                    </div>
+                        :
+                    <div>
+                        <GameDialog key={`gameDialog${this.props.activeGame}`} final={true} open={this.getDialog()} {...this.props} />
+                    </div>
                 }
 
                 <Card>
@@ -498,7 +516,7 @@ class Board extends PureComponent {
                                                 (!this.getLocked() && this.getCounter() < 2 && !this.props.games[`session${this.props.activeGame}`][tile].matched && !this.props.games[`session${this.props.activeGame}`][tile].flipped)
                                                     ?
                                                     () => {
-                                                        this.triggerDispatch(this.props.games[`session${this.props.activeGame}`][tile].index)
+                                                        this.triggerDispatch(this.props.games[`session${this.props.activeGame}`][tile].index);
                                                         this.setAudio('click');
                                                     }
                                                     : () => {
@@ -544,6 +562,7 @@ const mapStateToProps = (state, props) => {
         board : state.board,
         games : sessionsSelector(state),
         activeGame : activeGameSelector(state),
+        totalGames : totalGamesSelector(state),
         score : scoreSelector(state),
     }
 };

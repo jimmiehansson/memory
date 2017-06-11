@@ -48,6 +48,7 @@ import { connect } from 'react-redux';
  */
 import {
     activeGameSelector,
+    totalGamesSelector,
     scoreSelector
 } from '../../selectors/board';
 
@@ -159,7 +160,7 @@ class Header extends PureComponent {
                     secondary={true}
                     badgeStyle={{top: 17, right: 12, backgroundColor: '#8bc53e', fontFamily: 'Bangers', fontSize: '16px', padding:'3px'}}
                     >
-                    <IconButton tooltipStyles={tooltipText} tooltipPosition='bottom-right' tooltip="Look at your Ninja score!">
+                    <IconButton tooltipStyles={tooltipText} tooltipPosition='bottom-right' tooltip="Click to toggle">
                     <NotificationsIcon />
                     </IconButton>
                     </Badge>
@@ -172,7 +173,7 @@ class Header extends PureComponent {
                         <Subheader
                         style={{fontFamily: 'Bangers', fontSize: '24px', color: '#666'}}
                         >
-                            {`Level ${this.props.activeGame}`}
+                            {`Level ${this.props.activeGame} / ${this.props.totalGames}`}
                         </Subheader>
                         <Divider/>
                         <Subheader>My current score</Subheader>
@@ -181,7 +182,7 @@ class Header extends PureComponent {
                         </ListItem>
                         <Divider/>
                         <Subheader>Time spent playing</Subheader>
-                        <ListItem disabled={true} style={{fontFamily:'Bangers', fontSize:'24px', color:'#8bc53e', padding: '15px'}}>
+                        <ListItem disabled={true} style={{fontFamily:'Bangers', fontSize:'22px', color:'#8bc53e', padding: '15px'}}>
                             {`${this.getHoursInDuration()} hours ${this.getMinutesInDuration()} minutes`}
                         </ListItem>
                         <Divider/>
@@ -226,6 +227,7 @@ const mapStateToProps = (state, props) => {
    return {
        board : state.board,
        activeGame : activeGameSelector(state),
+       totalGames : totalGamesSelector(state),
        score : scoreSelector(state),
    }
 };

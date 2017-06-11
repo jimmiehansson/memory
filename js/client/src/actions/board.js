@@ -108,6 +108,7 @@ export const dataToBoard = (payload) => {
                 score : 0,
                 flipCount : 0,
                 activeGame : 1,
+                totalGames : 'Secret',
                 sessions : {...data}
             };
             dispatch(getDataToBoard(payload));

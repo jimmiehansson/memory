@@ -42,6 +42,7 @@ import { createSelector } from 'reselect';
  */
 export const getSessions = state => state.board.sessions;
 export const getActiveGame = state => state.board.activeGame;
+export const getTotalGames = state => state.board.totalGames;
 export const getScore = state => state.board.score;
 
 
@@ -58,6 +59,12 @@ export const sessionsSelector = createSelector([ getSessions ], (board) => board
  */
 export const activeGameSelector = createSelector([ getActiveGame ], (board) => board);
 
+
+/**
+ * DOING: Should return a cursor
+ * for the current total games stored in state.
+ */
+export const totalGamesSelector = createSelector([ getTotalGames ], (board) => board);
 
 
 /**
