@@ -44,6 +44,10 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     let testLibrary = require('../../../../../js/client/src/constants/action-types/board');
 
 
+    /**
+     * DOING: Should test equality for return on function
+     * call on getBoardState() fn.
+     */
     mocha.describe('Behaviors @action->getBoardState::function', () =>{
 
         let data = {
@@ -84,6 +88,10 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     });
 
 
+    /**
+     * DOING: Should test equality for return on function
+     * call on boardState() fn.
+     */
     mocha.describe('Behaviors @action->boardState::function', () =>{
 
         let data = {
@@ -115,21 +123,26 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     });
 
 
-    mocha.describe('Behaviors @action->boardState::function dispatch', () =>{
-
-        let testAPI = require('../../../../../js/client/src/lib/common-api');
+    /**
+     * DOING: Should test promise resolve for dispatch with function
+     * call on generic() fn.
+     */
+    mocha.describe('Behaviors @action->dispatch::request', () =>{
 
         let data = {
             payload : {},
             type : testLibrary.GET_BOARD_STATE
         };
 
-        testAPI.buildDataFromUrl = sinon.stub().returns(Promise.resolve((resolve, reject) => resolve(data)));
+        let method = sinon.stub().returns(Promise.resolve((resolve, reject) => resolve(data)));
         const action = sinon.spy();
-        const dispatch = testAPI.buildDataFromUrl;
+        const dispatch = method;
 
         mocha.describe('Assert callback', () => {
 
+            mocha.it('should return a stub function', () => {
+                chai.assert.isFunction(dispatch);
+            });
             mocha.it('should dispatch the asynchronous action atleast once', (done) => {
                 dispatch(action).then((data) => chai.expect(action.called).to.be.true).catch((err) => err);
                 done();
@@ -147,6 +160,10 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     });
 
 
+    /**
+     * DOING: Should test equality for return on function
+     * call on incrementFlipCount() fn.
+     */
     mocha.describe('Behaviors @action->incrementFlipCount::function', () =>{
 
         let data = {
@@ -186,6 +203,10 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     });
 
 
+    /**
+     * DOING: Should test equality for return on function
+     * call on decrementFlipCount() fn.
+     */
     mocha.describe('Behaviors @action->decrementFlipCount::function', () =>{
 
         let data = {
@@ -225,6 +246,10 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     });
 
 
+    /**
+     * DOING: Should test equality for return on function
+     * call on incrementActiveGame() fn.
+     */
     mocha.describe('Behaviors @action->incrementActiveGame::function', () =>{
 
         let data = {
@@ -264,6 +289,10 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
     });
 
 
+    /**
+     * DOING: Should test equality for return on function
+     * call on incrementScoreCount() fn.
+     */
     mocha.describe('Behaviors @action->incrementScoreCount::function', () =>{
 
         let data = {

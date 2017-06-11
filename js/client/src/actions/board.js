@@ -47,7 +47,10 @@ import {
     INCREMENT_ACTIVEGAME_STATE,
     INCREMENT_SCORECOUNT_STATE
 } from '../constants/action-types/board.js';
-
+import {
+    sessionsSelector
+}
+from '../selectors/board';
 import {
     buildDataFromUrl
 } from '../lib/common-api';
@@ -108,7 +111,7 @@ export const dataToBoard = (payload) => {
                 score : 0,
                 flipCount : 0,
                 activeGame : 1,
-                totalGames : 'Secret',
+                totalGames : 0,
                 sessions : {...data}
             };
             dispatch(getDataToBoard(payload));

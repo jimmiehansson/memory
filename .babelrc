@@ -1,4 +1,13 @@
 {
-  "presets" : ["react","stage-1","es2015","es2017"],
-  "plugins": ["transform-async-to-generator", "transform-runtime","transform-object-rest-spread"]
+  "presets" : [
+    "react",
+    "stage-1",
+    "es2015",
+    "es2017"],
+  "plugins": [
+    "transform-runtime",
+    "transform-object-rest-spread",
+    "transform-react-constant-elements",
+    "transform-react-inline-elements"
+  ]
 }

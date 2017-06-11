@@ -231,7 +231,7 @@ export const buildDataFromUrl = () => {
                 .then((dataFromUrl) => {
                     if (hasObjectProperties(dataFromUrl, getHttpObjectProperties())) {
                         // build and return dataset
-                        resolve(resolve(buildCopyObject(dataFromUrl, 6)));
+                        resolve(buildCopyObject(dataFromUrl, 6));
                     }
                 });
         }

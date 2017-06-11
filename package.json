@@ -10,14 +10,19 @@
     "watch": "./node_modules/.bin/webpack-dev-server",
     "test": "mocha --compilers js:babel-core/register --recursive"
   },
+  "jsHintConfig": {
+    "node": true,
+    "es6": true
+  },
   "dependencies": {
     "all": "^0.0.0",
     "babel": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^6.4.0",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "babel-plugin-transform-react-inline-elements": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.1.11",
@@ -28,7 +33,6 @@
     "bufferutil": "^3.0.0",
     "chai": "^4.0.2",
     "chai-http": "^3.0.0",
-    "chai-json-equal": "^0.0.1",
     "classnames": "^2.2.5",
     "css-loader": "^0.26.2",
     "devtron": "^1.4.0",
@@ -63,12 +67,12 @@
     "redux-mock-store": "^1.2.3",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
-    "should": "^11.2.1",
     "sinon": "^2.3.4",
     "style-loader": "^0.13.2",
     "utf-8-validate": "^3.0.1",
     "v8-profiler": "^5.7.0",
     "webpack": "^2.2.1",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "^2.4.1",
+    "webpack-uglify-js-plugin": "^1.1.9"
   }
 }

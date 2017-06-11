@@ -102,6 +102,7 @@ class Board extends PureComponent {
 
         // UI
         this.dialog = false;
+
     }
 
 
@@ -173,6 +174,7 @@ class Board extends PureComponent {
      */
     triggerResetBoard() {
 
+
         /**
          * Should return timer to sync animations
          * from the animation interface.
@@ -182,26 +184,26 @@ class Board extends PureComponent {
 
                 // Set flip state to tile
                 this.props.games[`session${this.props.activeGame}`][item].flipped = !!(this.props.games[`session${this.props.activeGame}`][item].matched);
-
-                // Register n total of game sessions
-                this.props.board.totalGames=Object.keys(this.props.games).length;
-
                 // Audio feedback when  matched
                 if(this.countMatchingTiles(this.props.games[`session${this.props.activeGame}`][item].name)===2) {
                     this.setAudio('match');
+                    // Register n total of game sessions
+                    this.props.board.totalGames=Object.keys(this.props.games).length;
                 }
-            });
 
-            /**
-             * Make sure dialog is returned to closed
-             * state on dispatch.
-             */
-            setTimeout(() => {
-                this.setDialog(false);
-            }, 4000);
+            });
 
             // Audio feedback on session complete
             if(this.countMatchingSession(this.props.games[`session${this.props.activeGame}`])===Object.keys(this.props.games[`session${this.props.activeGame}`]).length) {
+
+                /**
+                 * Make sure dialog is returned to closed
+                 * state on dispatch.
+                 */
+                setTimeout(() => {
+                    this.setDialog(false);
+                }, 2000);
+
                 this.setAudio('game');
             }
 
@@ -211,7 +213,7 @@ class Board extends PureComponent {
             }
 
             this.triggerUnlockBoard();
-        },1500);
+        },1000);
     }
 
 
@@ -470,7 +472,7 @@ class Board extends PureComponent {
          */
         if(
             setGameSession===Object.keys(this.props.games[`session${this.props.activeGame}`]).length &&
-            this.props.activeGame < Object.keys(this.props.games).length
+            this.props.activeGame <= Object.keys(this.props.games).length
         ){
             this.setDialog(true);
             this.setAudio('game');
@@ -478,9 +480,6 @@ class Board extends PureComponent {
             setTimeout(() => {
                 this.props.incrementActiveGame(this.props);
             }, 4000);
-        }
-        else {
-                //this.triggerResetBoard();
         }
     }
 

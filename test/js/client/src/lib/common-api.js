@@ -37,38 +37,98 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
-
-import {
-    API_FETCH_URL
-} from '../../../../../js/client/src/constants/common-application';
-
-
 chai.use(chaiHttp);
-let request = chai.request('http://tretton37.com/assets/js/');
+let request = chai.request('http://tretton37.com');
 
 
 
 mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
 
 
-
+    /**
+     * DOING: Should test response for request of
+     * generic url and return.
+     */
     mocha.describe('Behaviors @request->uri::generic', () =>{
 
         mocha.describe('Assert normal', () => {
 
-            mocha.it('should GET an object from url with 200 response and no errors', (done) => {
+            mocha.it('should GET an object from url with 200 response and no errors from tretton37.com', (done) => {
                 request
-                    .get('meet-ninjas.js')
+                    .get('/assets/js/meet-ninjas.js')
+                    .end((err, res) => {
+                        chai.expect(res.status).to.equal(200);
+                        chai.expect(err).to.equal(null);
+                        chai.expect(res.body).to.be.a('object');
+                        done();
+                });
+            });
+        });
+
+        mocha.describe('Assert error', () => {
+
+            mocha.it('should GET a 200 response on erroneous request from tretton37.com', (done) => {
+                request
+                    .get('/assets/js')
+                    .end((err, res) => {
+                        chai.expect(res.status).to.equal(200);
+                        chai.expect(err).to.equal(null);
+                        chai.expect(res.body).to.be.a('object');
+                        done();
+                });
+            });
+        });
+
+    });
+
+
+    /**
+     * DOING: Should test response for request of
+     * generic url and return.
+     */
+    mocha.describe('Behaviors @request->uri::generic', () =>{
+
+        mocha.describe('Assert normal', () => {
+
+            mocha.it('should GET an object from url with 200 response and no errors from tretton37.com', (done) => {
+                request
+                    .get('/assets/js/meet-ninjas.js')
                     .end((err, res) => {
                         chai.expect(res.status).to.equal(200);
                         chai.expect(err).to.equal(null);
                         chai.expect(res.body).to.be.a('object');
                         done();
                     });
-                });
+            });
+        });
+
+        mocha.describe('Assert error', () => {
+
+            mocha.it('should GET a 200 response on error from tretton37.com', (done) => {
+                request
+                    .get('/assets/js')
+                    .end((err, res) => {
+                        chai.expect(res.status).to.equal(200);
+                        chai.expect(err).to.equal(null);
+                        chai.expect(res.body).to.be.a('object');
+                        done();
+                    });
+            });
         });
 
     });
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 
