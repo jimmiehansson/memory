@@ -37,12 +37,24 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 
+
+/**
+ * DOING: Import and define resource
+ * identifiers for our tests here.
+ */
 chai.use(chaiHttp);
-let request = chai.request('http://tretton37.com');
+const TEST_BASE_URL = 'http://tretton37.com';
+const TEST_SUCCESS_PATH = '/assets/js/meet-ninjas.js';
+const TEST_FAIL_PATH = '/path/to/invalid/dir/or/file.js';
+let request = chai.request(TEST_BASE_URL);
+
 
 
 
 mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
+
+
+    let testScope = require('../../../../../js/client/src/lib/common-api');
 
 
     /**
@@ -55,7 +67,7 @@ mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
 
             mocha.it('should GET an object from url with 200 response and no errors from tretton37.com', (done) => {
                 request
-                    .get('/assets/js/meet-ninjas.js')
+                    .get(TEST_SUCCESS_PATH)
                     .end((err, res) => {
                         chai.expect(res.status).to.equal(200);
                         chai.expect(err).to.equal(null);
@@ -69,7 +81,7 @@ mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
 
             mocha.it('should GET a 200 response on erroneous request from tretton37.com', (done) => {
                 request
-                    .get('/assets/js')
+                    .get(TEST_FAIL_PATH)
                     .end((err, res) => {
                         chai.expect(res.status).to.equal(200);
                         chai.expect(err).to.equal(null);
@@ -83,51 +95,92 @@ mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
 
 
     /**
-     * DOING: Should test response for request of
-     * generic url and return.
+     * DOING: Should test equality for return on function
+     * call on getHttpObjectProperties() fn.
      */
-    mocha.describe('Behaviors @request->uri::generic', () =>{
+    mocha.describe('Behaviors @generic->getHttpObjectProperties::function', () =>{
+
+
+        let data = ['name', 'imagePortraitUrl','index','filename'];
+
 
         mocha.describe('Assert normal', () => {
-
-            mocha.it('should GET an object from url with 200 response and no errors from tretton37.com', (done) => {
-                request
-                    .get('/assets/js/meet-ninjas.js')
-                    .end((err, res) => {
-                        chai.expect(res.status).to.equal(200);
-                        chai.expect(err).to.equal(null);
-                        chai.expect(res.body).to.be.a('object');
-                        done();
-                    });
+            mocha.it('should return an array with correct members', ()=> {
+                chai.expect(testScope.getHttpObjectProperties()).to.deep.equal(data);
             });
+            mocha.it('should not return an empty array', ()=> {
+                chai.expect(testScope.getHttpObjectProperties()).to.not.equal([]);
+            });
+            mocha.it('should have array members ["name", "imagePortraitUrl","index", "filename"]', ()=> {
+                chai.expect(testScope.getHttpObjectProperties()).to.include.members(data);
+            });
+
         });
 
         mocha.describe('Assert error', () => {
-
-            mocha.it('should GET a 200 response on error from tretton37.com', (done) => {
-                request
-                    .get('/assets/js')
-                    .end((err, res) => {
-                        chai.expect(res.status).to.equal(200);
-                        chai.expect(err).to.equal(null);
-                        chai.expect(res.body).to.be.a('object');
-                        done();
-                    });
+            mocha.it('should not return a string when passed a string', ()=> {
+                chai.expect(testScope.getHttpObjectProperties('')).to.not.deep.equal('string');
+            });
+            mocha.it('should not return a number when passed a number', ()=> {
+                chai.expect(testScope.getHttpObjectProperties(100)).to.not.deep.equal(100);
+            });
+            mocha.it('should not return a boolean when passed a boolean', ()=> {
+                chai.expect(testScope.getHttpObjectProperties(true)).to.not.deep.equal(true);
+            });
+            mocha.it('should not return an array when passed an array', ()=> {
+                chai.expect(testScope.getHttpObjectProperties([])).to.not.deep.equal([]);
             });
         });
-
     });
 
 
 
+    /**
+     * DOING: Should test equality for return on function
+     * call on hasObjectProperties() fn.
+     */
+    mocha.describe('Behaviors @generic->hasObjectProperties::function', () =>{
 
 
+        let data = {
+            name : 'John doe',
+            imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
+            index : 11,
+            filename : 'john-doe',
+            flipped : false,
+            matched : false,
+        };
+
+        let mock = ['name', 'imagePortraitUrl', 'index', 'filename', 'flipped','matched'];
 
 
+        mocha.describe('Assert normal', () => {
+            mocha.it('should return true if object properties match', ()=> {
+                chai.expect(testScope.hasObjectProperties(data, mock)).to.equal(true);
+            });
+            mocha.it('should not return an null response', ()=> {
+                chai.expect(testScope.hasObjectProperties(data, mock)).to.not.equal(null);
+            });
+        });
 
-
-
-
+        mocha.describe('Assert error', () => {
+            mocha.it('should return a throw() error when passed a empty object', ()=> {
+                chai.expect(testScope.hasObjectProperties({})).to.throw();
+            });
+            mocha.it('should not return a string when passed a string', ()=> {
+                chai.expect(testScope.hasObjectProperties('')).to.not.deep.equal('string');
+            });
+            mocha.it('should not return a number when passed a number', ()=> {
+                chai.expect(testScope.hasObjectProperties(100)).to.not.deep.equal(100);
+            });
+            mocha.it('should not return a boolean when passed a boolean', ()=> {
+                chai.expect(testScope.hasObjectProperties(true)).to.not.deep.equal(true);
+            });
+            mocha.it('should not return an array when passed an array', ()=> {
+                chai.expect(testScope.hasObjectProperties([])).to.not.deep.equal([]);
+            });
+        });
+    });
 
 });
 
