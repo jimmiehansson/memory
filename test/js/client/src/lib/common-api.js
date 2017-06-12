@@ -50,18 +50,27 @@ let request = chai.request(TEST_BASE_URL);
 
 
 
-
-mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
+mocha.describe(`
+-----------------------------------------------------------------------
+BEGIN
+-----------------------------------------------------------------------
+Testing file: /js/client/src/lib/common-api.js
+`, () => {
 
 
     let testScope = require('../../../../../js/client/src/lib/common-api');
+    let testLibrary = require('../../../../../js/client/src/constants/language/english');
 
 
     /**
      * DOING: Should test response for request of
      * generic url and return.
      */
-    mocha.describe('Behaviors @request->uri::generic', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @request->uri::generic
+    -----------------------------------------------------------------------
+    `, () =>{
 
         mocha.describe('Assert normal', () => {
 
@@ -98,11 +107,13 @@ mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
      * DOING: Should test equality for return on function
      * call on getHttpObjectProperties() fn.
      */
-    mocha.describe('Behaviors @generic->getHttpObjectProperties::function', () =>{
-
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @generic->getHttpObjectProperties::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = ['name', 'imagePortraitUrl','index','filename'];
-
 
         mocha.describe('Assert normal', () => {
             mocha.it('should return an array with correct members', ()=> {
@@ -139,20 +150,20 @@ mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
      * DOING: Should test equality for return on function
      * call on hasObjectProperties() fn.
      */
-    mocha.describe('Behaviors @generic->hasObjectProperties::function', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @generic->hasObjectProperties::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
-
-        let data = {
+        let data = [{
             name : 'John doe',
             imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
             index : 11,
             filename : 'john-doe',
-            flipped : false,
-            matched : false,
-        };
+        }];
 
-        let mock = ['name', 'imagePortraitUrl', 'index', 'filename', 'flipped','matched'];
-
+        let mock = ['name', 'imagePortraitUrl', 'index', 'filename'];
 
         mocha.describe('Assert normal', () => {
             mocha.it('should return true if object properties match', ()=> {
@@ -161,23 +172,141 @@ mocha.describe('Testing file: /js/client/src/lib/common-api.js', () => {
             mocha.it('should not return an null response', ()=> {
                 chai.expect(testScope.hasObjectProperties(data, mock)).to.not.equal(null);
             });
+            mocha.it('should not throw an error when properties match', ()=> {
+                chai.expect(() => testScope.hasObjectProperties(data, mock)).to.not.throw(testLibrary.BAD_ARGS);
+            });
         });
 
         mocha.describe('Assert error', () => {
-            mocha.it('should return a throw() error when passed a empty object', ()=> {
-                chai.expect(testScope.hasObjectProperties({})).to.throw();
+            mocha.it('should throw Error when passed a empty object', ()=> {
+                chai.expect(() => testScope.hasObjectProperties({})).to.throw(testLibrary.BAD_ARGS);
             });
-            mocha.it('should not return a string when passed a string', ()=> {
-                chai.expect(testScope.hasObjectProperties('')).to.not.deep.equal('string');
+            mocha.it('should throw Error when passed a string', ()=> {
+                chai.expect(() => testScope.hasObjectProperties('')).to.throw(testLibrary.BAD_ARGS);
             });
-            mocha.it('should not return a number when passed a number', ()=> {
-                chai.expect(testScope.hasObjectProperties(100)).to.not.deep.equal(100);
+            mocha.it('should throw Error when passed a number', ()=> {
+                chai.expect(() => testScope.hasObjectProperties(100)).to.throw(testLibrary.BAD_ARGS);
             });
-            mocha.it('should not return a boolean when passed a boolean', ()=> {
-                chai.expect(testScope.hasObjectProperties(true)).to.not.deep.equal(true);
+            mocha.it('should throw Error when passed a boolean', ()=> {
+                chai.expect(() => testScope.hasObjectProperties(true)).to.throw(testLibrary.BAD_ARGS);
             });
-            mocha.it('should not return an array when passed an array', ()=> {
-                chai.expect(testScope.hasObjectProperties([])).to.not.deep.equal([]);
+            mocha.it('should throw Error when passed an empty array', ()=> {
+                chai.expect(() => testScope.hasObjectProperties([])).to.throw(testLibrary.BAD_ARGS);
+            });
+        });
+    });
+
+
+    /**
+     * DOING: Should test equality for return on function
+     * call on getShuffleData() fn.
+     */
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @generic->getShuffleData::function
+    -----------------------------------------------------------------------
+    `, () =>{
+
+        let data = [
+            {
+                name : 'John doe',
+                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
+                index : 11,
+                filename : 'john-doe',
+            },
+            {
+                name : 'Jane doe',
+                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/jane-doe',
+                index : 13,
+                filename : 'jane-doe',
+            }
+        ];
+
+        mocha.describe('Assert normal', () => {
+            mocha.it('should return the object shuffled', ()=> {
+                chai.expect(testScope.getShuffleData(data)).to.not.deep.equal(data);
+            });
+            mocha.it('should not return an null response', ()=> {
+                chai.expect(testScope.getShuffleData(data)).to.not.equal(null);
+            });
+            mocha.it('should not throw an error when function is called', ()=> {
+                chai.expect(() => testScope.getShuffleData(data)).to.not.throw(testLibrary.BAD_ARGS);
+            });
+        });
+
+        mocha.describe('Assert error', () => {
+            mocha.it('should throw Error when passed a empty object', ()=> {
+                chai.expect(() => testScope.getShuffleData({})).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed a string', ()=> {
+                chai.expect(() => testScope.getShuffleData('')).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed a number', ()=> {
+                chai.expect(() => testScope.getShuffleData(100)).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed a boolean', ()=> {
+                chai.expect(() => testScope.getShuffleData(true)).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed an empty array', ()=> {
+                chai.expect(() => testScope.getShuffleData([])).to.throw(testLibrary.BAD_ARGS);
+            });
+        });
+    });
+
+
+
+    /**
+     * DOING: Should test equality for return on function
+     * call on getShuffleData() fn.
+     */
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @generic->getShuffleData::function
+    -----------------------------------------------------------------------
+    `, () =>{
+
+        let data = [
+            {
+                name : 'John doe',
+                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
+                index : 11,
+                filename : 'john-doe',
+            },
+            {
+                name : 'Jane doe',
+                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/jane-doe',
+                index : 13,
+                filename : 'jane-doe',
+            }
+        ];
+
+        mocha.describe('Assert normal', () => {
+            mocha.it('should return the object shuffled', ()=> {
+                chai.expect(testScope.getShuffleData(data)).to.deep.equal(data);
+            });
+            mocha.it('should not return an null response', ()=> {
+                chai.expect(testScope.getShuffleData(data)).to.not.equal(null);
+            });
+            mocha.it('should not throw an error when function is called', ()=> {
+                chai.expect(() => testScope.getShuffleData(data)).to.not.throw(testLibrary.BAD_ARGS);
+            });
+        });
+
+        mocha.describe('Assert error', () => {
+            mocha.it('should throw Error when passed a empty object', ()=> {
+                chai.expect(() => testScope.getShuffleData({})).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed a string', ()=> {
+                chai.expect(() => testScope.getShuffleData('')).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed a number', ()=> {
+                chai.expect(() => testScope.getShuffleData(100)).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed a boolean', ()=> {
+                chai.expect(() => testScope.getShuffleData(true)).to.throw(testLibrary.BAD_ARGS);
+            });
+            mocha.it('should throw Error when passed an empty array', ()=> {
+                chai.expect(() => testScope.getShuffleData([])).to.throw(testLibrary.BAD_ARGS);
             });
         });
     });
