@@ -30,13 +30,12 @@ All data will be fetched from a private API as a JSON object.
 # Why
 This project was made as an assignment for an interview at the company Tretton37.
 
-# How long did it take?
+## How long did it take?
 This project from none to completion took 10 days.
 
-# Any words?
+## Any words?
 Yeah, a big shout to my pregnant wife for her support.
 
-# Special thanks to
-
-
-
+## Special thanks to
+* NoiseForFun for the audio (http://www.noiseforfun.com/)
+* VectorCharacters.net for the ninja (http://vectorcharacters.net/ninja-vector-characters/ninja-vector-character-2)
