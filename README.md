@@ -24,8 +24,19 @@ All data will be fetched from a private API as a JSON object.
 
 ## Screenshot
 
-![alt text](https://github.com/jimmiehansson/memory/blob/master/public/images/memorinja_github.PNG?raw=true)
+![alt text](https://github.com/jimmiehansson/memory/blob/master/public/images/memorinjascore.PNG?raw=true)
+
 
 # Why
 This project was made as an assignment for an interview at the company Tretton37.
+
+# How long did it take?
+This project from none to completion took 10 days.
+
+# Any words?
+Yeah, a big shout to my pregnant wife for her support.
+
+# Special thanks to
+
+
 
