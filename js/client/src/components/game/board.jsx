@@ -83,7 +83,6 @@ import {
 } from 'material-ui/Card';
 
 
-
 class Board extends PureComponent {
 
 
@@ -102,7 +101,6 @@ class Board extends PureComponent {
 
         // UI
         this.dialog = false;
-
     }
 
 
@@ -163,7 +161,6 @@ class Board extends PureComponent {
                 this.audio.volume = 0.3;
                 this.audio.play();
         }
-
     }
 
 

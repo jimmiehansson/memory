@@ -222,9 +222,25 @@ Testing file: /js/client/src/lib/common-api.js
             }
         ];
 
+        let mock = [
+            {
+                name : 'Jane doe',
+                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/jane-doe',
+                index : 13,
+                filename : 'jane-doe',
+            },
+            {
+                name : 'John doe',
+                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
+                index : 11,
+                filename : 'john-doe',
+            }
+        ];
+
+
         mocha.describe('Assert normal', () => {
             mocha.it('should return the object shuffled', ()=> {
-                chai.expect(testScope.getShuffleData(data)).to.not.deep.equal(data);
+                chai.expect(testScope.getShuffleData(data)).to.deep.members(mock);
             });
             mocha.it('should not return an null response', ()=> {
                 chai.expect(testScope.getShuffleData(data)).to.not.equal(null);
@@ -257,56 +273,60 @@ Testing file: /js/client/src/lib/common-api.js
 
     /**
      * DOING: Should test equality for return on function
-     * call on getShuffleData() fn.
+     * call on getTotalCountFromobject() fn.
      */
     mocha.describe(`
     -----------------------------------------------------------------------
-    Behaviors @generic->getShuffleData::function
+    Behaviors @generic->getTotalCountFromObject::function
     -----------------------------------------------------------------------
     `, () =>{
 
-        let data = [
-            {
-                name : 'John doe',
-                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
-                index : 11,
-                filename : 'john-doe',
+        let data =
+        {
+            mock1: {
+                name: 'John doe',
+                imagePortraitUrl: 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
+                index: 11,
+                filename: 'john-doe',
             },
-            {
-                name : 'Jane doe',
-                imagePortraitUrl : 'http://tretton37img.blob.core.windows.net/ninja-portrait/jane-doe',
-                index : 13,
-                filename : 'jane-doe',
+            mock2: {
+                name: 'John doe',
+                imagePortraitUrl: 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
+                index: 11,
+                filename: 'john-doe',
+            },
+            mock3: {
+                name: 'John doe',
+                imagePortraitUrl: 'http://tretton37img.blob.core.windows.net/ninja-portrait/john-doe',
+                index: 11,
+                filename: 'john-doe',
             }
-        ];
+        };
 
         mocha.describe('Assert normal', () => {
-            mocha.it('should return the object shuffled', ()=> {
-                chai.expect(testScope.getShuffleData(data)).to.deep.equal(data);
+            mocha.it('should return numeral count of object passed in length', ()=> {
+                chai.expect(testScope.getTotalCountFromObject(data)).to.deep.equal(3);
             });
             mocha.it('should not return an null response', ()=> {
-                chai.expect(testScope.getShuffleData(data)).to.not.equal(null);
-            });
-            mocha.it('should not throw an error when function is called', ()=> {
-                chai.expect(() => testScope.getShuffleData(data)).to.not.throw(testLibrary.BAD_ARGS);
+                chai.expect(testScope.getTotalCountFromObject(data)).to.not.equal(null);
             });
         });
 
         mocha.describe('Assert error', () => {
-            mocha.it('should throw Error when passed a empty object', ()=> {
-                chai.expect(() => testScope.getShuffleData({})).to.throw(testLibrary.BAD_ARGS);
+            mocha.it('should return 0 when object has 0 properties', ()=> {
+                chai.expect(testScope.getTotalCountFromObject({})).to.deep.equal(0);
             });
-            mocha.it('should throw Error when passed a string', ()=> {
-                chai.expect(() => testScope.getShuffleData('')).to.throw(testLibrary.BAD_ARGS);
+            mocha.it('should not return a string when passed a string', ()=> {
+                chai.expect(testScope.getTotalCountFromObject('')).to.not.deep.equal('string');
             });
-            mocha.it('should throw Error when passed a number', ()=> {
-                chai.expect(() => testScope.getShuffleData(100)).to.throw(testLibrary.BAD_ARGS);
+            mocha.it('should not return a number when passed a number', ()=> {
+                chai.expect(testScope.getTotalCountFromObject(100)).to.not.deep.equal(100);
             });
-            mocha.it('should throw Error when passed a boolean', ()=> {
-                chai.expect(() => testScope.getShuffleData(true)).to.throw(testLibrary.BAD_ARGS);
+            mocha.it('should not return a boolean when passed a boolean', ()=> {
+                chai.expect(testScope.getTotalCountFromObject(true)).to.not.deep.equal(true);
             });
-            mocha.it('should throw Error when passed an empty array', ()=> {
-                chai.expect(() => testScope.getShuffleData([])).to.throw(testLibrary.BAD_ARGS);
+            mocha.it('should not return an array when passed an array', ()=> {
+                chai.expect(testScope.getTotalCountFromObject([])).to.not.deep.equal([]);
             });
         });
     });

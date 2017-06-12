@@ -37,7 +37,12 @@ const chai = require('chai');
 const sinon = require('sinon');
 
 
-mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
+mocha.describe(`
+-----------------------------------------------------------------------
+BEGIN
+-----------------------------------------------------------------------
+Testing file: /js/client/src/actions/board.js
+`, () => {
 
 
     let testScope = require('../../../../../js/client/src/actions/board');
@@ -48,7 +53,11 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
      * DOING: Should test equality for return on function
      * call on getBoardState() fn.
      */
-    mocha.describe('Behaviors @action->getBoardState::function', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @action->getBoardState::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = {
             payload : {},
@@ -92,7 +101,11 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
      * DOING: Should test equality for return on function
      * call on boardState() fn.
      */
-    mocha.describe('Behaviors @action->boardState::function', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @action->boardState::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = {
             payload : {},
@@ -127,7 +140,11 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
      * DOING: Should test promise resolve for dispatch with function
      * call on generic() fn.
      */
-    mocha.describe('Behaviors @action->dispatch::request', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @action->dispatch::request
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = {
             payload : {},
@@ -164,7 +181,11 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
      * DOING: Should test equality for return on function
      * call on incrementFlipCount() fn.
      */
-    mocha.describe('Behaviors @action->incrementFlipCount::function', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @action->incrementFlipCount::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = {
             type : testLibrary.INCREMENT_FLIPCOUNT_STATE
@@ -207,7 +228,11 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
      * DOING: Should test equality for return on function
      * call on decrementFlipCount() fn.
      */
-    mocha.describe('Behaviors @action->decrementFlipCount::function', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @action->decrementFlipCount::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = {
             type : testLibrary.DECREMENT_FLIPCOUNT_STATE
@@ -250,7 +275,11 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
      * DOING: Should test equality for return on function
      * call on incrementActiveGame() fn.
      */
-    mocha.describe('Behaviors @action->incrementActiveGame::function', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @action->incrementActiveGame::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = {
             type : testLibrary.INCREMENT_ACTIVEGAME_STATE
@@ -293,7 +322,11 @@ mocha.describe('Testing file: /js/client/src/actions/board.js', () => {
      * DOING: Should test equality for return on function
      * call on incrementScoreCount() fn.
      */
-    mocha.describe('Behaviors @action->incrementScoreCount::function', () =>{
+    mocha.describe(`
+    -----------------------------------------------------------------------
+    Behaviors @action->incrementScoreCount::function
+    -----------------------------------------------------------------------
+    `, () =>{
 
         let data = {
             type : testLibrary.INCREMENT_SCORECOUNT_STATE
